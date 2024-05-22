@@ -23,7 +23,7 @@ export default function RootLayout({
       <body className={inter.className}>
         <Providers>
           <Navbar />
-          <div className="flex flex-col items-center justify-center mt-20 lg:hidden">
+          <div className="flex flex-col items-center justify-center mt-20 p-5 text-center gap-12 lg:hidden">
             <p>This web app works better with a larger screens (Laptop, Desktop, etc)</p>
             <p>Please try again later</p> 
           </div>
