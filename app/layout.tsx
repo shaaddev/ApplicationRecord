@@ -6,7 +6,7 @@ import { Providers } from "./providers";
 import { Toaster } from "@/components/ui/toaster";
 
 
-const inter = Inter({ subsets: ["latin"] });
+const inter = Inter({ variable: "--font-inter", subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "Application Record",
