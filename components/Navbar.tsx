@@ -25,7 +25,7 @@ export async function Navbar() {
           {user ? (
             <>
               <li>
-                <p>Welcome, User</p>
+                <p>Welcome!</p>
               </li>
               {Object.entries(paths).slice(0, 1).map(([path, { name }]) => (
                 <li key={path} >
