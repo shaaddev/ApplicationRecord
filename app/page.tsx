@@ -2,7 +2,7 @@ import { _Table } from "@/components/Table/table";
 import { TableCard } from "@/components/table-card";
 import { Button } from "@/components/ui/button";
 import { Pencil } from "@/lib/Logos";
-import { FormTrigger } from "@/components/Forms/form-trigger/c-form-trigger";
+import { FormTrigger } from "@/components/Forms/form-trigger/create-form-trigger";
 import { createClient } from "@/utils/supabase/server";
 
 export default async function Home() {

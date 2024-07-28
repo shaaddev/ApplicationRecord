@@ -5,6 +5,7 @@ import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input"
 import { LoginAction } from "./authActions";
 import Link from "next/link";
+import { AuthAltBtns } from "./auth-alt-btns";
 
 export function LoginForm(){
   const { register } = useForm();
@@ -39,6 +40,8 @@ export function LoginForm(){
             <Button type="button">Sign up</Button>
           </Link>
         </div>
+
+        <AuthAltBtns />
       </div>
     </>
   )

@@ -29,11 +29,11 @@ export async function Navbar() {
               </li>
               {Object.entries(paths).slice(0, 1).map(([path, { name }]) => (
                 <li key={path} >
-                  <Link href={path}>{name}</Link>
+                  <Link href={path} className='hover:text-slate-800 dark:hover:text-pink-500'>{name}</Link>
                 </li>  
               ))}
               <li>
-                <Link href="/logout">
+                <Link href="/logout" className='hover:text-slate-800 dark:hover:text-pink-500'>
                   Logout
                 </Link>
               </li>
@@ -42,7 +42,7 @@ export async function Navbar() {
             <>
             {Object.entries(paths).map(([path, { name }]) => (
               <li key={path} >
-                <Link href={path}>{name}</Link>
+                <Link href={path} className='hover:text-slate-800 dark:hover:text-pink-500'>{name}</Link>
               </li>  
             ))}
             </>
