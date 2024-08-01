@@ -3,12 +3,12 @@ import { Button } from "../ui/button";
 
 const altBtns = [
   {
-    name: 'Google',
+    name: 'Continue with Google',
     icon: <Google className="ml-2"/>,
     clickable: null
   },
   {
-    name: 'Github',
+    name: 'Continue with Github',
     icon: <Github className="ml-2"/>,
     clickable: null
   }

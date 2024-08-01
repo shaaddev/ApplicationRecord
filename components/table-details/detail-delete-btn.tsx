@@ -18,9 +18,9 @@ export function Delete({id}: {id: number}){
       if (!res.ok){
         throw new Error('Something went wrong');
       }
-
-      router.refresh();
     }
+    
+    router.refresh();
   }
 
   return(

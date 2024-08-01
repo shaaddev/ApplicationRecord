@@ -3,7 +3,6 @@ import { revalidatePath } from 'next/cache';
 import { db } from '@/db';
 import { applications } from '@/db/schema/applications';
 import { createClient } from '@/utils/supabase/server'
-import { useToast } from '../ui/use-toast';
 
 export const createAction = async (formData: FormData) => {
   const role = formData.get('role')
@@ -40,7 +39,6 @@ export const createAction = async (formData: FormData) => {
   } catch (error) {
     return console.log('Error:', error)
   }
-
 
   revalidatePath("/")
 }
