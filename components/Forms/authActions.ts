@@ -78,3 +78,19 @@ export const signInWithGitHubAction = async () => {
     redirect(data.url)
   }
 }
+
+// TODO: work on this - not finalised
+export const signInWithGoogleAction = async () => {
+  const supabase = createClient()
+
+  const { data, error } = await supabase.auth.signInWithOAuth({
+    provider: 'google',
+    options: {
+      redirectTo: getURL(),
+      queryParams: {
+        access_type: 'offline',
+        prompt: 'consent'
+      }
+    }
+  })
+}
