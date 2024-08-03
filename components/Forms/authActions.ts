@@ -1,7 +1,6 @@
 "use server"
 import { revalidatePath } from "next/cache"
 import { redirect } from "next/navigation"
-
 import { createClient } from "@/utils/supabase/server"
 import { headers } from "next/headers"
 
@@ -73,7 +72,7 @@ export const signInWithGitHubAction = async () => {
   }
 }
 
-// TODO: work on this - not finalised
+
 export const signInWithGoogleAction = async () => {
   const supabase = createClient()
   const origin = headers().get('origin')
