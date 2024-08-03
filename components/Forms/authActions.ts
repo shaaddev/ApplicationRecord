@@ -3,6 +3,7 @@ import { revalidatePath } from "next/cache"
 import { redirect } from "next/navigation"
 
 import { createClient } from "@/utils/supabase/server"
+import { headers } from "next/headers"
 
 export const LoginAction = async (formData: FormData) => {
   const supabase = createClient()
@@ -54,39 +55,34 @@ export const signOutAction = async () => {
   redirect('/')
 }
 
-const getURL = () => {
-  let url = 
-    process?.env?.NEXT_PUBLIC_SITE_URL ??
-    process?.env?.NEXT_PUBLIC_VERCEL_URL ??
-    'http://localhost:3000/'
-  url = url.startsWith('http') ? url : `https://${url}`
-  url = url.endsWith('/') ? url : `${url}/`
-  return url
-}
-
 export const signInWithGitHubAction = async () => {
   const supabase = createClient()
+  const origin = headers().get('origin')
 
   const { data, error } = await supabase.auth.signInWithOAuth({
     provider: 'github',
     options: {
-      redirectTo: getURL(),
+      redirectTo: `${origin}/auth/callback`,
     }
   })
 
-  if (data.url){
-    redirect(data.url)
+  if (error){
+    return redirect('/error')
+  } else {
+    return redirect(data.url)
   }
 }
 
 // TODO: work on this - not finalised
 export const signInWithGoogleAction = async () => {
   const supabase = createClient()
+  const origin = headers().get('origin')
+
 
   const { data, error } = await supabase.auth.signInWithOAuth({
     provider: 'google',
     options: {
-      redirectTo: getURL(),
+      redirectTo: `${origin}/auth/callback`,
       queryParams: {
         access_type: 'offline',
         prompt: 'consent'

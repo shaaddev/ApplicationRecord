@@ -1,16 +1,17 @@
 import { Google, Github } from "@/lib/Logos";
 import { Button } from "../ui/button";
+import { signInWithGitHubAction } from "./authActions";
 
 const altBtns = [
   {
     name: 'Continue with Google',
     icon: <Google className="ml-2"/>,
-    clickable: null
+    action: undefined,
   },
   {
     name: 'Continue with Github',
     icon: <Github className="ml-2"/>,
-    clickable: null
+    action: signInWithGitHubAction,
   }
 ]
 
@@ -20,9 +21,11 @@ export function AuthAltBtns() {
       <hr />
 
       {altBtns.map((a, index) => (
-        <Button key={index} variant="outline" className="mt-5 w-full ">
-          {a.name} {a.icon}
-        </Button>
+        <form key={index} action={a.action}>
+          <Button variant="outline" className="mt-5 w-full ">
+            {a.name} {a.icon}
+          </Button>
+        </form>
       ))}
     </div>
   )
