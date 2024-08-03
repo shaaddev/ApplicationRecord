@@ -1,12 +1,12 @@
 import { Google, Github } from "@/lib/Logos";
 import { Button } from "../ui/button";
-import { signInWithGitHubAction } from "./authActions";
+import { signInWithGitHubAction, signInWithGoogleAction } from "./authActions";
 
 const altBtns = [
   {
     name: 'Continue with Google',
     icon: <Google className="ml-2"/>,
-    action: undefined,
+    action: signInWithGoogleAction,
   },
   {
     name: 'Continue with Github',

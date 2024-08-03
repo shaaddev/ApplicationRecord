@@ -89,4 +89,10 @@ export const signInWithGoogleAction = async () => {
       }
     }
   })
+
+  if (error){
+    return redirect('/error')
+  } else {
+    return redirect(data.url)
+  }
 }
