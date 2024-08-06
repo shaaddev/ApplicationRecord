@@ -31,3 +31,13 @@ $ bun run build
 or
 $ npm run build
 ```
+
+## Contributing
+
+We welcome and appreciate your contributions to this project! Before you begin, please take a moment to review our [Contribution Guidelines](https://github.com/shaaddev/ApplicationRecord/blob/main/contributing.md) to ensure a smooth and effective contribution process.
+
+### Good First Issues
+
+We have a simple feature to get you started, but we highly encourage contributors to suggest their own issues based on what they believe would be useful. 
+
+Put yourself in the user's position and think about what enhancements or features would improve the application. Your unique perspective is valuable and can help make the project even better :)
