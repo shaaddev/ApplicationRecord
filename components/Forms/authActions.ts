@@ -54,6 +54,20 @@ export const signOutAction = async () => {
   redirect('/')
 }
 
+const getURL = () => {
+  let url =
+    process?.env?.NEXT_PUBLIC_SITE_URL ??
+    process?.env?.NEXT_PUBLIC_VERCEL_URL ??
+    'http://localhost:3000/'
+  url = url.startsWith('http') ? url :
+    `https://${url}`
+
+  url = url.endsWith('/') ? url : `${url}/`
+  return url
+}
+
+console.log(getURL())
+
 export const signInWithGitHubAction = async () => {
   const supabase = createClient()
   const origin = headers().get('origin')
@@ -61,7 +75,7 @@ export const signInWithGitHubAction = async () => {
   const { data, error } = await supabase.auth.signInWithOAuth({
     provider: 'github',
     options: {
-      redirectTo: `${origin}/auth/callback`,
+      redirectTo: `${getURL()}/auth/callback`,
     }
   })
 
@@ -81,7 +95,7 @@ export const signInWithGoogleAction = async () => {
   const { data, error } = await supabase.auth.signInWithOAuth({
     provider: 'google',
     options: {
-      redirectTo: `${origin}/auth/callback`,
+      redirectTo: `${getURL()}/auth/callback`,
       queryParams: {
         access_type: 'offline',
         prompt: 'consent'
