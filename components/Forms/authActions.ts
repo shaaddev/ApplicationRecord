@@ -63,6 +63,7 @@ const getURL = () => {
   return url
 }
 
+console.log(headers().get('origin'))
 
 export const signInWithGitHubAction = async () => {
   const supabase = createClient()
@@ -71,7 +72,7 @@ export const signInWithGitHubAction = async () => {
   const { data, error } = await supabase.auth.signInWithOAuth({
     provider: 'github',
     options: {
-      redirectTo: `${getURL()}auth/callback`,
+      redirectTo: `${origin}/auth/callback`,
     }
   })
 
