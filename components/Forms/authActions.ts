@@ -63,7 +63,6 @@ const getURL = () => {
   return url
 }
 
-console.log(headers().get('origin'))
 
 export const signInWithGitHubAction = async () => {
   const supabase = createClient()
