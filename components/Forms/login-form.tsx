@@ -29,7 +29,7 @@ export function LoginForm(){
               id="password"
               type="password"
               className="border border-black border-opacity-10 dark:border-white dark:border-opacity-15 dark:bg-inherit mt-2"
-              {...register("password", { required: true })}
+              {...register("password", { required: true, minLength: 6 })}
             />
           </div>
           <Button type="submit" >Login</Button>
