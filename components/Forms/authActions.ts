@@ -59,10 +59,7 @@ const getURL = () => {
     process?.env?.NEXT_PUBLIC_SITE_URL ??
     process?.env?.NEXT_PUBLIC_VERCEL_URL ??
     'http://localhost:3000/'
-  url = url.startsWith('http') ? url :
-    `https://${url}`
-
-  // url = url.endsWith('/') ? url : `${url}`
+  
   return url
 }
 
@@ -74,7 +71,7 @@ export const signInWithGitHubAction = async () => {
   const { data, error } = await supabase.auth.signInWithOAuth({
     provider: 'github',
     options: {
-      redirectTo: `${getURL()}/auth/callback`,
+      redirectTo: `${getURL()}auth/callback`,
     }
   })
 
@@ -94,7 +91,7 @@ export const signInWithGoogleAction = async () => {
   const { data, error } = await supabase.auth.signInWithOAuth({
     provider: 'google',
     options: {
-      redirectTo: `${getURL()}/auth/callback`,
+      redirectTo: `${getURL()}auth/callback`,
       queryParams: {
         access_type: 'offline',
         prompt: 'consent'
