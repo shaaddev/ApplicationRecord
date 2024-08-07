@@ -54,16 +54,6 @@ export const signOutAction = async () => {
   redirect('/')
 }
 
-const getURL = () => {
-  let url =
-    process?.env?.NEXT_PUBLIC_SITE_URL ??
-    process?.env?.NEXT_PUBLIC_VERCEL_URL ??
-    'http://localhost:3000/'
-  
-  return url
-}
-
-
 export const signInWithGitHubAction = async () => {
   const supabase = createClient()
   const origin = headers().get('origin')
@@ -93,7 +83,7 @@ export const signInWithGoogleAction = async () => {
   const { data, error } = await supabase.auth.signInWithOAuth({
     provider: 'google',
     options: {
-      redirectTo: `${getURL()}auth/callback`,
+      redirectTo: `${origin}/auth/callback`,
       queryParams: {
         access_type: 'offline',
         prompt: 'consent'
