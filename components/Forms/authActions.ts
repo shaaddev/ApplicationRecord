@@ -62,11 +62,10 @@ const getURL = () => {
   url = url.startsWith('http') ? url :
     `https://${url}`
 
-  url = url.endsWith('/') ? url : `${url}/`
+  // url = url.endsWith('/') ? url : `${url}`
   return url
 }
 
-console.log(getURL())
 
 export const signInWithGitHubAction = async () => {
   const supabase = createClient()
