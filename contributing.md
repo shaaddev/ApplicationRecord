@@ -23,6 +23,29 @@ Thank you for considering contributing to our project! Your help is greatly appr
 - Write clear and descriptive commit messages.
 - Submit pull requests to the `main` branch.
 
+### Setting Up Your Local Environment
+
+1. **Copy the `.env.example` file to your .env.local**:
+   ```bash
+   cp .env.example .env.local
+   ```
+
+2. **Obtain your DATABASE_URL, SUPABASE_URL, and SUPABASE_ANON_KEY from your respective accounts and insert them into the .env.local file.**:
+
+   ```bash
+   DATABASE_URL=your_database_url_here
+   SUPABASE_URL=your_supabase_url_here
+   SUPABASE_ANON_KEY=your_supabase_anon_key_here
+   ```
+
+### Running Tests Locally
+
+1. **Run tests to make sure your changes do not introduce new issues**:
+
+   ```bash
+   npm test
+   ```
+
 ### Submitting Pull Requests
 
 1. **Create a new branch**:
