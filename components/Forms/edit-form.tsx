@@ -82,7 +82,7 @@ export function EditForm({
                     <SelectValue placeholder="Choose your status"/>
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="Not Applied">Applied</SelectItem>
+                    <SelectItem value="Not Applied">Not Applied</SelectItem>
                     <SelectItem value="Applied">Applied</SelectItem>
                     <SelectItem value="Phone Screen">Phone Screen</SelectItem>
                     <SelectItem value="Offer">Offer</SelectItem>
