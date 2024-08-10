@@ -3,7 +3,6 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev-open": "infisical run -- bun run dev",
     "generate": "drizzle-kit generate",
     "migrate": "node migrate.js",
     "dev": "next dev",
