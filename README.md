@@ -34,7 +34,7 @@ $ npm run build
 
 ## Contributing
 
-We welcome and appreciate your contributions to this project! Before you begin, please take a moment to review our [Contribution Guidelines](https://github.com/shaaddev/ApplicationRecord/blob/main/contributing.md) to ensure a smooth and effective contribution process.
+We welcome and appreciate your contributions to this project! Before you begin, please take a moment to review our [Contribution Guidelines](https://github.com/shaaddev/ApplicationRecord/blob/main/contributing.md) to ensure a smooth and effective contribution process. Feel free to make a PR!
 
 ### Good First Issues
 
