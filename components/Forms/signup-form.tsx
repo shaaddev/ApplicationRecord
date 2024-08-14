@@ -6,9 +6,18 @@ import { Input } from "@/components/ui/input"
 import { SignupAction } from "./authActions";
 import Link from "next/link";
 import { AuthAltBtns } from "./auth-alt-btns";
+import { useToast } from "../ui/use-toast";
 
 export function SignupForm(){
   const { register } = useForm();
+  const { toast } = useToast();
+
+  const onSubmit = () => {
+    toast({
+      title: 'Thank you for signing up!',
+      description: 'Please Login to continue',
+    })
+  }
 
   return(
     <>
@@ -49,7 +58,7 @@ export function SignupForm(){
               {...register("password", { required: true, minLength: 6 })}
             />
           </div>
-          <Button type="submit" >Sign Up</Button>
+          <Button type="submit" onClick={onSubmit}>Sign Up</Button>
         </form>
         <div className="flex flex-col items-end justify-center w-full my-5">
           <p className="text-sm text-slate-500 dark:text-slate-300 mb-5">Already have an account? </p>
