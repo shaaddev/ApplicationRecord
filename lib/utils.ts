@@ -13,30 +13,14 @@ export function cn(...inputs: ClassValue[]) {
 }
 
 let stripePromise: Promise<Stripe | null>;
-const getStripe = () => {
-  if (!stripePromise) {
-    stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!);
-  }
+
+export default function getStripe(): Promise<Stripe | null> {
+  if (!stripePromise)
+    stripePromise = loadStripe(
+      process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY as string,
+    );
+
   return stripePromise;
-};
-
-export default getStripe;
-
-//-------------------------------------------------------
-// for route.ts
-export function formatAmountForStripe(amount: number, currency: string): number {
- let multiplier = 100; // Default multiplier for most currencies (e.g., USD, EUR, etc.)
-
- // You can adjust the multiplier for currencies that don't use cents (e.g., JPY).
- switch (currency.toLowerCase()) {
-   case 'jpy': // Japanese Yen
-   case 'vnd': // Vietnamese Dong
-     multiplier = 1;
-     break;
-   // Add more cases if needed for other currencies
- }
-
- return Math.round(amount * multiplier);
 }
 //-------------------------------------------------------
 // for the checkoutform.tsx
@@ -60,4 +44,38 @@ export async function fetchPostJSON(url: string, data: any) {
     console.error('Error fetching JSON:', error);
     return { statusCode: 500, message: error.message };
   }
+}
+
+// ------------------------------------------------------------------
+//  for the CustomDonationInput.tsx in CheckOutForm folder
+export function formatAmountForDisplay(
+  amount: number,
+  currency: string,
+): string {
+  let numberFormat = new Intl.NumberFormat(["en-US"], {
+    style: "currency",
+    currency: currency,
+    currencyDisplay: "symbol",
+  });
+  return numberFormat.format(amount);
+}
+// ------------------------------------------------------------------
+//  for route.ts
+export function formatAmountForStripe(
+  amount: number,
+  currency: string,
+): number {
+  let numberFormat = new Intl.NumberFormat(["en-US"], {
+    style: "currency",
+    currency: currency,
+    currencyDisplay: "symbol",
+  });
+  const parts = numberFormat.formatToParts(amount);
+  let zeroDecimalCurrency: boolean = true;
+  for (let part of parts) {
+    if (part.type === "decimal") {
+      zeroDecimalCurrency = false;
+    }
+  }
+  return zeroDecimalCurrency ? amount : Math.round(amount * 100);
 }

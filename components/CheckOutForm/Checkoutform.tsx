@@ -1,40 +1,82 @@
-// Partial of ./components/CheckoutForm.tsx
+"use client";
 
-import getStripe, { fetchPostJSON } from "@/lib/utils";
-import input from "postcss/lib/input";
-import { FormEvent } from "react";
-import Stripe from "stripe";
+import type Stripe from "stripe";
 
-// ...
-const handleSubmit = async (e: FormEvent) => {
-    e.preventDefault();
+import React, { useState } from "react";
 
-    // Get the amount from the input field
-    const amountInput = document.getElementById('customDonation') as HTMLInputElement;
-    const amount = parseInt(amountInput.value, 10) * 100; // Convert to cents
+import CustomDonationInput from "@/components/CheckOutForm/CustomDonationInput";
+import StripeTestCards from "./StripeTestCards";
 
-    // Create a Checkout Session.
-    const checkoutSession: Stripe.Checkout.Session = await fetchPostJSON(
-      '/api/checkout_sessions',
-      { amount },
-    );
-  
-    if ((checkoutSession as any).statusCode === 500) {
-      console.error((checkoutSession as any).message);
-      return;
-    }
-  
-    // Redirect to Checkout.
-    const stripe = await getStripe();
-    const { error } = await stripe!.redirectToCheckout({
-      // Make the id field from the Checkout Session creation API response
-      // available to this file, so you can provide it as parameter here
-      // instead of the {{CHECKOUT_SESSION_ID}} placeholder.
-      sessionId: checkoutSession.id,
+import { formatAmountForDisplay } from "@/lib/utils";
+import * as config from "@/config";
+import { createCheckoutSession } from "@/app/actions/stripe";
+import getStripe from "@/lib/utils";
+import {
+  EmbeddedCheckout,
+  EmbeddedCheckoutProvider,
+} from "@stripe/react-stripe-js";
+
+interface CheckoutFormProps {
+  uiMode: Stripe.Checkout.SessionCreateParams.UiMode;
+}
+
+export default function CheckoutForm(props: CheckoutFormProps): JSX.Element {
+  const [loading] = useState<boolean>(false);
+  const [input, setInput] = useState<{ customDonation: number }>({
+    customDonation: Math.round(config.MAX_AMOUNT / config.AMOUNT_STEP),
+  });
+  const [clientSecret, setClientSecret] = useState<string | null>(null);
+
+  const handleInputChange: React.ChangeEventHandler<HTMLInputElement> = (
+    e,
+  ): void =>
+    setInput({
+      ...input,
+      [e.currentTarget.name]: e.currentTarget.value,
     });
-    // If `redirectToCheckout` fails due to a browser or network
-    // error, display the localized error message to your customer
-    // using `error.message`.
-    console.warn(error.message);
+
+  const formAction = async (data: FormData): Promise<void> => {
+    const uiMode = data.get(
+      "uiMode",
+    ) as Stripe.Checkout.SessionCreateParams.UiMode;
+    const { client_secret, url } = await createCheckoutSession(data);
+
+    if (uiMode === "embedded") return setClientSecret(client_secret);
+
+    window.location.assign(url as string);
   };
-  // ...
+
+  return (
+    <>
+      <form action={formAction}>
+        <input type="hidden" name="uiMode" value={props.uiMode} />
+        <CustomDonationInput
+          className="checkout-style"
+          name="customDonation"
+          min={config.MIN_AMOUNT}
+          max={config.MAX_AMOUNT}
+          step={config.AMOUNT_STEP}
+          currency={config.CURRENCY}
+          onChange={handleInputChange}
+          value={input.customDonation}
+        />
+        <StripeTestCards />
+        <button
+          className="checkout-style-background"
+          type="submit"
+          disabled={loading}
+        >
+          Donate {formatAmountForDisplay(input.customDonation, config.CURRENCY)}
+        </button>
+      </form>
+      {clientSecret ? (
+        <EmbeddedCheckoutProvider
+          stripe={getStripe()}
+          options={{ clientSecret }}
+        >
+          <EmbeddedCheckout />
+        </EmbeddedCheckoutProvider>
+      ) : null}
+    </>
+  );
+}

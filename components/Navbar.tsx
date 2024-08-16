@@ -8,7 +8,10 @@ const paths = {
     name: 'Home',
   },
   "/login": {
-    name: 'Login'
+    name: 'Login',
+  },
+  "/checkout":{
+    name: 'Checkout'
   }
 }
 
