@@ -20,7 +20,7 @@ export async function Navbar() {
     <nav className="sticky flex flex-col max-w-full h-max z-10 top-0 inset-x-o px-10 py-5 m-2 rounded-2xl border-none bg-lime-600 text-slate-100  dark:bg-lime-500 backdrop-blur-xl  shadow-md ">
       <div className="flex flex-row items-center justify-between px-5">
         {/* <SpreadSheet className='w-6 h-6' /> */}
-        <Link href="/application-record">
+        <Link href="/">
           <Image src={logo} alt="Logo" width={100} height={24} />
         </Link>
         <ul className='hidden lg:flex flex-row gap-6 justify-end'>

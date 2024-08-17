@@ -6,10 +6,21 @@ import { FormTrigger } from "@/components/Forms/form-trigger/create-form-trigger
 import { createClient } from "@/utils/supabase/server";
 import { redirect } from "next/navigation";
 import { Navbar } from "@/components/Navbar";
+import { applications } from '@/db/schema/applications';
+import { db } from '@/db';
+import { desc } from 'drizzle-orm';
+import { eq } from 'drizzle-orm';
 
 export default async function ApplicationRecord() {
   const supabase = createClient();
+
   const { data: { user } } = await supabase.auth.getUser();
+  const id = user?.id
+  let apps: any;
+
+  if (id){
+    apps = await db.select().from(applications).where(eq(applications.user_id, id)).orderBy(desc(applications.id))
+  }
 
   if (!user) {
     redirect("/login");
@@ -21,7 +32,7 @@ export default async function ApplicationRecord() {
       <main className="flex flex-col items-center justify-between p-10 lg:p-16">
         <h1 className="text-2xl font-bold mb-6">Application Record</h1>
         <TableCard>
-          <_Table />
+          <_Table data={apps}/>
         </TableCard>
         <div className="hidden md:flex mt-5 md:flex-row items-center gap-6 justify-between">
           {user && (
