@@ -29,7 +29,7 @@ export async function Navbar() {
               <li>
                 <p>Welcome!</p>
               </li>
-              {Object.entries(paths).slice(0, 1).map(([path, { name }]) => (
+              {Object.entries(paths).slice(1).map(([path, { name }]) => (
                 <li key={path} >
                   <Link href={path} className='hover:text-slate-800 dark:hover:text-pink-500'>{name}</Link>
                 </li>  
