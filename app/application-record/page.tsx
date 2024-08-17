@@ -11,9 +11,9 @@ export default async function ApplicationRecord() {
   const supabase = createClient();
   const { data: { user } } = await supabase.auth.getUser();
 
-  // if (!user) {
-  //   redirect("/login");
-  // }
+  if (!user) {
+    redirect("/login");
+  }
 
   return (
     <>
