@@ -9,7 +9,7 @@ export function TableList({ data }: { data: JobProps[] }) {
     <>
       {data.map((m, index) => (
         <Detail data={m} key={index}>
-          <TableRow className="hover:text-pink-500 hover:cursor-pointer">
+          <TableRow className="hover:text-lime-600 hover:cursor-pointer">
             <TableCell className="font-medium p-5">{m.role}</TableCell>
             <TableCell>{m.company_name}</TableCell>
             <TableCell>{m.location}</TableCell>
