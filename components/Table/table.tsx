@@ -8,7 +8,7 @@ import { desc } from 'drizzle-orm';
 import { createClient } from '@/utils/supabase/server';
 import { eq } from 'drizzle-orm';
 
-export async function _Table(){
+export async function _Table({data}: any){
 
   const supabase = createClient();
 
@@ -26,7 +26,7 @@ export async function _Table(){
       <TableH />
       <TableBody>
         <TableList 
-          data={user ? apps : mock_data}
+          data={data}
         />
       </TableBody>
     </Table>

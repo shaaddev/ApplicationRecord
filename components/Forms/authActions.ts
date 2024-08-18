@@ -19,7 +19,7 @@ export const LoginAction = async (formData: FormData) => {
   }
 
   revalidatePath('/')
-  redirect("/")
+  redirect("/application-record")
 }
 
 export const SignupAction = async (formData: FormData) => {
