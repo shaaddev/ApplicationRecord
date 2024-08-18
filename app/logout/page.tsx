@@ -14,7 +14,7 @@ export default async function Logout() {
 
 
   return(
-    <main className="flex flex-col items-center justify-center mx-auto max-w-screen-xl mt-10">
+    <main className="flex flex-col items-center justify-center mx-auto max-w-screen-xl my-10">
       <p className="mb-5">Are you sure you would like to log out?</p>
 
       <form action={signOutAction}>

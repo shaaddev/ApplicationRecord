@@ -1,13 +1,9 @@
-import type { Metadata } from "next";
-
 import CheckoutForm from "@/components/Stripe/Checkoutform";
-import { stripe_div } from "../checkout/page";
 
-export const metadata: Metadata = {
-  title: "Donate with hosted Checkout | Next.js + TypeScript Example",
-};
+export const stripe_div = 'flex flex-col items-center justify-center p-5 min-h-screen'
 
-export default function DonatePage(): JSX.Element {
+
+export default function DonatePage() {
   return (
     <div className={stripe_div}>
       <h1>Donate with hosted Checkout</h1>

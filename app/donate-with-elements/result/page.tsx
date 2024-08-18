@@ -7,7 +7,7 @@ export default async function ResultPage({
   searchParams,
 }: {
   searchParams: { payment_intent: string };
-}): Promise<JSX.Element> {
+}) {
   if (!searchParams.payment_intent)
     throw new Error("Please provide a valid payment_intent (`pi_...`)");
 
