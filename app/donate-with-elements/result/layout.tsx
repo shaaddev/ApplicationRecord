@@ -1,4 +1,5 @@
-import { stripe_div } from "@/app/donate-with-checkout/page";
+import type { Metadata } from "next";
+import { stripe_div } from "@/components/Stripe/CardStripe";
 
 export const metadata = {
   title: "Payment Intent Result",

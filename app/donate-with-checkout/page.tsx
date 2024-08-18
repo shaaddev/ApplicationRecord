@@ -1,6 +1,5 @@
 import CheckoutForm from "@/components/Stripe/Checkoutform";
-
-export const stripe_div = 'flex flex-col items-center justify-center p-5 min-h-screen'
+import { stripe_div } from "@/components/Stripe/CardStripe";
 
 
 export default function DonatePage() {

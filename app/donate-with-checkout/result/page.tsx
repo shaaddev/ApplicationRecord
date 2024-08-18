@@ -1,7 +1,7 @@
 import type { Stripe } from "stripe";
 
 import PrintObject from "@/components/Stripe/PrintObject";
-import { stripe } from "@/lib/stripe";
+import { stripe } from "@/lib/Stripe";
 
 export default async function ResultPage({
   searchParams,

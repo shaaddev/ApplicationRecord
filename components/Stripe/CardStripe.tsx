@@ -11,3 +11,5 @@ export function CardStripe({ children }: {
     </Card>
   )
 }
+
+export const stripe_div = 'flex flex-col items-center justify-center p-5 min-h-screen'
