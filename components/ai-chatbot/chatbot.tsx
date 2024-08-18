@@ -1,35 +1,56 @@
-'use client'
+"use client";
 
 import { type CoreMessage } from "ai";
 import { useState, useEffect, useRef } from "react";
 import { continueConversation } from "./actions";
 import { readStreamableValue } from "ai/rsc";
+import { AiOutlineSend } from "react-icons/ai";
 
 export const maxDuration = 30; // in seconds
 
-export function Chatbot(){
+export function Chatbot() {
   const [messages, setMessages] = useState<CoreMessage[]>([
+<<<<<<< HEAD
     // {
     //   role: 'assistant',
     //   content: "I am your AI-powered job application assistant. How can I help you achieve your career goals today?",
     // },
+=======
+    {
+      role: "assistant",
+      content:
+        "I am Landy, your AI-powered job application assistant. How can I help you achieve your career goals today?",
+    },
+>>>>>>> c7249b142ef9344c10560aab7b4339f65c4267fd
   ]);
-  const [input, setInput] = useState('');
-  const messagesEndRef = useRef(null);
+  const [input, setInput] = useState("");
+  const messagesEndRef = useRef<HTMLDivElement | null>(null);
 
   const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
-  }
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  };
 
   useEffect(() => {
     scrollToBottom();
-  }, [messages])
+  }, [messages]);
 
-  return(
+  return (
     <div className="flex flex-col w-full max-w-md py-24 mx-auto stretch">
       {messages.map((m, index) => (
+<<<<<<< HEAD
         <div key={index} className={`${m.role === 'assistant' ? 'items-start' : 'items-end'}`}>
           <div className={`${m.role === 'assistant' ? 'bg-white dark:text-black' : 'bg-gray-600'} rounded-2xl p-2`}>
+=======
+        <div
+          key={index}
+          className={`${m.role === "assistant" ? "items-start" : "items-end"}`}
+        >
+          <div
+            className={`${
+              m.role === "assistant" ? "bg-white" : "bg-gray-600"
+            } rounded-2xl p-2`}
+          >
+>>>>>>> c7249b142ef9344c10560aab7b4339f65c4267fd
             {m.content as string}
           </div>
         </div>
@@ -38,36 +59,41 @@ export function Chatbot(){
       <div ref={messagesEndRef} />
 
       <form
-        onSubmit={async e => {
+        onSubmit={async (e) => {
           e.preventDefault();
-          
+
           const newMessages: CoreMessage[] = [
             ...messages,
-            { content: input, role: 'user'}
+            { content: input, role: "user" },
           ];
 
           setMessages(newMessages);
-          setInput('')
+          setInput("");
 
           const result = await continueConversation(newMessages);
 
-          for await (const content of readStreamableValue(result)){
+          for await (const content of readStreamableValue(result)) {
             setMessages([
               ...newMessages,
               {
-                role: 'assistant',
+                role: "assistant",
                 content: content as string,
-              }
-            ])
+              },
+            ]);
           }
         }}
+        className="w-full max-w-md p-2 fixed bottom-0 left-0 right-0 mx-auto mb-8 flex items-center"
       >
-        <input 
-          className="fixed bottom-0 w-full max-w-md p-2 mb-8 border border-gray-300 rounded shadow-xl"
+        <input
+          className="w-full border border-gray-300 rounded shadow-xl p-2"
           value={input}
           onChange={(e) => setInput(e.target.value)}
+          placeholder="Type your message..."
         />
+        <button type="submit" className="ml-2">
+          <AiOutlineSend className="w-6 h-6 text-gray-600" />
+        </button>
       </form>
     </div>
-  )
+  );
 }

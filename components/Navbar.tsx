@@ -38,7 +38,7 @@ export async function Navbar() {
                 </li>  
               ))}
               <li>
-                <Link href="/logout" className='hover:text-slate-800 dark:text-slate-800'>
+                <Link href="/logout" className='hover:text-slate-800 dark:hover:text-slate-800'>
                   Logout
                 </Link>
               </li>
