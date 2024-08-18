@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 
 import ElementsForm from "@/components/Stripe/ElementsForm";
-import { stripe_div } from "../checkout/page";
+import { stripe_div } from "@/components/Stripe/CardStripe";
 
 export const metadata: Metadata = {
   title: "Donate with Elements",

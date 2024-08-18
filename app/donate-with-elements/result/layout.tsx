@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { stripe_div } from "@/app/checkout/page";
+import { stripe_div } from "@/components/Stripe/CardStripe";
 
 
 export const metadata: Metadata = {

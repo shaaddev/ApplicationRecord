@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import "@/styles.css"
 import { CardStripe } from "@/components/Stripe/CardStripe";
+import { stripe_div } from "@/components/Stripe/CardStripe";
 
 const checkouts = [
   {
@@ -18,7 +19,7 @@ const checkouts = [
   }
 ]
 
-export default function IndexPage(): JSX.Element {
+export default function Page(): JSX.Element {
   return (
     <div className={`${stripe_div}`}>
       <ul className="flex flex-wrap items-start pt-16">
@@ -40,4 +41,4 @@ export default function IndexPage(): JSX.Element {
 }
 
 //export const stripe_div = 'flex flex-col items-center justify-center p-5'
-export const stripe_div = 'flex flex-col items-center justify-center p-5 min-h-screen'
+// export const stripe_div = 'flex flex-col items-center justify-center p-5 min-h-screen'
