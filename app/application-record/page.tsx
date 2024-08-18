@@ -10,6 +10,8 @@ import { applications } from '@/db/schema/applications';
 import { db } from '@/db';
 import { desc } from 'drizzle-orm';
 import { eq } from 'drizzle-orm';
+import { AiChatBtn } from "@/components/ai-chatbot/ai-chat-btn";
+import { AiDialog } from "@/components/ai-chatbot/ai-dialog";
 
 export default async function ApplicationRecord() {
   const supabase = createClient();
@@ -42,6 +44,11 @@ export default async function ApplicationRecord() {
               </Button>
             </FormTrigger>
           )}
+        </div>
+        <div className="fixed bottom-10 right-20">
+          <AiDialog>
+            <AiChatBtn />
+          </AiDialog>
         </div>
       </main>
     </>

@@ -1,11 +1,8 @@
 "use client";
 
 import type { StripeError } from "@stripe/stripe-js";
-
 import * as React from "react";
-import { useStripe, useElements, PaymentElement,Elements, } from "@stripe/react-stripe-js";
-
-
+import { useStripe, useElements, PaymentElement, Elements } from "@stripe/react-stripe-js";
 
 import CustomDonationInput from "./CustomDonationInput";
 import StripeTestCards from "./StripeTestCards";
@@ -118,7 +115,7 @@ function CheckoutForm(): JSX.Element {
 
   return (
     <>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} className="max-w-lg w-full mx-auto p-6 rounded-md">
         <CustomDonationInput
           className="elements-style"
           name="customDonation"
@@ -129,14 +126,13 @@ function CheckoutForm(): JSX.Element {
           currency={config.CURRENCY}
           onChange={handleInputChange}
         />
-        <StripeTestCards />
         <fieldset className="elements-style">
           <legend>Your payment details:</legend>
           {paymentType === "card" ? (
             <input
               placeholder="Cardholder name"
-              className="elements-style"
-              type="Text"
+              className="elements-style mt-4 mb-4 p-2 border border-gray-300 rounded-md w-full"
+              type="text"
               name="cardholderName"
               onChange={handleInputChange}
               required
@@ -151,7 +147,7 @@ function CheckoutForm(): JSX.Element {
           </div>
         </fieldset>
         <button
-          className="elements-style-background"
+          className="mt-6 w-full bg-lime-600 text-white font-semibold py-2 rounded-md hover:bg-lime-700 transition-colors duration-300"
           type="submit"
           disabled={
             !["initial", "succeeded", "error"].includes(payment.status) ||
