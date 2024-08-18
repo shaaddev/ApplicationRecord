@@ -10,18 +10,11 @@ export const maxDuration = 30; // in seconds
 
 export function Chatbot() {
   const [messages, setMessages] = useState<CoreMessage[]>([
-<<<<<<< HEAD
     // {
-    //   role: 'assistant',
-    //   content: "I am your AI-powered job application assistant. How can I help you achieve your career goals today?",
+    //   role: "assistant",
+    //   content:
+    //     "I am Landy, your AI-powered job application assistant. How can I help you achieve your career goals today?",
     // },
-=======
-    {
-      role: "assistant",
-      content:
-        "I am Landy, your AI-powered job application assistant. How can I help you achieve your career goals today?",
-    },
->>>>>>> c7249b142ef9344c10560aab7b4339f65c4267fd
   ]);
   const [input, setInput] = useState("");
   const messagesEndRef = useRef<HTMLDivElement | null>(null);
@@ -37,20 +30,15 @@ export function Chatbot() {
   return (
     <div className="flex flex-col w-full max-w-md py-24 mx-auto stretch">
       {messages.map((m, index) => (
-<<<<<<< HEAD
-        <div key={index} className={`${m.role === 'assistant' ? 'items-start' : 'items-end'}`}>
-          <div className={`${m.role === 'assistant' ? 'bg-white dark:text-black' : 'bg-gray-600'} rounded-2xl p-2`}>
-=======
         <div
           key={index}
           className={`${m.role === "assistant" ? "items-start" : "items-end"}`}
         >
           <div
             className={`${
-              m.role === "assistant" ? "bg-white" : "bg-gray-600"
+              m.role === "assistant" ? "bg-white dark:text-black" : "bg-gray-600"
             } rounded-2xl p-2`}
           >
->>>>>>> c7249b142ef9344c10560aab7b4339f65c4267fd
             {m.content as string}
           </div>
         </div>
