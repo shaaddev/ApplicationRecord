@@ -7,7 +7,10 @@ import Image from 'next/image'
 
 const paths = {
   "/login": {
-    name: 'Login'
+    name: 'Login',
+  },
+  "/checkout":{
+    name: 'Checkout'
   }
 }
 
