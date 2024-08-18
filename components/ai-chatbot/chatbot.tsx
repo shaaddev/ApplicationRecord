@@ -35,6 +35,8 @@ export function Chatbot(){
         </div>
       ))}
 
+      <div ref={messagesEndRef} />
+
       <form
         onSubmit={async e => {
           e.preventDefault();
