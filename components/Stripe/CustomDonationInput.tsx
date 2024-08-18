@@ -20,9 +20,11 @@ export default function CustomDonationInput({
   className?: string;
 }): JSX.Element {
   return (
-    <label>
-      Custom donation amount ({formatAmountForDisplay(min, currency)}-
-      {formatAmountForDisplay(max, currency)}):
+    <div className="w-full max-w-md">
+      <label className="block mb-2">
+        Custom donation amount ({formatAmountForDisplay(min, currency)}-
+        {formatAmountForDisplay(max, currency)}):
+      </label>
       <input
         type="range"
         name={name}
@@ -31,8 +33,8 @@ export default function CustomDonationInput({
         step={step}
         onChange={onChange}
         value={value}
-        className={className}
-      ></input>
-    </label>
+        className={`w-full `} 
+      />
+    </div>
   );
 }

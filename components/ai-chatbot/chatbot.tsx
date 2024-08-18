@@ -28,24 +28,26 @@ export function Chatbot() {
   }, [messages]);
 
   return (
-    <div className="flex flex-col w-full max-w-md py-24 mx-auto stretch">
-      {messages.map((m, index) => (
-        <div
-          key={index}
-          className={`${m.role === "assistant" ? "items-start" : "items-end"}`}
-        >
+    <div className="flex flex-col w-full max-w-md mx-auto stretch h-[250px]"> 
+      <div className="flex-1 overflow-y-auto p-0"> 
+        {messages.map((m, index) => (
           <div
+            key={index}
             className={`${
-              m.role === "assistant" ? "bg-white dark:text-black" : "bg-gray-600"
-            } rounded-2xl p-2`}
+              m.role === "assistant" ? "items-start" : "items-end"
+            }`}
           >
-            {m.content as string}
+            <div
+              className={`${
+                m.role === "assistant" ? "bg-white" : "bg-gray-600"
+              } rounded-2xl p-2 break-words`}
+            >
+              {m.content as string}
+            </div>
           </div>
-        </div>
-      ))}
-
-      <div ref={messagesEndRef} />
-
+        ))}
+        <div ref={messagesEndRef} />
+      </div>
       <form
         onSubmit={async (e) => {
           e.preventDefault();
