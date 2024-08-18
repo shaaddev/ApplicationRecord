@@ -14,8 +14,7 @@ export default function PaymentElementPage({
 }): JSX.Element {
   return (
     <div className={stripe_div}>
-      <h1>Donate with Elements</h1>
-      <p>Donate to our project 💖</p>
+      <p className="text-xl font-bold">Donate to our project ❤️</p>
       <ElementsForm />
     </div>
   );

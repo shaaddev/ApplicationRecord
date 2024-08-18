@@ -6,11 +6,6 @@ import { CardStripe } from "@/components/Stripe/CardStripe";
 
 const checkouts = [
   {
-    name: 'Donate with embedded Checkout',
-    href: '/donate-with-embedded-checkout',
-    svg: '/checkout-one-time-payments.svg',
-  },
-  {
     name: 'Donate with hosted Checkout',
     href: '/donate-with-checkout',
     svg: '/checkout-one-time-payments.svg',
@@ -44,4 +39,5 @@ export default function IndexPage(): JSX.Element {
   );
 }
 
-export const stripe_div = 'flex flex-col items-center justify-center p-5'
+//export const stripe_div = 'flex flex-col items-center justify-center p-5'
+export const stripe_div = 'flex flex-col items-center justify-center p-5 min-h-screen'

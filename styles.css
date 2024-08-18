@@ -1,8 +1,8 @@
 /* Variables */
 :root {
     --body-color: #fcfdfe;
-    --checkout-color: #8f6ed5;
-    --elements-color: #6772e5;
+    --checkout-color: #8f6ed5; 
+    --elements-color: #89b575; /*#6772e5*/
     --body-font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
       sans-serif;
     --h1-color: #1a1f36;

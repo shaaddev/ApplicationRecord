@@ -9,8 +9,8 @@ const paths = {
   "/login": {
     name: 'Login',
   },
-  "/checkout":{
-    name: 'Checkout'
+  "/donate-with-elements":{
+    name: 'Donate'
   }
 }
 
@@ -34,7 +34,7 @@ export async function Navbar() {
               </li>
               {Object.entries(paths).slice(1).map(([path, { name }]) => (
                 <li key={path} >
-                  <Link href={path} className='hover:text-slate-800 dark:hover:text-pink-500'>{name}</Link>
+                  <Link href={path} className='hover:text-slate-800 dark:hover:text-slate-800'>{name}</Link>
                 </li>  
               ))}
               <li>

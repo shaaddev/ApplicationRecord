@@ -5,7 +5,7 @@ import type { Stripe } from "stripe";
 import { headers } from "next/headers";
 import { CURRENCY } from "@/config";
 import { formatAmountForStripe } from "@/lib/utils";
-import { stripe } from '@/lib/stripe';
+import { stripe } from "@/lib/Stripe";
 
 export async function createCheckoutSession(
   data: FormData,
@@ -39,9 +39,9 @@ export async function createCheckoutSession(
         success_url: `${origin}/donate-with-checkout/result?session_id={CHECKOUT_SESSION_ID}`,
         cancel_url: `${origin}/donate-with-checkout`,
       }),
-      ...(ui_mode === "embedded" && {
-        return_url: `${origin}/donate-with-embedded-checkout/result?session_id={CHECKOUT_SESSION_ID}`,
-      }),
+      // ...(ui_mode === "embedded" && {
+      //   return_url: `${origin}/donate-with-embedded-checkout/result?session_id={CHECKOUT_SESSION_ID}`,
+      // }),
       ui_mode,
     });
 
