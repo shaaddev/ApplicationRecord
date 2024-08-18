@@ -2,6 +2,7 @@
 import { createStreamableValue } from 'ai/rsc'
 import { CoreMessage, streamText } from 'ai'
 import { google } from '@ai-sdk/google'
+import { bedrock } from '@ai-sdk/amazon-bedrock'
 
 const systemPrompt = `
 You are an AI-powered customer support assistant for a job application record app designed to help users, especially students, track their job applications and land their dream jobs. Your goal is to provide efficient, accurate, and empathetic support to users by assisting them with:
@@ -33,10 +34,16 @@ Use plain text formatting without asterisks or Markdown styling for responses.
 
 export async function continueConversation(messages: CoreMessage[]){
   const result = await streamText({
-    model: google('models/gemini-1.5-pro-latest'),
+    model: bedrock('meta.llama3-8b-instruct-v1:0'),
     system: systemPrompt,
     messages,
-  });
+  })
+
+  // const result = await streamText({
+  //   model: google('models/gemini-1.5-pro-latest'),
+  //   system: systemPrompt,
+  //   messages,
+  // });
 
   const stream = createStreamableValue(result.textStream);
   return stream.value;

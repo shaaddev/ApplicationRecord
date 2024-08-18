@@ -9,10 +9,10 @@ export const maxDuration = 30; // in seconds
 
 export function Chatbot(){
   const [messages, setMessages] = useState<CoreMessage[]>([
-    {
-      role: 'assistant',
-      content: "I am your AI-powered job application assistant. How can I help you achieve your career goals today?",
-    },
+    // {
+    //   role: 'assistant',
+    //   content: "I am your AI-powered job application assistant. How can I help you achieve your career goals today?",
+    // },
   ]);
   const [input, setInput] = useState('');
   const messagesEndRef = useRef(null);
@@ -29,7 +29,7 @@ export function Chatbot(){
     <div className="flex flex-col w-full max-w-md py-24 mx-auto stretch">
       {messages.map((m, index) => (
         <div key={index} className={`${m.role === 'assistant' ? 'items-start' : 'items-end'}`}>
-          <div className={`${m.role === 'assistant' ? 'bg-white' : 'bg-gray-600'} rounded-2xl p-2`}>
+          <div className={`${m.role === 'assistant' ? 'bg-white dark:text-black' : 'bg-gray-600'} rounded-2xl p-2`}>
             {m.content as string}
           </div>
         </div>
