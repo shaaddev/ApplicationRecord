@@ -6,6 +6,10 @@ import { continueConversation } from "./actions";
 import { readStreamableValue } from "ai/rsc";
 import { AiOutlineSend } from "react-icons/ai";
 
+import remarkGfm from "remark-gfm";
+import remarkMath from 'remark-math';
+import { MemoizedReactMarkdown } from "./markdown";
+
 export const maxDuration = 30; // in seconds
 
 export function Chatbot() {
@@ -35,14 +39,18 @@ export function Chatbot() {
             key={index}
             className={`${
               m.role === "assistant" ? "items-start" : "items-end"
-            }`}
+            } mb-5`}
           >
             <div
               className={`${
-                m.role === "assistant" ? "bg-white" : "bg-gray-600"
+                m.role === "assistant" ? "bg-lime-600 text-white dark:bg-white dark:text-black" : "bg-gray-200 dark:bg-gray-600 dark:text-white"
               } rounded-2xl p-2 break-words`}
             >
-              {m.content as string}
+              <MemoizedReactMarkdown
+                remarkPlugins={[remarkGfm, remarkMath]}
+              >
+                {m.content as string}
+              </MemoizedReactMarkdown>
             </div>
           </div>
         ))}
