@@ -6,9 +6,7 @@ import { continueConversation } from "./actions";
 import { readStreamableValue } from "ai/rsc";
 import { AiOutlineSend } from "react-icons/ai";
 
-import remarkGfm from "remark-gfm";
-import remarkMath from 'remark-math';
-import { MemoizedReactMarkdown } from "./markdown";
+import ReactMarkdown from 'react-markdown'
 
 export const maxDuration = 30; // in seconds
 
@@ -46,11 +44,9 @@ export function Chatbot() {
                 m.role === "assistant" ? "bg-lime-600 text-white dark:bg-white dark:text-black" : "bg-gray-200 dark:bg-gray-600 dark:text-white"
               } rounded-2xl p-2 break-words`}
             >
-              <MemoizedReactMarkdown
-                remarkPlugins={[remarkGfm, remarkMath]}
-              >
+              <ReactMarkdown>
                 {m.content as string}
-              </MemoizedReactMarkdown>
+              </ReactMarkdown>
             </div>
           </div>
         ))}
