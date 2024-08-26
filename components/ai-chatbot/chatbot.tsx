@@ -78,15 +78,17 @@ export function Chatbot() {
         }}
         className="w-full max-w-md p-2 fixed bottom-0 left-0 right-0 mx-auto mb-8 flex items-center"
       >
-        <input
-          className="w-full border border-gray-300 rounded shadow-xl p-2"
-          value={input}
-          onChange={(e) => setInput(e.target.value)}
-          placeholder="Type your message..."
-        />
-        <button type="submit" className="ml-2">
-          <AiOutlineSend className="w-6 h-6 text-gray-600" />
-        </button>
+        <div className="relative flex w-full flex-row grow overflow-hidden p-2 border-gray-300 rounded-2xl shadow-xl bg-white focus-within:outline-blue-300">
+          <input
+            className="w-full bg-transparent resize-none px-4 focus-within:outline-none border-none dark:text-black"
+            value={input}
+            onChange={(e) => setInput(e.target.value)}
+            placeholder="Type your message..."
+          />
+          <button type="submit" className="ml-2">
+            <AiOutlineSend className="w-6 h-6 text-gray-600" />
+          </button>
+        </div>
       </form>
     </div>
   );

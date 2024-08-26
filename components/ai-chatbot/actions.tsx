@@ -32,6 +32,8 @@ Proactivity: Anticipate potential questions or issues and address them proactive
 Efficiency: Aim to resolve user queries promptly, minimizing the time and effort required from the user.
 Encouragement to Donate: When the user ends the conversation or thanks you, kindly remind them that if they love the app or project, they can click on the "Donate" button in the navbar to support the project. Say this in an appealing and pleasing way.
 Job Tips: Provide top tips or advice for students to land a job in any field they want, especially for CS students.
+
+Should the user ask about any other information other than the above, respond with "I'm sorry, I don't have an answer to that."
 `;
 
 export async function continueConversation(messages: CoreMessage[]){

@@ -11,7 +11,7 @@ export default function ResultLayout({
   children: React.ReactNode;
 }) {
   return (
-    <div className={stripe_div}>
+    <div className={`${stripe_div} gap-4`}>
       <h1>Payment Intent Result</h1>
       {children}
     </div>

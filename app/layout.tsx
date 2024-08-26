@@ -1,8 +1,6 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import { Providers } from "./providers";
-import { Toaster } from "@/components/ui/toaster";
 import { Analytics } from "@vercel/analytics/react"
 
 const inter = Inter({ variable: "--font-inter", subsets: ["latin"] });
@@ -23,6 +21,7 @@ export default function RootLayout({
           <main className="lg:mx-auto">
             {children}
           </main>
+          <Analytics />
       </body>
     </html>
   );
