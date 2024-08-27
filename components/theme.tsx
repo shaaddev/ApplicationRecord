@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 import { useTheme } from 'next-themes';
 import { Sun, Moon } from '@/lib/Logos';
 
-export  function Theme(){
+export  function Theme({ className }: { className?: string }) {
     const [mounted, setMounted] = useState(false)
     const {setTheme, resolvedTheme } = useTheme()
 
@@ -18,11 +18,12 @@ export  function Theme(){
             setTheme('dark')
         }
     }
-    const btn_style = `inline align-middle p-2 lg:p-0 lg:border-none rounded-xl border ${resolvedTheme === 'dark' ? 'text-slate-200' : 'text-slate-200'}`
+    const btn_style = `inline align-middle p-2 lg:p-0 lg:border-none rounded-xl border ${className ? className : 'text-slate-200'}`
     const btn_size = 'w-5 h-5'
 
     return (
         <button 
+            type="button"
             onClick={toggleTheme}
             className={btn_style}    
         >

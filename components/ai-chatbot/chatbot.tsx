@@ -5,6 +5,7 @@ import { useState, useEffect, useRef } from "react";
 import { continueConversation } from "./actions";
 import { readStreamableValue } from "ai/rsc";
 import { AiOutlineSend } from "react-icons/ai";
+import { Theme } from "../theme";
 
 import ReactMarkdown from 'react-markdown'
 
@@ -31,7 +32,7 @@ export function Chatbot() {
 
   return (
     <div className="flex flex-col w-full max-w-md mx-auto stretch h-[250px]"> 
-      <div className="flex-1 overflow-y-auto p-0"> 
+      <div className="overflow-y-auto p-0 flex-1 min-h-96"> 
         {messages.map((m, index) => (
           <div
             key={index}
@@ -85,9 +86,10 @@ export function Chatbot() {
             onChange={(e) => setInput(e.target.value)}
             placeholder="Type your message..."
           />
-          <button type="submit" className="ml-2">
+          <button type="submit" className="mx-2">
             <AiOutlineSend className="w-6 h-6 text-gray-600" />
           </button>
+          <Theme className="text-black"/>
         </div>
       </form>
     </div>
