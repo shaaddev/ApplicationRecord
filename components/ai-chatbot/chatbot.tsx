@@ -10,6 +10,7 @@ import { Input } from "@/components/ui/input";
 import ReactMarkdown from "react-markdown";
 import { ChevronsUpDownIcon, SendIcon } from "./icons";
 import { FaUser } from "react-icons/fa";
+import Image from "next/image";
 
 async function handleSendMessage(
   e: React.FormEvent,
@@ -70,7 +71,7 @@ export function ChatbotUI() {
         onClick={() => setIsExpanded(!isExpanded)}
       >
         <div className="flex items-center gap-2">
-          <img
+          <Image
             src="/landy.png"
             width={32}
             height={32}
@@ -90,7 +91,7 @@ export function ChatbotUI() {
             {messages.map((message, index) => (
               <div
                 key={index}
-                className={`flex items-start items-center gap-3 ${
+                className={`flex items-center gap-3 ${
                   message.role === "assistant" ? "" : "flex-row-reverse"
                 }`}
               >
@@ -115,29 +116,31 @@ export function ChatbotUI() {
             ))}
             <div ref={messagesEndRef} />
           </div>
-          <div className="border-t px-6">
+          <div className="border-t px-6 pt-5">
             <form
               onSubmit={(e) =>
                 handleSendMessage(e, messages, setMessages, input, setInput)
               }
               className="flex items-center gap-2"
             >
-              <Input
-                id="message"
-                placeholder="Type your message..."
-                className="flex-1 mt-8"
-                autoComplete="off"
-                value={input}
-                onChange={(e) => setInput(e.target.value)}
-              />
-              <Button
-                type="submit"
-                variant="ghost"
-                size="icon"
-                className="rounded-full mt-9"
-              >
-                <SendIcon className="w-4 h-4" />
-              </Button>
+              <div className="relative max-h-60 flex flex-row w-full grow justify-between overflow-hidden bg-zinc-100 dark:bg-slate-800 px-6 rounded-full border focus:outline-1">
+                <input
+                  id="message"
+                  placeholder="Type your message..."
+                  className="max-h-[60px] flex-1 border-none focus-within:outline-none bg-transparent"
+                  autoComplete="off"
+                  value={input}
+                  onChange={(e) => setInput(e.target.value)}
+                />
+                <Button
+                  type="submit"
+                  variant="ghost"
+                  size="icon"
+                  className="rounded-full hover:bg-muted"
+                >
+                  <SendIcon className="w-4 h-4" />
+                </Button>
+              </div>
             </form>
           </div>
         </div>
