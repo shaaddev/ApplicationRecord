@@ -37,17 +37,17 @@ Should the user ask about any other information other than the above, respond wi
 `;
 
 export async function continueConversation(messages: CoreMessage[]){
-  const result = await streamText({
-    model: bedrock('meta.llama3-8b-instruct-v1:0'),
-    system: systemPrompt,
-    messages,
-  })
-
   // const result = await streamText({
-  //   model: google('models/gemini-1.5-pro-latest'),
+  //   model: bedrock('meta.llama3-8b-instruct-v1:0'),
   //   system: systemPrompt,
   //   messages,
-  // });
+  // })
+
+  const result = await streamText({
+    model: google('models/gemini-1.5-pro-latest'),
+    system: systemPrompt,
+    messages,
+  });
 
   const stream = createStreamableValue(result.textStream);
   return stream.value;

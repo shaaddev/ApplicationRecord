@@ -41,11 +41,11 @@ async function handleSendMessage(
 export function ChatbotUI() {
   const [isExpanded, setIsExpanded] = useState<boolean>(false);
   const [messages, setMessages] = useState<CoreMessage[]>([
-    // {
-    //   role: "assistant",
-    //   content:
-    //     "I am Landy, your AI-powered job application assistant. How can I help you achieve your career goals today?",
-    // },
+    {
+      role: "assistant",
+      content:
+        "I am Landy, your AI-powered job application assistant. How can I help you achieve your career goals today?",
+    },
   ]);
   const [input, setInput] = useState<string>("");
   const messagesEndRef = useRef<HTMLDivElement | null>(null);
