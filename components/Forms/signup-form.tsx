@@ -6,15 +6,13 @@ import { Input } from "@/components/ui/input"
 import { SignupAction } from "./authActions";
 import Link from "next/link";
 import { AuthAltBtns } from "./auth-alt-btns";
-import { useToast } from "../ui/use-toast";
+import { toast } from "sonner";
 
 export function SignupForm(){
   const { register } = useForm();
-  const { toast } = useToast();
 
   const onSubmit = () => {
-    toast({
-      title: 'Thank you for signing up!',
+    toast.success('Thank you for signing up!', {
       description: 'Please Login to continue',
     })
   }
@@ -47,6 +45,8 @@ export function SignupForm(){
               id="email"
               className="border border-black border-opacity-10 dark:border-white dark:border-opacity-15 dark:bg-inherit mt-2"
               {...register("email", { required: true })}
+              required
+              aria-required
             />
           </div>
           <div>
@@ -56,6 +56,8 @@ export function SignupForm(){
               type="password"
               className="border border-black border-opacity-10 dark:border-white dark:border-opacity-15 dark:bg-inherit mt-2"
               {...register("password", { required: true, minLength: 6 })}
+              required
+              aria-required
             />
           </div>
           <Button type="submit" onClick={onSubmit}>Sign Up</Button>
