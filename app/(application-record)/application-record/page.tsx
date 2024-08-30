@@ -1,3 +1,4 @@
+'use client'
 import { _Table } from "@/components/Table/table";
 import { TableCard } from "@/components/table-card";
 import { Button } from "@/components/ui/button";
@@ -10,9 +11,13 @@ import { db } from '@/db';
 import { desc } from 'drizzle-orm';
 import { eq } from 'drizzle-orm';
 import { ChatbotUI } from "@/components/ai-chatbot/chatbot";
+import {LayoutGridIcon, ListIcon} from 'lucide-react'
+import { useState } from "react";
 
 export default async function ApplicationRecord() {
   const supabase = createClient();
+  const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid')
+
 
   const { data: { user } } = await supabase.auth.getUser();
   const id = user?.id
@@ -29,6 +34,31 @@ export default async function ApplicationRecord() {
   return (
     <main className="flex flex-col items-center justify-between p-10 lg:p-16">
       <h1 className="text-2xl font-bold mb-6">Application Record</h1>
+       <div className="flex gap-2">
+          <Button
+            variant={viewMode === 'grid' ? 'default' : 'outline'}
+            size="icon"
+            onClick={() => setViewMode('grid')}
+            aria-label="Grid view"
+          >
+            <LayoutGridIcon className="h-4 w-4" />
+          </Button>
+          <Button
+            variant={viewMode === 'list' ? 'default' : 'outline'}
+            size="icon"
+            onClick={() => setViewMode('list')}
+            aria-label="List view"
+          >
+            <ListIcon className="h-4 w-4" />
+          </Button>
+        </div>
+      {user && (
+          <FormTrigger>
+            <Button type='button' className='flex flex-row gap-2 dark:bg-slate-500 dark:text-black'>
+              Add Application<Pencil className="w-4 h-4 inline" />
+            </Button>
+          </FormTrigger>
+        )}
       <TableCard>
         <_Table data={apps}/>
       </TableCard>
