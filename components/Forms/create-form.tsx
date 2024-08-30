@@ -10,35 +10,43 @@ import {
 } from "@/components/ui/select"
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input"
-import { useToast } from "@/components/ui/use-toast";
+import { toast } from 'sonner'
 import { createAction } from "./createAction";
+import { useState } from "react";
 
 
 
 export function CreateForm(){
   const { register } = useForm();
-  const { toast } = useToast();
+  const [isPending, setIsPending] = useState(false);
 
+  const handleSubmit = async (formData: FormData) => {
+    setIsPending(true)
 
-  const onSubmit = () => {
-    toast({
-      title: 'Submitted Successfully',
-      description: 'Application Added'
-    })
+    try {
+      const result = await createAction(formData)
+
+      if (result.success) {
+        toast.success('Submitted Successfully', {
+          description: 'Application Added'
+        })
+      } else {
+        toast.error('You must fill out all required fields', {
+          description: 'Fields Required'
+        })
+      }
+    } catch (error){
+      toast.error('An unexpected error occurred')
+    } finally {
+      setIsPending(false)
+    }
   }
-  
   return(
     <>
       <div className="flex flex-col items-center justify-center p-10 w-full lg:p-16">
-        <form onSubmit={ async (e) => { 
-            e.preventDefault();
-            const formData = new FormData(e.currentTarget);
-            await createAction(formData) 
-          
-            }} className="space-y-6 w-full"
-          >
+        <form action={handleSubmit} className="space-y-6 w-full">
             <div>
-              <Label htmlFor="role" >Role</Label>
+              <Label htmlFor="role" >Role *</Label>
               <Input 
                 id="role"
                 className="border border-black border-opacity-10 dark:border-white dark:border-opacity-15 dark:bg-inherit mt-2"
@@ -46,7 +54,7 @@ export function CreateForm(){
               />
             </div>
             <div>
-              <Label htmlFor="company_name">Company Name</Label>
+              <Label htmlFor="company_name">Company Name *</Label>
               <Input 
                 id="company_name"
                 className="border border-black border-opacity-10 dark:border-white dark:border-opacity-15 dark:bg-inherit mt-2"
@@ -55,7 +63,7 @@ export function CreateForm(){
             </div>
             <div className="flex flex-col justify-center lg:grid lg:grid-cols-2 lg:gap-6">
               <div>
-                <Label htmlFor="location">Location</Label>
+                <Label htmlFor="location">Location *</Label>
                 <Input 
                   id="location"
                   className="border border-black border-opacity-10 dark:border-white dark:border-opacity-15 dark:bg-inherit mt-2"
@@ -63,7 +71,7 @@ export function CreateForm(){
                 />
               </div>
               <div>
-                <Label htmlFor="status">Status</Label>
+                <Label htmlFor="status">Status *</Label>
                 <Select {...register("status", { required: true })}>
                   <SelectTrigger className="border border-black border-opacity-10 dark:border-white dark:border-opacity-15 dark:bg-inherit mt-2">
                     <SelectValue placeholder="Choose your status"/>
@@ -81,7 +89,7 @@ export function CreateForm(){
               </div>
             </div>
             <div className="flex flex-col">
-              <Label htmlFor="date_applied">Date Applied</Label>
+              <Label htmlFor="date_applied">Date Applied *</Label>
               <Input 
                 id="date_applied"
                 type="date"
@@ -92,7 +100,7 @@ export function CreateForm(){
             <div className="flex flex-col justify-center lg:grid lg:grid-cols-2 lg:gap-6">
               
               <div>
-                <Label htmlFor="link">Link</Label>
+                <Label htmlFor="link">Link (Optional)</Label>
                 <Input 
                   id="link"
                   className="border border-black border-opacity-10 dark:border-white dark:border-opacity-15 dark:bg-inherit mt-2"
@@ -100,7 +108,7 @@ export function CreateForm(){
                 />
               </div>
               <div>
-                <Label htmlFor="salary">Salary</Label>
+                <Label htmlFor="salary">Salary (Optional)</Label>
                 <Input 
                   id="salary"
                   className="border border-black border-opacity-10 dark:border-white dark:border-opacity-15 dark:bg-inherit mt-2"
@@ -108,7 +116,7 @@ export function CreateForm(){
                 />
               </div>
             </div>
-            <Button type="submit" onClick={onSubmit} className="">Submit</Button>
+            <Button type="submit" className="">Submit</Button>
         </form>
       </div>
     </>

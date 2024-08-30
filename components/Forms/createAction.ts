@@ -20,7 +20,8 @@ export const createAction = async (formData: FormData) => {
 
   if (!role || !company_name || !location || !status || !date_applied) {
     return {
-      error: 'Missing required fields',
+      success: false,
+      message: 'Missing required fields',
     }
   }
   
@@ -36,9 +37,16 @@ export const createAction = async (formData: FormData) => {
       user_id: user?.id
     })
 
-  } catch (error) {
-    return console.log('Error:', error)
-  }
+    revalidatePath("/")
 
-  revalidatePath("/")
+    return {
+      success: true,
+    }
+  } catch (error) {
+    return {
+      success: false,
+      error: console.log(error)
+    }
+
+  }
 }

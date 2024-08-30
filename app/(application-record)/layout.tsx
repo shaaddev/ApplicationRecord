@@ -1,6 +1,6 @@
 import "../globals.css";
 import { Providers } from "@/app/providers";
-import { Toaster } from "@/components/ui/toaster";
+import { Toaster } from "@/components/ui/sonner";
 import { Analytics } from "@vercel/analytics/react"
 import { Navbar } from "@/components/Navbar";
 

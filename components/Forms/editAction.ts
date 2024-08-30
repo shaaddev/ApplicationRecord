@@ -3,7 +3,7 @@ import { db } from "@/db"
 import { applications } from "@/db/schema/applications";
 import { eq } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
-import { redirect } from "next/navigation";
+// import { redirect } from "next/navigation";
 
 export const editAction = async (formData: FormData, id: string) => {
   const new_role = formData.get('new_role')
@@ -17,13 +17,14 @@ export const editAction = async (formData: FormData, id: string) => {
 
   if (!new_role || !new_company_name || !new_location || !new_status || !new_date_applied) {
     return {
+      success: false,
       error: 'Missing required fields'
     }
   }  
 
   
   try {
-    await db.update(applications)
+    const result = await db.update(applications)
       .set({
         role: new_role as string,
         company_name: new_company_name as string,
@@ -35,10 +36,13 @@ export const editAction = async (formData: FormData, id: string) => {
       })
       .where(eq(applications.id, parseInt(id)));
 
+      revalidatePath("/")
+    
+      return { success: true, redirect: '/application-record' }
   } catch (error){
-    return console.error("Error", error)
+    return {
+      success: false,
+      error: console.log(error)
+    }
   }
-
-  revalidatePath("/")
-  redirect("/")
 }

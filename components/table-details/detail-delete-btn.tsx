@@ -3,6 +3,7 @@
 import { Button } from '@/components/ui/button'
 import { useRouter } from 'next/navigation'
 import { revalidatePath } from 'next/cache';
+import { toast } from 'sonner';
 
 export function Delete({id}: {id: number}){
   const router = useRouter();
@@ -18,6 +19,10 @@ export function Delete({id}: {id: number}){
       if (!res.ok){
         throw new Error('Something went wrong');
       }
+
+      toast.success('Application Deleted Successfully')
+    } else  {
+      toast.error('Application Not Deleted', { description: 'Please try again' })
     }
     
     router.refresh();
