@@ -4,6 +4,8 @@ import { Theme } from './theme'
 import { createClient } from '@/utils/supabase/server'
 import logo from '@/public/logo.svg'
 import Image from 'next/image'
+import { ResNavBar } from './res-nav-bar'
+
 
 const paths = {
   "/login": {
@@ -29,9 +31,6 @@ export async function Navbar() {
         <ul className='hidden lg:flex flex-row gap-6 justify-end'>
           {user ? (
             <>
-              <li>
-                <p>Welcome!</p>
-              </li>
               {Object.entries(paths).slice(1).map(([path, { name }]) => (
                 <li key={path} >
                   <Link href={path} className='hover:text-slate-800 dark:hover:text-slate-800'>{name}</Link>
@@ -56,6 +55,11 @@ export async function Navbar() {
             <Theme />
           </li>
         </ul>
+        <ResNavBar 
+          theme={<Theme />}
+          user={user}
+          paths={paths}
+        />
       </div>
     </nav>
   )
