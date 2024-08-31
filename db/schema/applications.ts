@@ -6,7 +6,7 @@ export const applications = pgTable("applications", {
   company_name: text("company_name").notNull(),
   location: text("location").notNull(),
   status: text("status").notNull(),
-  date_applied: text("date_applied").notNull(),
+  date_applied: text("date_applied"),
   link: text("link"),
   salary: text("salary"),
   user_id: text("user_id"),

@@ -30,7 +30,7 @@ export function Delete({id}: {id: number}){
 
   return(
     <>
-      <Button type='button' onClick={removeApplication} className='dark:bg-slate-500 dark:text-black'>Delete</Button>
+      <Button type='button' onClick={removeApplication} >Delete</Button>
     </>
   )
 }

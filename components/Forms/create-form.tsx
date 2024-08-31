@@ -12,13 +12,26 @@ import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input"
 import { toast } from 'sonner'
 import { createAction } from "./createAction";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 
 
 export function CreateForm(){
   const { register } = useForm();
   const [isPending, setIsPending] = useState(false);
+  const [minDate, setMinDate] = useState('');
+  const [maxDate, setMaxDate] = useState('');
+
+  useEffect(() => {
+    const today = new Date();
+    const oneYearFromNow = new Date(today);
+    oneYearFromNow.setFullYear(today.getFullYear() + 1)
+
+    const formatDate = (date: Date) => date.toISOString().split('T')[0];
+
+    setMinDate(formatDate(today));
+    setMaxDate(formatDate(oneYearFromNow));
+  }, [])
 
   const handleSubmit = async (formData: FormData) => {
     setIsPending(true)
@@ -84,17 +97,20 @@ export function CreateForm(){
                     <SelectItem value="Hired">Hired</SelectItem>
                     <SelectItem value="Rejected">Rejected</SelectItem>
                     <SelectItem value="Ghosted">Ghosted</SelectItem>
+                    <SelectItem value="Blacklist">Blacklist</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
             </div>
             <div className="flex flex-col">
-              <Label htmlFor="date_applied">Date Applied *</Label>
+              <Label htmlFor="date_applied">Date Applied (Optional)</Label>
               <Input 
                 id="date_applied"
                 type="date"
+                min={minDate}
+                max={maxDate}
                 className="border border-black border-opacity-10 dark:border-white dark:border-opacity-15 dark:bg-inherit mt-2"
-                {...register("date_applied", { required: true })}
+                {...register("date_applied", { required: false })}
               />
             </div>
             <div className="flex flex-col justify-center lg:grid lg:grid-cols-2 lg:gap-6">

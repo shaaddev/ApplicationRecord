@@ -19,6 +19,20 @@ export function EditForm({
   id, role, company_name, location, status, date_applied, link, salary
 }: JobProps){
   const { register, setValue } = useForm();
+  const [minDate, setMinDate] = useState('');
+  const [maxDate, setMaxDate] = useState('');
+  const [isPending, setIsPending] = useState(false);
+
+  useEffect(() => {
+    const today = new Date();
+    const oneYearFromNow = new Date(today);
+    oneYearFromNow.setFullYear(today.getFullYear() + 1)
+
+    const formatDate = (date: Date) => date.toISOString().split('T')[0];
+
+    setMinDate(formatDate(today));
+    setMaxDate(formatDate(oneYearFromNow));
+  }, [])
 
   useEffect(() => {
     setValue('new_role', role);
@@ -30,7 +44,6 @@ export function EditForm({
     setValue('new_salary', salary);
   }, [setValue, role, company_name, location, status, date_applied, link, salary])
 
-  const [isPending, setIsPending] = useState(false);
 
 
   const handleSubmit = async (formData: FormData) => {
@@ -105,12 +118,14 @@ export function EditForm({
               </div>
             </div>
             <div>
-              <Label htmlFor="date_applied">Date Applied *</Label>
+              <Label htmlFor="date_applied">Date Applied (Optional)</Label>
               <Input 
                 id="date_applied"
                 type="date"
+                min={minDate}
+                max={maxDate}
                 className="border border-black border-opacity-10 dark:border-white dark:border-opacity-15 dark:bg-inherit mt-2"
-                {...register("new_date_applied", { required: true })}
+                {...register("new_date_applied", { required: false })}
               />
             </div>
             <div className="flex flex-col justify-center lg:grid lg:grid-cols-2 lg:gap-6">

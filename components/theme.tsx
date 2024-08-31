@@ -1,7 +1,7 @@
 'use client'
 import { useState, useEffect } from 'react';
 import { useTheme } from 'next-themes';
-import { Sun, Moon } from '@/lib/Logos';
+import { Sun, Moon } from 'lucide-react';
 
 export  function Theme({ className }: { className?: string }) {
     const [mounted, setMounted] = useState(false)

@@ -18,7 +18,7 @@ export const createAction = async (formData: FormData) => {
   const { data: { user } } = await supabase.auth.getUser();
 
 
-  if (!role || !company_name || !location || !status || !date_applied) {
+  if (!role || !company_name || !location || !status) {
     return {
       success: false,
       message: 'Missing required fields',
@@ -31,7 +31,7 @@ export const createAction = async (formData: FormData) => {
       company_name: company_name as string,
       location: location as string,
       status: status as string,
-      date_applied: date_applied as string,
+      date_applied: date_applied as string || null,
       link: link as string || null,
       salary: salary as string || null,
       user_id: user?.id

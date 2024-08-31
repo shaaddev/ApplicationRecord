@@ -1,4 +1,4 @@
-import { DropdownMenuIcon,  } from "@radix-ui/react-icons";
+import { Menu } from "lucide-react";
 import { User } from "@supabase/supabase-js";
 import {
   Sheet,
@@ -16,18 +16,18 @@ export function ResNavBar({
   return(
     <div className="flex lg:hidden">
       <Sheet>
-        <SheetTrigger className="text-white"><DropdownMenuIcon className="w-6 h-6 mr-2"/></SheetTrigger>
+        <SheetTrigger className="text-white"><Menu className="w-6 h-6 mr-2"/></SheetTrigger>
         <SheetContent side='top' className="bg-lime-500 text-white border-none">
           <div className="flex flex-row items-center justify-center p-10">
             <ul className="flex flex-col gap-2 w-full text-center">
               {user ? (
                 <>
                   {Object.entries(paths).slice(1).map(([path, { name }]) => (
-                    <li key={path} className="w-full border border-white border-opacity-10 p-2 rounded-xl">
+                    <li key={path} className="w-full border border-black border-opacity-10 p-2 rounded-xl">
                       <Link href={path} >{name}</Link>
                     </li>
                   ))}
-                  <li className="w-full border border-white border-opacity-10 p-2 rounded-xl">
+                  <li className="w-full border border-black border-opacity-10 p-2 rounded-xl">
                     <Link href='/logout' className="">
                       Logout
                     </Link>
@@ -36,7 +36,7 @@ export function ResNavBar({
               ) : (
                 <> 
                 {Object.entries(paths).map(([path, {name}]) => (
-                  <li key={path} className="w-full border border-white border-opacity-10 p-2 rounded-xl">
+                  <li key={path} className="w-full border border-black border-opacity-10 p-2 rounded-xl">
                     <Link href={path}>{name}</Link>
                   </li>
                 ))}
