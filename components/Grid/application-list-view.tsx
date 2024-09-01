@@ -14,20 +14,21 @@ export function ApplicationListView({
         <Card key={m.id}>
           <CardContent className="flex items-center justify-between py-4">
             <div>
-              <h3 className="font-semibold">{m.role}</h3>
-              <p className="text-sm text-gray-500">{m.company_name}</p>
+              <h3 className="font-semibold">{m.company_name}</h3>
+              <p className="text-sm text-gray-500">{m.role}</p>
               <p className="text-sm text-gray-500">{m.location}</p>
+              <p className="text-sm text-gray-500">${m.salary}</p>
               {m.link && (
                 <Link href={`${m.link}`} target="_blank"
                   className={cn(
                     buttonVariants({ variant: 'link', size: 'sm' }),
+                    'text-blue-500 hover:text-blue-700 underline',
                     'size-8'
                   )}
                 >
-                  Apply
+                  Application Link
                 </Link>
               )}
-              <p className="text-sm text-gray-500">${m.salary}</p>
             </div>
             <div className="flex items-center space-x-4">
               <Badge className={`${statusColours[m.status]}`}>{m.status}</Badge>
