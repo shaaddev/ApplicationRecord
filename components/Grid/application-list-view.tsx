@@ -4,6 +4,7 @@ import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { Badge } from "@/components/ui/badge"
 import Link from "next/link";
+import { UpdateStatusBtn } from "./application-update-btn";
 
 export function ApplicationListView({
   data, statusColours
@@ -32,8 +33,9 @@ export function ApplicationListView({
             </div>
             <div className="flex items-center space-x-4">
               <Badge className={`${statusColours[m.status]}`}>{m.status}</Badge>
-              
             </div>
+            {/* add in the update status here */}
+            {/* <UpdateStatusBtn data={[]} statusColours={{}}></UpdateStatusBtn> */}
           </CardContent>
         </Card>
       ))}
