@@ -11,6 +11,7 @@ export interface JobProps {
 
 export const mock_data: JobProps[] = [
   {
+    id: '1',
     role: 'Software Development Engineer',
     company_name: 'Amazon',
     location: 'NYC',
@@ -18,6 +19,7 @@ export const mock_data: JobProps[] = [
     date_applied: '2022-01-01',
   },
   {
+    id: '2',
     role: 'Product Manager',
     company_name: 'Google',
     location: 'NYC',
@@ -25,6 +27,7 @@ export const mock_data: JobProps[] = [
     date_applied: '2022-01-01',
   },
   {
+    id: '3',
     role: 'Data Scientist',
     company_name: 'Meta',
     location: 'Seattle',

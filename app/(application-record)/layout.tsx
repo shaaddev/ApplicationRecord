@@ -14,11 +14,7 @@ export default function AppLayout({
     <html lang="en" suppressHydrationWarning>
         <Providers>
           <Navbar />
-          <div className="flex flex-col items-center justify-center mt-20 p-5 text-center gap-12 lg:hidden">
-            <p>This web app works better with larger screens (Laptop, Desktop, etc)</p>
-            <p>Please try again later</p> 
-          </div>
-          <main className="hidden lg:block lg:mx-auto">
+          <main className="mx-auto">
             {children}
           </main>
           <Toaster />

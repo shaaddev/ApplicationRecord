@@ -42,22 +42,22 @@ export default async function ApplicationRecord() {
   return (
     <main className="flex flex-col items-center justify-between p-10 lg:p-16">
       <h1 className="text-2xl font-bold mb-6">Application Record</h1>
-      <div className="hidden md:flex mt-5 md:flex-row items-center gap-6 justify-between">
-        <GridListToggle />
-        {user && (
-          <FormTrigger>
-            <Button type='button' className='flex flex-row gap-2 dark:bg-slate-500 dark:text-black'>
-              Add Application<Pencil className="w-4 h-4 inline" />
-            </Button>
-          </FormTrigger>
-        )}
-      </div>
-      <br />
       <TableCard>
-        <_Table data={apps} />
+        {/* <_Table data={apps}/> */}
+        <div className="flex mt-5 md:flex-row items-center gap-6 justify-between">
+          <GridListToggle data={apps} user={user}>
+            {user && (
+              <FormTrigger>
+                <Button type='button' className='flex flex-row gap-2 dark:bg-slate-500 dark:text-black'>
+                  Add Application<Pencil className="w-4 h-4 inline" />
+                </Button>
+              </FormTrigger>
+            )}
+          </GridListToggle>
+        </div>
       </TableCard>
       <div className="fixed bottom-10 right-20">
-        <ChatbotUI />
+        <ChatbotUI/>
       </div>
     </main>
   );

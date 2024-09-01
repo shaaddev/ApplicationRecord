@@ -15,7 +15,7 @@ export const editAction = async (formData: FormData, id: string) => {
   const new_salary = formData.get('new_salary')
 
 
-  if (!new_role || !new_company_name || !new_location || !new_status || !new_date_applied) {
+  if (!new_role || !new_company_name || !new_location || !new_status) {
     return {
       success: false,
       error: 'Missing required fields'
@@ -30,7 +30,7 @@ export const editAction = async (formData: FormData, id: string) => {
         company_name: new_company_name as string,
         location: new_location as string,
         status: new_status as string,
-        date_applied: new_date_applied as string,
+        date_applied: new_date_applied as string || null,
         link: new_link as string || null,
         salary: new_salary as string || null,
       })
