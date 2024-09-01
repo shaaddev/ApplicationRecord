@@ -6,8 +6,13 @@ import logo from '@/public/logo.svg'
 import Image from 'next/image'
 import { ResNavBar } from './res-nav-bar'
 
+export interface PathProps {
+  [key: string]: {
+    name: string
+  }
+}
 
-const paths = {
+const paths: PathProps = {
   "/login": {
     name: 'Login',
   },

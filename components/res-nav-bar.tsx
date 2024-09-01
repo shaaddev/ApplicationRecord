@@ -7,11 +7,12 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet"
 import Link from "next/link";
+import { PathProps } from "./Navbar";
 
 export function ResNavBar({
   theme, user, paths
 }: {
-  theme: React.ReactNode, user: User | null, paths: any
+  theme: React.ReactNode, user: User | null, paths: PathProps
 }) {
   return(
     <div className="flex lg:hidden">

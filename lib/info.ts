@@ -4,7 +4,7 @@ export interface JobProps {
   company_name: string
   location: string
   status: string
-  date_applied: string
+  date_applied?: string
   link?: string
   salary?: string
 }

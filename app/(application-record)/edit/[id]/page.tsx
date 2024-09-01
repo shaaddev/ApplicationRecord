@@ -24,7 +24,7 @@ export default async function Edit({params}: {params: {id: string}}){
         company_name={company_name}
         location={location}
         status={status}
-        date_applied={date_applied}
+        date_applied={date_applied!}
         link={link!}
         salary={salary!}
       />
