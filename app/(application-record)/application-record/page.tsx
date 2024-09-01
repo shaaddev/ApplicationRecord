@@ -15,12 +15,24 @@ import {GridListToggle} from '@/components/Grid/grid-list-toggle'
 export default async function ApplicationRecord() {
   const supabase = createClient();
 
-  const { data: { user } } = await supabase.auth.getUser();
-  const id = user?.id
+  let { data: { user } } = await supabase.auth.getUser();
+
+  if (!user && typeof window !== "undefined" && localStorage.getItem('guestMode') === 'true') {
+    const { data, error } = await supabase.auth.signInAnonymously(); 
+
+    if (error) {
+      console.error("Failed to sign in as guest", error);
+      redirect("/login");
+    } else {
+      user = data.user; 
+    }
+  }
+
+  const id = user?.id;
   let apps: any;
 
-  if (id){
-    apps = await db.select().from(applications).where(eq(applications.user_id, id)).orderBy(desc(applications.id))
+  if (id) {
+    apps = await db.select().from(applications).where(eq(applications.user_id, id)).orderBy(desc(applications.id));
   }
 
   if (!user) {
