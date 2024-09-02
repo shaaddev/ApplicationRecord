@@ -4,7 +4,7 @@ import { redirect } from "next/navigation";
 import { createClient } from "@/utils/supabase/server";
 import { headers } from "next/headers";
 
-export const LoginAction = async (formData: FormData) => {
+export const loginAction = async (formData: FormData) => {
   const supabase = createClient();
 
   const data = {
@@ -19,10 +19,13 @@ export const LoginAction = async (formData: FormData) => {
   }
 
   revalidatePath("/");
-  redirect("/application-record");
+  return {
+    success: true,
+    redirect: '/application-record'
+  }
 };
 
-export const SignupAction = async (formData: FormData) => {
+export const signupAction = async (formData: FormData) => {
   const supabase = createClient();
 
   const data = {
@@ -38,7 +41,10 @@ export const SignupAction = async (formData: FormData) => {
   }
 
   revalidatePath("/");
-  redirect("/login");
+  return {
+    success: true,
+    redirect: '/login'
+  }
 };
 
 export const signOutAction = async () => {
