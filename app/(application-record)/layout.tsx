@@ -14,7 +14,7 @@ export default function AppLayout({
     <html lang="en" suppressHydrationWarning>
         <Providers>
           <Navbar />
-          <main className="mx-auto">
+          <main className="mx-auto max-w-screen-2xl">
             {children}
           </main>
           <Toaster />

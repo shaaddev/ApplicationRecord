@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation'
 import { revalidatePath } from 'next/cache';
 import { toast } from 'sonner';
 
-export function Delete({id}: {id: number}){
+export function Delete({id, className}: {id: number, className?: string}){
   const router = useRouter();
 
   const removeApplication = async () => {
@@ -30,7 +30,7 @@ export function Delete({id}: {id: number}){
 
   return(
     <>
-      <Button type='button' onClick={removeApplication} >Delete</Button>
+      <Button type='button' onClick={removeApplication} className={`${className} w-full`}>Delete</Button>
     </>
   )
 }

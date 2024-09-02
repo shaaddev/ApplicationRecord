@@ -28,6 +28,10 @@ import { DatePicker } from "./date-picker"
 import { Calendar as CalendarIcon } from "lucide-react"
 import { format } from "date-fns"
 
+interface EditFormProps extends JobProps {
+  onSuccess?: () => void;
+}
+
 
 const formSchema = z.object({
   new_role: z.string().min(1, { message: 'Required' }),
@@ -39,8 +43,8 @@ const formSchema = z.object({
 })
 
 export function EditForm({
-  id, role, company_name, location, status, date_applied, link, salary
-}: JobProps){
+  id, role, company_name, location, status, date_applied, link, salary,  onSuccess
+}: EditFormProps){
   const [isPending, setIsPending] = useState(false);
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -54,17 +58,6 @@ export function EditForm({
       new_salary: salary,
     },
   })
-
-  // useEffect(() => {
-  //   setValue('new_role', role);
-  //   setValue('new_company_name', company_name);
-  //   setValue('new_location', location);
-  //   setValue('new_status', status);
-  //   setValue('new_date_applied', date_applied);
-  //   setValue('new_link', link);
-  //   setValue('new_salary', salary);
-  // }, [setValue, role, company_name, location, status, date_applied, link, salary])
-
 
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
@@ -86,7 +79,9 @@ export function EditForm({
           description: 'Application Updated'
         })
 
-        window.location.href=`${result.redirect}`
+        if (onSuccess) {
+          onSuccess();
+        }
       } else {
         toast.error('You must fill out all required fields', {
           description: 'Fields Required'

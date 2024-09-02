@@ -8,6 +8,7 @@ import { User } from "@supabase/supabase-js";
 import { cn } from "@/lib/utils";
 import { Ellipsis } from "lucide-react";
 import { UpdateStatusBtn } from "./application-update-btn";
+import { EditButton } from "./edit-btn";
 
 export function ApplicationGridView({
   data, statusColours, user
@@ -48,14 +49,7 @@ export function ApplicationGridView({
             />
             <div className="flex space-x-2 mb-6  w-full">
               <Delete id={Number(m.id!)} />
-              <Link href={`/edit/${m.id}`}
-                className={cn(
-                  buttonVariants({ variant: 'default' }),
-                  'w-full'
-                )}>
-                Update
-              </Link>
-              {/* This will be the edit button */}
+              <EditButton job={m} />
             </div>
           </CardFooter>
         </Card>
