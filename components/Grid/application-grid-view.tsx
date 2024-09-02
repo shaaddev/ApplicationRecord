@@ -6,33 +6,32 @@ import Link from "next/link";
 import { Delete } from "./application-delete-btn";
 import { User } from "@supabase/supabase-js";
 import { cn } from "@/lib/utils";
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "../ui/dropdown-menu";
-import { ChevronDownIcon } from "lucide-react";
-import { Button } from "react-day-picker";
-import { useState } from "react";
+import { Ellipsis } from "lucide-react";
 import { UpdateStatusBtn } from "./application-update-btn";
 
 export function ApplicationGridView({
   data, statusColours, user
 }: { data: JobProps[], statusColours: { [key: string]: string }, user?: User | null } ) {
 
-  const [statuses, setStatuses] = useState<JobProps[]>(data);
-  const handleUpdateStatus = (id: string, newStatus: keyof typeof statusColours) => {
-    setStatuses((prevStatuses: any) =>
-      prevStatuses.map((job: any) =>
-        job.id === id ? { ...job, status: newStatus } : job
-      )
-    );
-  };
-  
-
   return(
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
       {data.map((m) => (
         <Card key={m.id} className="flex flex-col justify-between">
-          <CardHeader>
-            <CardTitle>{m.company_name}</CardTitle>
-            <CardDescription>{m.role}</CardDescription>
+          <CardHeader className="relative flex flex-row items-start justify-between">
+            <div className="flex flex-col gap-2">
+              <CardTitle>{m.company_name}</CardTitle>
+              <CardDescription>{m.role}</CardDescription>
+            </div>
+            <div className="flex">
+              <Link href={`/edit/${m.id}`}
+                className={cn(
+                  buttonVariants({ variant: 'ghost', size: 'sm' }),
+                  '',
+                )}
+              >
+                <Ellipsis />
+              </Link>
+            </div>
           </CardHeader>
           <CardContent>
             <Badge className={`${statusColours[m.status]}`}>{m.status}</Badge>
