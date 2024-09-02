@@ -7,8 +7,8 @@ import Link from "next/link";
 import { UpdateStatusBtn } from "./application-update-btn";
 
 export function ApplicationListView({
-  data, statusColours
-}: { data: JobProps[], statusColours: any }) {
+  data, statusColours, className
+}: { data: JobProps[], statusColours: any, className?: string }) {
   return(
     <div className="space-y-4">
       {data.map((m) => (
@@ -31,11 +31,11 @@ export function ApplicationListView({
                 </Link>
               )}
             </div>
-            <div className="flex items-center space-x-4">
-              <Badge className={`${statusColours[m.status]}`}>{m.status}</Badge>
+            <div className="flex items-center justify-center space-x-4">
+              <Badge className={`${statusColours[m.status]} w-full`}>{m.status}</Badge>
+              {/* add in the update status here */}
+              <UpdateStatusBtn id={m.id!} status={m.status} data={data} statusColours={statusColours} className={className}/>
             </div>
-            {/* add in the update status here */}
-            {/* <UpdateStatusBtn data={[]} statusColours={{}}></UpdateStatusBtn> */}
           </CardContent>
         </Card>
       ))}

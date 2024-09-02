@@ -10,27 +10,16 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel,
 import { ChevronDownIcon } from "lucide-react";
 import { Button } from "react-day-picker";
 import { useState } from "react";
-
-const colors = {
-  'Not Applied': 'bg-red-500',
-  'Applied': 'bg-yellow-500',
-  'Phone Screen': 'bg-orange-500',
-  'Interview': 'bg-blue-500',
-  'Offer': 'bg-green-500',
-  'Hired': 'bg-lime-500',
-  'Rejected': 'bg-red-500',
-  'Ghosted': 'bg-gray-500',
-  'Blacklist': 'bg-red-500',
-};
+import { UpdateStatusBtn } from "./application-update-btn";
 
 export function ApplicationGridView({
   data, statusColours, user
 }: { data: JobProps[], statusColours: { [key: string]: string }, user?: User | null } ) {
 
   const [statuses, setStatuses] = useState<JobProps[]>(data);
-  const handleUpdateStatus = (id: string, newStatus: keyof typeof colors) => {
-    setStatuses(prevStatuses =>
-      prevStatuses.map(job =>
+  const handleUpdateStatus = (id: string, newStatus: keyof typeof statusColours) => {
+    setStatuses((prevStatuses: any) =>
+      prevStatuses.map((job: any) =>
         job.id === id ? { ...job, status: newStatus } : job
       )
     );
@@ -61,8 +50,8 @@ export function ApplicationGridView({
                 </Link>
               )}
                {/* add in the update status here */}
-               {/* <UpdateStatusBtn data={[]} statusColours={{}}></UpdateStatusBtn> */}
           </CardContent>
+          <UpdateStatusBtn id={m.id!} status={m.status} data={data} statusColours={statusColours} />
         </Card>
       ))}
     </div>
