@@ -31,12 +31,19 @@ export function ApplicationListView({
                 </Link>
               )}
             </div>
-            <div className="flex items-center justify-center space-x-4">
-              <Badge className={`${statusColours[m.status]} w-full`}>{m.status}</Badge>
+            <div className="flex items-center justify-center space-x-4 flex-col sm:flex-row">
+              <Badge className={`${statusColours[m.status]} `}>{m.status}</Badge>
               {/* add in the update status here */}
               <UpdateStatusBtn id={m.id!} status={m.status} data={data} statusColours={statusColours} className={className}/>
-              <Delete id={Number(m.id!)} />
-              <Delete id={Number(m.id!)} /> {/* This will be the edit button */}
+              <Delete id={Number(m.id!)} className="hidden"/>
+              <Link href={`/edit/${m.id}`}
+                className={cn(
+                  buttonVariants({ variant: 'default' }),
+                  'w-full hidden'
+                )}>
+                Update
+              </Link>
+              {/* <Delete id={Number(m.id!)} /> This will be the edit button */}
             </div>
           </CardContent>
         </Card>

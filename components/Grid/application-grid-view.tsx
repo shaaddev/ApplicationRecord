@@ -22,16 +22,6 @@ export function ApplicationGridView({
               <CardTitle>{m.company_name}</CardTitle>
               <CardDescription>{m.role}</CardDescription>
             </div>
-            <div className="flex">
-              <Link href={`/edit/${m.id}`}
-                className={cn(
-                  buttonVariants({ variant: 'ghost', size: 'sm' }),
-                  '',
-                )}
-              >
-                <Ellipsis />
-              </Link>
-            </div>
           </CardHeader>
           <CardContent>
             <Badge className={`${statusColours[m.status]}`}>{m.status}</Badge>
@@ -49,18 +39,25 @@ export function ApplicationGridView({
               )}
                {/* add in the update status here */}
           </CardContent>
-          <CardContent className="flex items-center justify-between py-4">
+          <CardFooter className="flex items-center justify-between py-4 px-4 gap-2 flex-col xl:flex-row">
             <UpdateStatusBtn
               id={m.id!}
               status={m.status}
               data={data}
               statusColours={statusColours}
             />
-            <div className="flex space-x-2 mb-6">
+            <div className="flex space-x-2 mb-6  w-full">
               <Delete id={Number(m.id!)} />
-              <Delete id={Number(m.id!)} /> {/* This will be the edit button */}
+              <Link href={`/edit/${m.id}`}
+                className={cn(
+                  buttonVariants({ variant: 'default' }),
+                  'w-full'
+                )}>
+                Update
+              </Link>
+              {/* This will be the edit button */}
             </div>
-          </CardContent>
+          </CardFooter>
         </Card>
       ))}
     </div>
