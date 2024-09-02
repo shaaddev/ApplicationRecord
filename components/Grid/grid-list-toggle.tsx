@@ -6,7 +6,7 @@ import { ApplicationGridView } from "./application-grid-view";
 import { ApplicationListView } from "./application-list-view";
 import { JobProps } from "@/lib/info";
 import { User } from "@supabase/supabase-js";
-import { FilterDropdown } from "./filter-dropdown";
+import { SortDropdown } from "./sort-dropdown";
 
 const colors = {
   'Not Applied': 'bg-red-500',
@@ -19,19 +19,41 @@ const colors = {
   'Blacklist': 'bg-gray-900',
 }
 
+type SortableFields = 'role' | 'company_name' | 'status' | 'date_applied';
+
 export function GridListToggle({data, children, user}:{
   data: JobProps[], children?: React.ReactNode, user?: User | null
 }) {
     const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid')
-    const [sortStatus, setSortStatus] = useState<string>('all')
+    const [sortField, setSortField] = useState<SortableFields>('date_applied');
+    const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('desc');
+    const [filterStatus, setFilterStatus] = useState<string>('all');
 
-    const sortedData = useMemo(() => {
-      if (sortStatus === 'all') return data;
-      return data.filter(item => item.status === sortStatus);
-    }, [data, sortStatus]);
+    const sortedAndFilteredData = useMemo(() => {
+      let result = [...data];
+      
+      if (filterStatus !== 'all') {
+        result = result.filter(item => item.status === filterStatus);
+      }
 
-    const handleSort = (status: string) => {
-      setSortStatus(status);
+      result.sort((a, b) => {
+        const aValue = a[sortField] ?? '';
+        const bValue = b[sortField] ?? '';
+        if (aValue < bValue) return sortOrder === 'asc' ? -1 : 1;
+        if (aValue > bValue) return sortOrder === 'asc' ? 1 : -1;
+        return 0;
+      });
+
+      return result;
+    }, [data, sortField, sortOrder, filterStatus]);
+
+    const handleSortChange = (field: SortableFields, order: 'asc' | 'desc') => {
+      setSortField(field);
+      setSortOrder(order);
+    };
+
+    const handleFilter = (status: string) => {
+      setFilterStatus(status);
     };
 
     return(
@@ -56,14 +78,20 @@ export function GridListToggle({data, children, user}:{
               </Button>
             </div>
             <div className="flex items-center gap-2">
-              <FilterDropdown onSort={handleSort} />
+              <SortDropdown sortBy={sortField} sortOrder={sortOrder} onSortChange={handleSortChange} />
+              <Button
+                variant="outline"
+                onClick={() => handleFilter(filterStatus === 'all' ? 'Applied' : 'all')}
+              >
+                {filterStatus === 'all' ? 'Show Applied' : 'Show All'}
+              </Button>
               {children}
             </div>
           </div>
           {viewMode === 'grid' ? (
-            <ApplicationGridView data={sortedData} statusColours={colors} user={user}/>
+            <ApplicationGridView data={sortedAndFilteredData} statusColours={colors} user={user}/>
           ) : (
-            <ApplicationListView data={sortedData} statusColours={colors} className={`${viewMode === 'list' ? 'mt-5' : '' }`}/>
+            <ApplicationListView data={sortedAndFilteredData} statusColours={colors} className={`${viewMode === 'list' ? 'mt-5' : '' }`}/>
           )}
         </div>
     )
