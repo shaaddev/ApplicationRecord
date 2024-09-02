@@ -6,7 +6,7 @@ export interface JobProps {
   status: string
   date_applied?: string
   link?: string
-  salary?: string
+  salary?: number
 }
 
 export const mock_data: JobProps[] = [

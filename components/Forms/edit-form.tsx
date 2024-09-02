@@ -49,6 +49,14 @@ export function EditForm({
   const handleSubmit = async (formData: FormData) => {
     setIsPending(true)
 
+    const salary = formData.get("new_salary");
+
+    if (salary && isNaN(Number(salary))) {
+      toast.error('Please enter a valid number for the salary.');
+      setIsPending(false);
+      return;
+    }
+
     try {
       const result = await editAction(formData, id!)
 
@@ -142,8 +150,9 @@ export function EditForm({
                 <Label htmlFor="salary">Salary (Optional)</Label>
                 <Input 
                   id="salary"
+                  type="number"
                   className="border border-black border-opacity-10 dark:border-white dark:border-opacity-15 dark:bg-inherit mt-2"
-                  {...register("new_salary", { required: false })}
+                  {...register("new_salary", { required: false, pattern: /^[0-9]*$/ })}
                 />
               </div>
             </div>

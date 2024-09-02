@@ -8,7 +8,7 @@ export const applications = pgTable("applications", {
   status: text("status").notNull(),
   date_applied: text("date_applied"),
   link: text("link"),
-  salary: text("salary"),
+  salary: integer("salary"),
   user_id: text("user_id"),
   created_at: timestamp("created_at", { withTimezone: true }).defaultNow().notNull(),
   updated_at: timestamp("updated_at", { withTimezone: true }).defaultNow().notNull(),
