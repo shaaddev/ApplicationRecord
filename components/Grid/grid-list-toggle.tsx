@@ -1,11 +1,12 @@
 'use client'
 import { Button } from "@/components/ui/button";
-import {LayoutGridIcon, ListIcon} from 'lucide-react'
-import { useState } from "react";
+import { LayoutGridIcon, ListIcon } from 'lucide-react'
+import { useState, useMemo } from "react";
 import { ApplicationGridView } from "./application-grid-view";
 import { ApplicationListView } from "./application-list-view";
 import { JobProps } from "@/lib/info";
 import { User } from "@supabase/supabase-js";
+import { FilterDropdown } from "./filter-dropdown";
 
 const colors = {
   'Not Applied': 'bg-red-500',
@@ -22,6 +23,16 @@ export function GridListToggle({data, children, user}:{
   data: JobProps[], children?: React.ReactNode, user?: User | null
 }) {
     const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid')
+    const [sortStatus, setSortStatus] = useState<string>('all')
+
+    const sortedData = useMemo(() => {
+      if (sortStatus === 'all') return data;
+      return data.filter(item => item.status === sortStatus);
+    }, [data, sortStatus]);
+
+    const handleSort = (status: string) => {
+      setSortStatus(status);
+    };
 
     return(
         <div className="flex flex-col w-full gap-2">
@@ -44,12 +55,15 @@ export function GridListToggle({data, children, user}:{
                 <ListIcon className="h-4 w-4" />
               </Button>
             </div>
-            {children}
+            <div className="flex items-center gap-2">
+              <FilterDropdown onSort={handleSort} />
+              {children}
+            </div>
           </div>
           {viewMode === 'grid' ? (
-            <ApplicationGridView data={data} statusColours={colors} user={user}/>
+            <ApplicationGridView data={sortedData} statusColours={colors} user={user}/>
           ) : (
-            <ApplicationListView data={data} statusColours={colors} className={`${viewMode === 'list' ? 'mt-5' : '' }`}/>
+            <ApplicationListView data={sortedData} statusColours={colors} className={`${viewMode === 'list' ? 'mt-5' : '' }`}/>
           )}
         </div>
     )
