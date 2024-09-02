@@ -15,7 +15,7 @@ const colors = {
   'Hired': 'bg-lime-500',
   'Rejected': 'bg-red-500',
   'Ghosted': 'bg-gray-500',
-  'Blacklist': 'bg-red-500',
+  'Blacklist': 'bg-gray-900',
 }
 
 export function GridListToggle({data, children, user}:{

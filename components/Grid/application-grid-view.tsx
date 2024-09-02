@@ -36,7 +36,7 @@ export function ApplicationGridView({
           <CardContent>
             <Badge className={`${statusColours[m.status]}`}>{m.status}</Badge>
             <p className="my-2">{m.location}</p>
-            <p className="mt-2">{m.salary}</p>
+            <p className="mt-2">${m.salary}</p>
             {m.link && (
                 <Link href={`${m.link}`} target="_blank"
                   className={cn(
@@ -49,7 +49,18 @@ export function ApplicationGridView({
               )}
                {/* add in the update status here */}
           </CardContent>
-          <UpdateStatusBtn id={m.id!} status={m.status} data={data} statusColours={statusColours} />
+          <CardContent className="flex items-center justify-between py-4">
+            <UpdateStatusBtn
+              id={m.id!}
+              status={m.status}
+              data={data}
+              statusColours={statusColours}
+            />
+            <div className="flex space-x-2 mb-6">
+              <Delete id={Number(m.id!)} />
+              <Delete id={Number(m.id!)} /> {/* This will be the edit button */}
+            </div>
+          </CardContent>
         </Card>
       ))}
     </div>

@@ -5,6 +5,7 @@ import { cn } from "@/lib/utils";
 import { Badge } from "@/components/ui/badge"
 import Link from "next/link";
 import { UpdateStatusBtn } from "./application-update-btn";
+import { Delete } from "./application-delete-btn";
 
 export function ApplicationListView({
   data, statusColours, className
@@ -34,6 +35,8 @@ export function ApplicationListView({
               <Badge className={`${statusColours[m.status]} w-full`}>{m.status}</Badge>
               {/* add in the update status here */}
               <UpdateStatusBtn id={m.id!} status={m.status} data={data} statusColours={statusColours} className={className}/>
+              <Delete id={Number(m.id!)} />
+              <Delete id={Number(m.id!)} /> {/* This will be the edit button */}
             </div>
           </CardContent>
         </Card>
