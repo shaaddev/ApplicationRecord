@@ -6,6 +6,7 @@ import { ApplicationGridView } from "./application-grid-view";
 import { ApplicationListView } from "./application-list-view";
 import { JobProps } from "@/lib/info";
 import { User } from "@supabase/supabase-js";
+import { FilterDropdown } from "./filter-dropdown";
 import { SortDropdown } from "./sort-dropdown";
 
 const colors = {
@@ -79,12 +80,7 @@ export function GridListToggle({data, children, user}:{
             </div>
             <div className="flex items-center gap-2">
               <SortDropdown sortBy={sortField} sortOrder={sortOrder} onSortChange={handleSortChange} />
-              <Button
-                variant="outline"
-                onClick={() => handleFilter(filterStatus === 'all' ? 'Applied' : 'all')}
-              >
-                {filterStatus === 'all' ? 'Show Applied' : 'Show All'}
-              </Button>
+              <FilterDropdown onSort={handleFilter} />
               {children}
             </div>
           </div>
