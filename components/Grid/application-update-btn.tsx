@@ -51,7 +51,7 @@ export function UpdateStatusBtn({
 
   return (
     <>
-      <CardFooter className={`flex  w-full  items-center justify-center ${className}`}>
+      <CardFooter className={`flex w-full items-center justify-center ${className}`}>
         <form className="w-full">
           <div>
            <Select 

@@ -12,7 +12,7 @@ export function ApplicationListView({
   return(
     <div className="space-y-4">
       {data.map((m) => (
-        <Card key={m.id}>
+        <Card key={m.id} className="">
           <CardContent className="flex items-center justify-between py-4">
             <div>
               <h3 className="font-semibold">{m.company_name}</h3>
@@ -23,8 +23,7 @@ export function ApplicationListView({
                 <Link href={`${m.link}`} target="_blank"
                   className={cn(
                     buttonVariants({ variant: 'link', size: 'sm' }),
-                    'text-blue-500 hover:text-blue-700 underline',
-                    'size-8'
+                    'text-blue-500 hover:text-blue-700 underline size-8 ml-7',
                   )}
                 >
                   Application Link

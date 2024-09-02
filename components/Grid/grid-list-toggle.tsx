@@ -49,7 +49,7 @@ export function GridListToggle({data, children, user}:{
           {viewMode === 'grid' ? (
             <ApplicationGridView data={data} statusColours={colors} user={user}/>
           ) : (
-            <ApplicationListView data={data} statusColours={colors} className={`${viewMode === 'list' ? '' : '' }`}/>
+            <ApplicationListView data={data} statusColours={colors} className={`${viewMode === 'list' ? 'mt-5' : '' }`}/>
           )}
         </div>
     )

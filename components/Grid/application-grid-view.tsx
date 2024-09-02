@@ -29,7 +29,7 @@ export function ApplicationGridView({
   return(
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
       {data.map((m) => (
-        <Card key={m.id}>
+        <Card key={m.id} className="flex flex-col justify-between">
           <CardHeader>
             <CardTitle>{m.company_name}</CardTitle>
             <CardDescription>{m.role}</CardDescription>
@@ -42,8 +42,7 @@ export function ApplicationGridView({
                 <Link href={`${m.link}`} target="_blank"
                   className={cn(
                     buttonVariants({ variant: 'link', size: 'sm' }),
-                    'text-blue-500 hover:text-blue-700 underline',
-                    'size-8'
+                    'text-blue-500 hover:text-blue-700 underline size-8 ml-7',
                   )}
                 >
                   Application Link
