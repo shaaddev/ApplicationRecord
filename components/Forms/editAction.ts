@@ -3,45 +3,45 @@ import { db } from "@/db"
 import { applications } from "@/db/schema/applications";
 import { eq } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
-// import { redirect } from "next/navigation";
 
 export const editAction = async (formData: FormData, id: string) => {
-  const new_role = formData.get('new_role')
-  const new_company_name = formData.get('new_company_name')
-  const new_location = formData.get('new_location')
-  const new_status = formData.get('new_status')
-  const new_date_applied = formData.get('new_date_applied')
-  const new_link = formData.get('new_link')
-  const new_salary = formData.get('new_salary')
+  const role = formData.get('role') as string
+  const company_name = formData.get('company_name') as string
+  const location = formData.get('location') as string
+  const status = formData.get('status') as string
+  const date_applied = formData.get('date_applied') as string | null
+  const link = formData.get('link') as string | null
+  const salary = formData.get('salary') as string | null
 
-
-  if (!new_role || !new_company_name || !new_location) {
+  if (!role || !company_name || !location || !status) {
     return {
       success: false,
       error: 'Missing required fields'
     }
   }  
 
-  
   try {
-    const result = await db.update(applications)
+    await db.update(applications)
       .set({
-        role: new_role as string,
-        company_name: new_company_name as string,
-        location: new_location as string,
-        date_applied: new_date_applied as string || null,
-        link: new_link as string || null,
-        salary: new_salary as string || null,
+        role,
+        company_name,
+        location,
+        status,
+        date_applied: date_applied ? new Date(date_applied) : null,
+        link: link || null,
+        salary: salary || null,
+        updated_at: new Date(),
       })
       .where(eq(applications.id, parseInt(id)));
 
-      revalidatePath("/")
+    revalidatePath("/application-record")
     
-      return { success: true, redirect: '/application-record' }
+    return { success: true, redirect: '/application-record' }
   } catch (error){
+    console.error('Error updating application:', error);
     return {
       success: false,
-      error: console.log(error)
+      error: 'Failed to update application'
     }
   }
 }
