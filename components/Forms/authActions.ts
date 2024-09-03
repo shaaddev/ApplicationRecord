@@ -29,7 +29,6 @@ export const signupAction = async (formData: FormData) => {
   const supabase = createClient();
 
   const data = {
-    display_name: `${formData.get("first_name")} ${formData.get("last_name")}`,
     email: formData.get("email") as string,
     password: formData.get("password") as string,
   };
@@ -99,6 +98,42 @@ export const signInWithGoogleAction = async () => {
     return redirect(data.url);
   }
 };
+
+export const signInWithTwitterAction = async () => {
+  const supabase = createClient();
+  const origin = headers().get("origin");
+
+  const { data, error } = await supabase.auth.signInWithOAuth({
+    provider: "twitter",
+    options: {
+      redirectTo: `${origin}/auth/callback`,
+    },
+  })
+
+  if (error){
+    return redirect("/error")
+  } else {
+    return redirect(data.url)
+  }
+}
+
+export const signInWithLinkedinAction = async () => {
+  const supabase = createClient();
+  const origin = headers().get("origin");
+
+  const { data, error } = await supabase.auth.signInWithOAuth({
+    provider: "linkedin_oidc",
+    options: {
+      redirectTo: `${origin}/auth/callback`,
+    },
+  })
+
+  if (error){
+    return redirect("/error")
+  } else {
+    return redirect(data.url)
+  }
+}
 
 export const signInAnonymouslyAction = async () => {
   const supabase = createClient();

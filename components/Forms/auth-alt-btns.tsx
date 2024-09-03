@@ -1,6 +1,12 @@
-import { Google, Github } from "@/lib/Logos";
+import { Google, Github, Twitter, Linkedin } from "@/lib/Logos";
 import { Button } from "../ui/button";
-import { signInWithGitHubAction, signInWithGoogleAction, signInAnonymouslyAction } from "./authActions";
+import { 
+  signInWithGitHubAction, 
+  signInWithGoogleAction,
+  signInAnonymouslyAction, 
+  signInWithTwitterAction,
+  signInWithLinkedinAction 
+} from "./authActions";
 
 const altBtns = [
   {
@@ -14,10 +20,20 @@ const altBtns = [
     action: signInWithGitHubAction,
   },
   {
-    name: 'Try as a Guest', 
-    icon: null,
-    action: signInAnonymouslyAction,
-  }
+    name: 'Continue with X',
+    icon: <Twitter className="ml-2"/>,
+    action: signInWithTwitterAction,
+  },
+  {
+    name: 'Continue with Linkedin',
+    icon: <Linkedin className="ml-2"/>,
+    action: signInWithLinkedinAction,
+  },
+  // {
+  //   name: 'Try as a Guest', 
+  //   icon: null,
+  //   action: signInAnonymouslyAction,
+  // }
 ]
 
 export function AuthAltBtns() {
