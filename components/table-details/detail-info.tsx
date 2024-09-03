@@ -25,7 +25,7 @@ export async function DetailInfo({ data }: {data: JobProps}){
           <div>
             <p>{data.company_name}</p>
             <p>{data.status}</p>
-            <p>{data.date_applied}</p>
+            <p>{data.date_applied?.toDateString()}</p>
           </div>
           {user ? (
             <div className='w-full pt-5 flex justify-between '>

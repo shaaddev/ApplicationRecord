@@ -33,7 +33,7 @@ export function TableList({ data }: { data: JobProps[] }) {
             <TableCell>{m.company_name}</TableCell>
             <TableCell>{m.location}</TableCell>
             <TableCell>{m.status}</TableCell>
-            <TableCell>{m.date_applied}</TableCell>
+            <TableCell>{m.date_applied?.toDateString()}</TableCell>
             <TableCell className="w-1/12">
               <a 
                 href={m.link} 

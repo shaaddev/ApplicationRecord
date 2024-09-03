@@ -4,7 +4,7 @@ export interface JobProps {
   company_name: string
   location: string
   status: string
-  date_applied?: string
+  date_applied?: Date
   link?: string
   salary?: string
 }
@@ -16,7 +16,7 @@ export const mock_data: JobProps[] = [
     company_name: 'Amazon',
     location: 'NYC',
     status: 'Applied',
-    date_applied: '2022-01-01',
+    date_applied: new Date('2022-01-01'),
   },
   {
     id: '2',
@@ -24,7 +24,7 @@ export const mock_data: JobProps[] = [
     company_name: 'Google',
     location: 'NYC',
     status: 'Ghosted',
-    date_applied: '2022-01-01',
+    date_applied: new Date('2022-01-01'),
   },
   {
     id: '3',
@@ -32,6 +32,6 @@ export const mock_data: JobProps[] = [
     company_name: 'Meta',
     location: 'Seattle',
     status: 'Rejected',
-    date_applied: '2022-01-01',
+    date_applied: new Date('2022-01-01'),
   }
 ]
