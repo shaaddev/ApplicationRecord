@@ -9,7 +9,7 @@ export const createAction = async (formData: FormData) => {
   const company_name = formData.get('company_name')
   const location = formData.get('location')
   const status = formData.get('status')
-  const date_applied = formData.get('date_applied')
+  const date_applied = formData.get('date_applied') as string | null
   const link = formData.get('link')
   const salary = formData.get('salary')
 
@@ -31,7 +31,7 @@ export const createAction = async (formData: FormData) => {
       company_name: company_name as string,
       location: location as string,
       status: status as string,
-      date_applied: date_applied as string || null,
+      date_applied: date_applied ? new Date(date_applied) : null,
       link: link as string || null,
       salary: salary as string || null,
       user_id: user?.id
