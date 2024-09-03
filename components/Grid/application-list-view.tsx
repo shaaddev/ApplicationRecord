@@ -21,6 +21,9 @@ export function ApplicationListView({
               <p className="text-sm text-gray-500">{m.role}</p>
               <p className="text-sm text-gray-500">{m.location}</p>
               <p className="text-sm text-gray-500">${m.salary}</p>
+              {m.date_applied && (
+                <p className="text-sm text-gray-500">Applied: {m.date_applied.toLocaleDateString()}</p>
+              )}
               {m.link && (
                 <Link href={`${m.link}`} target="_blank"
                   className={cn(

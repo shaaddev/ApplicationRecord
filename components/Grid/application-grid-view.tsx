@@ -28,6 +28,9 @@ export function ApplicationGridView({
             <Badge className={`${statusColours[m.status]}`}>{m.status}</Badge>
             <p className="my-2">{m.location}</p>
             <p className="mt-2">${m.salary}</p>
+            {m.date_applied && (
+                <p className="text-sm text-gray-500">Applied: {m.date_applied.toLocaleDateString()}</p>
+              )}
             {m.link && (
                 <Link href={`${m.link}`} target="_blank"
                   className={cn(
