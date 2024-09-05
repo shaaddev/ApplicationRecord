@@ -18,7 +18,7 @@ export function ResNavBar({
     <div className="flex lg:hidden">
       <Sheet>
         <SheetTrigger className="text-white"><Menu className="w-6 h-6 mr-2"/></SheetTrigger>
-        <SheetContent side='top' className="bg-lime-500 text-white border-none">
+        <SheetContent side='top' className="bg-lime-500 text-white border-none rounded-b-3xl">
           <div className="flex flex-row items-center justify-center p-10">
             <ul className="flex flex-col gap-2 w-full text-center">
               {user ? (
