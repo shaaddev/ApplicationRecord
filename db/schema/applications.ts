@@ -9,6 +9,7 @@ export const applications = pgTable("applications", {
   date_applied: timestamp("date_applied", { mode: 'date' }),
   link: text("link"),
   salary: text("salary"),
+  rate: text('rate'),
   user_id: text("user_id"),
   created_at: timestamp("created_at", { withTimezone: true }).defaultNow().notNull(),
   updated_at: timestamp("updated_at", { withTimezone: true }).defaultNow().notNull(),
