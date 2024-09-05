@@ -16,8 +16,8 @@ export function FilterDropdown({ onSort }: FilterDropdownProps) {
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Button variant="outline" className="ml-auto">
-          <ArrowUpDown className="mr-2 h-4 w-4" />
-          Filter by Status
+          <ArrowUpDown className=" h-4 w-4" />
+          <span className="hidden md:flex p-0 ml-2">Filter by Status</span>
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">

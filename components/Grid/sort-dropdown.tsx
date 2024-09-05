@@ -47,8 +47,8 @@ export function SortDropdown({ sortBy, sortOrder, onSortChange }: SortDropdownPr
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Button variant="outline" className="flex items-center gap-2">
-          <ListOrderedIcon className="w-4 h-4" />
-          <span>{getSortByLabel(sortBy)}</span>
+          <ListOrderedIcon className="w-4 h-4 hidden md:flex" />
+          <span className='hidden md:flex'>{getSortByLabel(sortBy)}</span>
           <ChevronsUpDownIcon className="w-4 h-4" />
         </Button>
       </DropdownMenuTrigger>
