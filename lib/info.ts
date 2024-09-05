@@ -6,7 +6,7 @@ export interface JobProps {
   status: string
   date_applied?: Date
   link?: string
-  salary?: string
+  salary?: number
   rate?: string
 }
 

@@ -32,7 +32,7 @@ const formSchema = z.object({
   status: z.string().min(1, { message: 'Required' }),
   date_applied: z.date().optional(),
   link: z.string().optional(),
-  salary: z.number().optional(),
+  salary: z.number().positive().optional(),
   rate: z.enum(['hourly', 'weekly', 'monthly', 'yearly']).optional()
 })
 
@@ -221,7 +221,9 @@ export function CreateForm(){
                   <FormLabel>Salary (Optional)</FormLabel>
                   <FormControl>
                     <Input 
-                     {...field}
+                      type="number"
+                      {...field}
+                      onChange={(e) => field.onChange(Number(e.target.value))}
                       className=""  
                     />
                   </FormControl>
