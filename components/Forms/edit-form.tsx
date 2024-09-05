@@ -1,5 +1,5 @@
 'use client'
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { editAction } from './editAction';
 import { JobProps } from '@/lib/info';
@@ -24,6 +24,7 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 import { DatePicker } from "./date-picker"
+import { format } from 'date-fns'
 
 const formSchema = z.object({
   role: z.string().min(1, { message: 'Required' }),
@@ -33,6 +34,7 @@ const formSchema = z.object({
   date_applied: z.date().optional(),
   link: z.string().optional(),
   salary: z.string().optional(),
+  rate: z.string().optional()
 })
 
 interface EditFormProps extends JobProps {
@@ -40,9 +42,10 @@ interface EditFormProps extends JobProps {
 }
 
 export function EditForm({
-  id, role, company_name, location, status, date_applied, link, salary, onSuccess
+  id, role, company_name, location, status, date_applied, link, salary, rate, onSuccess
 }: EditFormProps){
   const [isPending, setIsPending] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -54,8 +57,18 @@ export function EditForm({
       date_applied: date_applied ? new Date(date_applied) : undefined,
       link: link || '',
       salary: salary || '',
+      rate: rate || '',
     },
   })
+
+  useEffect(() => {
+    const checkIfMobile = () => {
+      setIsMobile(window.innerWidth < 768)
+    }
+    checkIfMobile()
+    window.addEventListener('resize', checkIfMobile)
+    return () => window.removeEventListener('resize', checkIfMobile)
+  }, [])
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     setIsPending(true)
@@ -176,10 +189,24 @@ export function EditForm({
             render={({ field }) => (
               <FormItem className="flex flex-col">
                 <FormLabel>Date Applied (Optional)</FormLabel>
-                <DatePicker 
-                  value={field.value} 
-                  onChange={(date: Date | undefined) => field.onChange(date)}
-                />
+                {isMobile ? (
+                  <FormControl>
+                    <Input 
+                      type="date"
+                      {...field}
+                      value={field.value ? format(field.value, 'yyyy-MM-dd') : ''}
+                      onChange={(e) => {
+                        const date = new Date(e.target.value)
+                        field.onChange(isNaN(date.getTime()) ? undefined : date)
+                      }}
+                    />
+                  </FormControl>
+                ) : (
+                  <DatePicker 
+                    value={field.value} 
+                    onChange={(date: Date | undefined) => field.onChange(date)}
+                  />
+                )}
                 <FormMessage />
               </FormItem>
             )}

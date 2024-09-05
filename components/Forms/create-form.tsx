@@ -11,7 +11,7 @@ import {
 import { Input } from "@/components/ui/input"
 import { toast } from 'sonner'
 import { createAction } from "./createAction";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   Form,
   FormControl,
@@ -23,6 +23,7 @@ import {
 import { z } from "zod";
 import { zodResolver } from '@hookform/resolvers/zod'
 import { DatePicker } from "./date-picker"
+import { format } from "date-fns"
 
 const formSchema = z.object({
   role: z.string().min(1, { message: 'Required' }),
@@ -31,11 +32,13 @@ const formSchema = z.object({
   status: z.string().min(1, { message: 'Required' }),
   date_applied: z.date().optional(),
   link: z.string().optional(),
-  salary: z.string().optional(),
+  salary: z.number().optional(),
+  rate: z.enum(['hourly', 'weekly', 'monthly', 'yearly']).optional()
 })
 
 export function CreateForm(){
   const [isPending, setIsPending] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -46,9 +49,19 @@ export function CreateForm(){
       status: '',
       date_applied: undefined,
       link: '',
-      salary: '',
+      salary: undefined,
+      rate: 'hourly'
     },
   })
+
+  useEffect(() => {
+    const checkIfMobile = () => {
+      setIsMobile(window.innerWidth < 768)
+    }
+    checkIfMobile()
+    window.addEventListener('resize', checkIfMobile)
+    return () => window.removeEventListener('resize', checkIfMobile)
+  }, [])
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     setIsPending(true)
@@ -163,27 +176,43 @@ export function CreateForm(){
             render={({ field }) => (
               <FormItem className="flex flex-col">
                 <FormLabel>Date Applied (Optional)</FormLabel>
-                <DatePicker 
-                  value={field.value} 
-                  onChange={(date: Date | undefined) => field.onChange(date)}
-                />
+                {isMobile ? (
+                  <FormControl>
+                    <Input 
+                      type="date"
+                      {...field}
+                      value={field.value ? format(field.value, 'yyyy-MM-dd') : ''}
+                      onChange={(e) => {
+                        const date = new Date(e.target.value)
+                        field.onChange(isNaN(date.getTime()) ? undefined : date)
+                      }}
+                    />
+                  </FormControl>
+                ): (
+                  <>
+                    <DatePicker 
+                      value={field.value} 
+                      onChange={(date: Date | undefined) => field.onChange(date)}
+                    />
+                  </>
+                )}
                 <FormMessage />
               </FormItem>
             )}
           />
-          <div className="flex flex-col justify-center lg:grid lg:grid-cols-2 lg:gap-6">
-            <FormField 
-              control={form.control}
-              name="link"
-              render={({ field}) => (
-                <FormItem>
-                  <FormLabel>Link (Optional)</FormLabel>
-                  <FormControl>
-                    <Input {...field}/>
-                  </FormControl>
-                </FormItem>
-              )}
-            />
+          <FormField 
+            control={form.control}
+            name="link"
+            render={({ field}) => (
+              <FormItem>
+                <FormLabel>Link (Optional)</FormLabel>
+                <FormControl>
+                  <Input {...field}/>
+                </FormControl>
+              </FormItem>
+            )}
+          />
+          {/* <div className="flex flex-row items-end w-full"> */}
             <FormField 
               control={form.control}
               name="salary"
@@ -191,12 +220,37 @@ export function CreateForm(){
                 <FormItem>
                   <FormLabel>Salary (Optional)</FormLabel>
                   <FormControl>
-                    <Input {...field}/>
+                    <Input 
+                     {...field}
+                      className=""  
+                    />
                   </FormControl>
+                  <FormMessage />
                 </FormItem>
               )}
             />
-          </div>
+            {/* <FormField 
+              control={form.control}
+              name="rate"
+              render={({ field }) => (
+                <FormItem>
+                  <Select onValueChange={field.onChange} defaultValue={field.value}>
+                    <FormControl>
+                      <SelectTrigger className="w-[120px] rounded-l-none border-l-none">
+                        <SelectValue placeholder={field.value} />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                      <SelectItem value="Hourly">Hourly</SelectItem>
+                      <SelectItem value="Weekly">Weekly</SelectItem>
+                      <SelectItem value="Monthly">Monthly</SelectItem>
+                      <SelectItem value="Yearly">Yearly</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </FormItem>
+              )}
+            /> */}
+          {/* </div> */}
           <Button type="submit" disabled={isPending}>
             {isPending ? 'Submitting...' : 'Submit'}
           </Button>
