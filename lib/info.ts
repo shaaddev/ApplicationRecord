@@ -7,6 +7,7 @@ export interface JobProps {
   date_applied?: Date
   link?: string
   salary?: string
+  rate?: string
 }
 
 export const mock_data: JobProps[] = [
