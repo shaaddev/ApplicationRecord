@@ -49,7 +49,7 @@ export default async function ApplicationRecord() {
             {user && (
               <FormTrigger>
                 <Button type='button' className='flex flex-row gap-2 dark:bg-slate-500 dark:text-black'>
-                  Add Application<Pencil className="w-4 h-4 inline" />
+                  Add <span className="hidden md:flex">Application</span> <Pencil className="w-4 h-4 inline " />
                 </Button>
               </FormTrigger>
             )}
