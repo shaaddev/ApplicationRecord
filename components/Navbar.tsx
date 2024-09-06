@@ -5,7 +5,7 @@ import logo from '@/public/logo.svg'
 import Image from 'next/image'
 import { ResNavBar } from './res-nav-bar'
 import { getKindeServerSession } from '@kinde-oss/kinde-auth-nextjs/server'
-
+import { LogoutLink } from "@kinde-oss/kinde-auth-nextjs/components";
 
 export interface PathProps {
   [key: string]: {
@@ -43,9 +43,9 @@ export async function Navbar() {
                 </li>  
               ))}
               <li>
-                <Link href="/api/auth/logout" className='hover:text-slate-800 dark:hover:text-slate-800'>
+                <LogoutLink className='hover:text-slate-800 dark:hover:text-slate-800'>
                   Logout
-                </Link>
+                </LogoutLink>
               </li>
             </> 
           ): (
