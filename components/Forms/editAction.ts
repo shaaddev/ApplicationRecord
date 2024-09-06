@@ -4,6 +4,7 @@ import { applications } from "@/db/schema/applications";
 import { eq } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
 
+
 export const editAction = async (formData: FormData, id: string) => {
   const role = formData.get('role') as string
   const company_name = formData.get('company_name') as string

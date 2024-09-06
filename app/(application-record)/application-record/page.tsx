@@ -11,22 +11,12 @@ import { desc } from 'drizzle-orm';
 import { eq } from 'drizzle-orm';
 import { ChatbotUI } from "@/components/ai-chatbot/chatbot";
 import {GridListToggle} from '@/components/Grid/grid-list-toggle'
+import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 
 export default async function ApplicationRecord() {
-  const supabase = createClient();
+  const { getUser } = getKindeServerSession();
 
-  let { data: { user } } = await supabase.auth.getUser();
-
-  if (!user && typeof window !== "undefined" && localStorage.getItem('guestMode') === 'true') {
-    const { data, error } = await supabase.auth.signInAnonymously(); 
-
-    if (error) {
-      console.error("Failed to sign in as guest", error);
-      redirect("/login");
-    } else {
-      user = data.user; 
-    }
-  }
+  let user = await getUser();
 
   const id = user?.id;
   let apps: any;
@@ -36,7 +26,7 @@ export default async function ApplicationRecord() {
   }
 
   if (!user) {
-    redirect("/login");
+    redirect("/api/auth/login");
   }
 
   return (

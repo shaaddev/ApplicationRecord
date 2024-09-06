@@ -12,7 +12,7 @@ import { EditButton } from "./edit-btn";
 
 export function ApplicationGridView({
   data, statusColours, user
-}: { data: JobProps[], statusColours: { [key: string]: string }, user?: User | null } ) {
+}: { data: JobProps[], statusColours: { [key: string]: string }, user?: any } ) {
 
   return(
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">

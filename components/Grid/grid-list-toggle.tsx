@@ -5,9 +5,9 @@ import { useState, useMemo } from "react";
 import { ApplicationGridView } from "./application-grid-view";
 import { ApplicationListView } from "./application-list-view";
 import { JobProps } from "@/lib/info";
-import { User } from "@supabase/supabase-js";
 import { FilterDropdown } from "./filter-dropdown";
 import { SortDropdown } from "./sort-dropdown";
+import { KindeUser } from "@kinde-oss/kinde-auth-nextjs/dist/types";
 
 const colors = {
   'Not Applied': 'bg-red-500',
@@ -23,7 +23,7 @@ const colors = {
 type SortableFields = 'role' | 'company_name' | 'status' | 'date_applied';
 
 export function GridListToggle({data, children, user}:{
-  data: JobProps[], children?: React.ReactNode, user?: User | null
+  data: JobProps[], children?: React.ReactNode, user?: any
 }) {
     const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid')
     const [sortField, setSortField] = useState<SortableFields>('date_applied');

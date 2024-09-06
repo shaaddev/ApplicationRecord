@@ -7,7 +7,7 @@ export default async function Signup(){
 
   const { data: { user }} = await supabase.auth.getUser()
   if (!user){
-    redirect('/login')
+    redirect('/api/auth/login')
   }
 
   return(

@@ -2,7 +2,7 @@
 import { revalidatePath } from 'next/cache';
 import { db } from '@/db';
 import { applications } from '@/db/schema/applications';
-import { createClient } from '@/utils/supabase/server'
+import { getKindeServerSession } from '@kinde-oss/kinde-auth-nextjs/server';
 
 export const createAction = async (formData: FormData) => {
   const role = formData.get('role')
@@ -13,9 +13,8 @@ export const createAction = async (formData: FormData) => {
   const link = formData.get('link')
   const salary = formData.get('salary')
 
-  const supabase = createClient()
-
-  const { data: { user } } = await supabase.auth.getUser();
+  const { getUser } = getKindeServerSession();
+  const user = await getUser();
 
 
   if (!role || !company_name || !location || !status) {

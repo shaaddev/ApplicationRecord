@@ -1,5 +1,4 @@
 import { Menu } from "lucide-react";
-import { User } from "@supabase/supabase-js";
 import {
   Sheet,
   SheetClose,
@@ -12,7 +11,7 @@ import { PathProps } from "./Navbar";
 export function ResNavBar({
   theme, user, paths
 }: {
-  theme: React.ReactNode, user: User | null, paths: PathProps
+  theme: React.ReactNode, user: any, paths: PathProps
 }) {
   return(
     <div className="flex lg:hidden">
