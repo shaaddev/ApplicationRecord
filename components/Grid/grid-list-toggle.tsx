@@ -23,7 +23,7 @@ const colors = {
 type SortableFields = 'role' | 'company_name' | 'status' | 'date_applied';
 
 export function GridListToggle({data, children, user}:{
-  data: JobProps[], children?: React.ReactNode, user?: any
+  data: any, children?: React.ReactNode, user?: any
 }) {
     const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid')
     const [sortField, setSortField] = useState<SortableFields>('date_applied');

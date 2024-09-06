@@ -16,16 +16,14 @@ export default async function ApplicationRecord() {
   const { getUser } = getKindeServerSession();
   const user = await getUser();
 
-  const id = user?.id;
-  let apps: any;
-
-  if (id) {
-    apps = await db.select().from(applications).where(eq(applications.user_id, id)).orderBy(desc(applications.id));
-  }
-
   if (!user) {
     redirect("/api/auth/login");
   }
+
+  const id = user?.id;
+  const apps = await db.select().from(applications).where(eq(applications.user_id, id)).orderBy(desc(applications.id));
+
+  
 
   return (
     <main className="flex flex-col items-center justify-between p-10 lg:p-16">
