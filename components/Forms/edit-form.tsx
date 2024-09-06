@@ -1,7 +1,7 @@
 'use client'
 import { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
-import { editAction } from './editAction';
+import { editAction } from './actions';
 import { JobProps } from '@/lib/info';
 import { Button } from '@/components/ui/button'
 import { toast } from 'sonner';

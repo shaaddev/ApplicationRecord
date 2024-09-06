@@ -4,9 +4,7 @@ import { buttonVariants } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import Link from "next/link";
 import { Delete } from "./application-delete-btn";
-import { User } from "@supabase/supabase-js";
 import { cn } from "@/lib/utils";
-import { Ellipsis } from "lucide-react";
 import { UpdateStatusBtn } from "./application-update-btn";
 import { EditButton } from "./edit-btn";
 

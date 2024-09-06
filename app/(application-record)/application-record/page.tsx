@@ -3,7 +3,6 @@ import { TableCard } from "@/components/table-card";
 import { Button } from "@/components/ui/button";
 import { Pencil } from "@/lib/Logos";
 import { FormTrigger } from "@/components/Forms/form-trigger/create-form-trigger";
-import { createClient } from "@/utils/supabase/server";
 import { redirect } from "next/navigation";
 import { applications } from '@/db/schema/applications';
 import { db } from '@/db';
@@ -16,7 +15,6 @@ import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 export default async function ApplicationRecord() {
   const { getUser } = getKindeServerSession();
   const user = await getUser();
-
 
   const id = user?.id;
   let apps: any;

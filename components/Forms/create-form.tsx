@@ -10,7 +10,7 @@ import {
 } from "@/components/ui/select"
 import { Input } from "@/components/ui/input"
 import { toast } from 'sonner'
-import { createAction } from "./createAction";
+import { createAction } from "./actions"
 import { useState, useEffect } from "react";
 import {
   Form,
@@ -63,11 +63,7 @@ export function CreateForm(){
     return () => window.removeEventListener('resize', checkIfMobile)
   }, [])
 
-  const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
-
-    
-    const values = form.getValues()
+  const onSubmit = async (values: z.infer<typeof formSchema>) => {
     setIsPending(true)
     
     const formData = new FormData();
@@ -105,7 +101,7 @@ export function CreateForm(){
   return(
     <div className="flex flex-col items-center justify-center p-10 w-full lg:p-16">
       <Form {...form}>
-        <form onSubmit={onSubmit} className="space-y-6 w-full">
+        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6 w-full">
           <FormField 
             control={form.control}
             name="role"

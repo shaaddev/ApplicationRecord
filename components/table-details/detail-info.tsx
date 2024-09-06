@@ -3,14 +3,13 @@ import { JobProps } from '@/lib/info'
 import { Button } from '../ui/button'
 import Link from 'next/link'
 import { Delete } from '../Grid/application-delete-btn'
-import { createClient } from '@/utils/supabase/server'
-
+import { getKindeServerSession } from '@kinde-oss/kinde-auth-nextjs/server'
 
 export async function DetailInfo({ data }: {data: JobProps}){
 
-  const supabase = createClient()
+  const {getUser} = getKindeServerSession()
 
-  const { data: { user } } = await supabase.auth.getUser()
+  const user = await getUser()
 
   return(
     <>

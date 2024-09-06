@@ -5,14 +5,14 @@ import { mock_data } from '@/lib/info';
 import { applications } from '@/db/schema/applications';
 import { db } from '@/db';
 import { desc } from 'drizzle-orm';
-import { createClient } from '@/utils/supabase/server';
 import { eq } from 'drizzle-orm';
+import { getKindeServerSession } from '@kinde-oss/kinde-auth-nextjs/server';
 
 export async function _Table({data}: any){
 
-  const supabase = createClient();
+  const {getUser} = getKindeServerSession()
 
-  const { data: { user } } = await supabase.auth.getUser();
+  const user = await getUser();
   const id = user?.id
   let apps: any;
 
