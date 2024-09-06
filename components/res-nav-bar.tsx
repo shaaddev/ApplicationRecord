@@ -28,7 +28,7 @@ export function ResNavBar({
                     </li>
                   ))}
                   <li className="w-full border border-black border-opacity-10 p-2 rounded-xl">
-                    <Link href='/logout' className="">
+                    <Link href='/api/auth/logout' className="">
                       Logout
                     </Link>
                   </li>
