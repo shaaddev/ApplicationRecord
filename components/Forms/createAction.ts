@@ -5,6 +5,9 @@ import { applications } from '@/db/schema/applications';
 import { getKindeServerSession } from '@kinde-oss/kinde-auth-nextjs/server';
 
 export const createAction = async (formData: FormData) => {
+  const { getUser } = getKindeServerSession();
+  const user = await getUser();
+
   const role = formData.get('role')
   const company_name = formData.get('company_name')
   const location = formData.get('location')
@@ -13,8 +16,7 @@ export const createAction = async (formData: FormData) => {
   const link = formData.get('link')
   const salary = formData.get('salary')
 
-  const { getUser } = getKindeServerSession();
-  const user = await getUser();
+  
 
 
   if (!role || !company_name || !location || !status) {
@@ -33,7 +35,7 @@ export const createAction = async (formData: FormData) => {
       date_applied: date_applied ? new Date(date_applied) : null,
       link: link as string || null,
       salary: salary as string || null,
-      user_id: user?.id
+      user_id: user?.id as string
     })
 
     revalidatePath("/")
