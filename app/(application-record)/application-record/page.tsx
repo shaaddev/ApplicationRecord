@@ -15,8 +15,8 @@ import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 
 export default async function ApplicationRecord() {
   const { getUser } = getKindeServerSession();
+  const user = await getUser();
 
-  let user = await getUser();
 
   const id = user?.id;
   let apps: any;
