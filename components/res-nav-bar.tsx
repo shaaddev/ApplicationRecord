@@ -7,7 +7,7 @@ import {
 } from "@/components/ui/sheet"
 import Link from "next/link";
 import { PathProps } from "./Navbar";
-import { LogoutLink } from "@kinde-oss/kinde-auth-nextjs/components";
+import { LogoutDialog } from "./logout-dialog";
 
 export function ResNavBar({
   theme, user, paths
@@ -29,9 +29,7 @@ export function ResNavBar({
                     </li>
                   ))}
                   <li className="w-full border border-black border-opacity-10 p-2 rounded-xl">
-                    <LogoutLink>
-                      Logout
-                    </LogoutLink>
+                    <LogoutDialog />
                   </li>
                 </>
               ) : (
