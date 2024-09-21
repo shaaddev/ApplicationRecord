@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "generate": "drizzle-kit generate",
-    "migrate": "node migrate.js",
+    "migrate": "npx tsx migrate.ts",
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
