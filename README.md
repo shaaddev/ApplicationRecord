@@ -40,4 +40,4 @@ We welcome and appreciate your contributions to this project! Before you begin, 
 
 We have a simple feature to get you started, but we highly encourage contributors to suggest their own issues based on what they believe would be useful. 
 
-Put yourself in the user's position and think about what enhancements or features would improve the application. Your unique perspective is valuable and can help make the project even better :)
+Put yourself in the user's position and think about what enhancements or features would improve the application. Your unique perspective is valuable and can help make the project even better :))
