@@ -1,37 +1,27 @@
-'use client'
-import { useState, useEffect } from 'react';
-import { useTheme } from 'next-themes';
-import { Sun, Moon } from 'lucide-react';
+"use client";
+import { Sun, Moon } from "lucide-react";
+import { useTheme } from "next-themes";
+import { Button } from "./ui/button";
 
-export  function Theme({ className }: { className?: string }) {
-    const [mounted, setMounted] = useState(false)
-    const {setTheme, resolvedTheme } = useTheme()
+export default function Theme({ className }: { className?: string }) {
+  const { theme, setTheme } = useTheme();
 
-    useEffect(() => setMounted(true), [])
-
-    if (!mounted) return
-
-    const toggleTheme = () => {
-        if (resolvedTheme === 'dark'){
-            setTheme('light')
-        } else if (resolvedTheme === 'light'){
-            setTheme('dark')
-        }
-    }
-    const btn_style = `inline align-middle p-2 lg:p-0 lg:border-none rounded-xl border ${className ? className : 'text-slate-200'}`
-    const btn_size = 'w-5 h-5'
-
-    return (
-        <button 
-            type="button"
-            onClick={toggleTheme}
-            className={btn_style}    
-        >
-            {resolvedTheme === 'dark' ? 
-            (<Sun className={btn_size} aria-label='the sun'/>) : 
-            (<Moon className={btn_size} aria-label='the moon'/>)}
-        </button>
-    )
-    
+  return (
+    <Button
+      onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+      className="px-2 rounded-full"
+      type="button"
+      size="icon"
+      variant="ghost"
+    >
+      <Sun
+        className="h-[1.2rem] w-[1.2rem] text-neutral-800 dark:hidden dark:text-neutral-200"
+        aria-label="the sun"
+      />
+      <Moon
+        className="hidden h-[1.2rem] w-[1.2rem] text-neutral-800 dark:block dark:text-neutral-200"
+        aria-label="the moon"
+      />
+    </Button>
+  );
 }
-

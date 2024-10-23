@@ -2,9 +2,10 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import { Toaster } from "@/components/ui/sonner";
-import { Analytics } from "@vercel/analytics/react"
+import { Analytics } from "@vercel/analytics/react";
 import { GoogleAnalytics } from "@/components/google-analytics";
-
+import { ViewTransitions } from "next-view-transitions";
+import { Providers } from "./providers";
 
 const inter = Inter({ variable: "--font-inter", subsets: ["latin"] });
 
@@ -19,15 +20,21 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning>
-      <body className={inter.className}>
-          <main className="lg:mx-auto">
-            {children}
-          </main>
-          <Toaster />
-          <Analytics />
-          <GoogleAnalytics />
-      </body>
-    </html>
+    <ViewTransitions>
+      <html lang="en" suppressHydrationWarning>
+        <body className={`${inter.className} antialiased`}>
+          <div className="w-full lg:mx-auto flex flex-col justify-between min-h-screen py-12 sm:py-24 bg-background text-primary">
+            <Providers>
+              <main className="">
+                {children}
+                <Toaster position="bottom-right" />
+              </main>
+            </Providers>
+            <Analytics />
+            <GoogleAnalytics />
+          </div>
+        </body>
+      </html>
+    </ViewTransitions>
   );
 }
