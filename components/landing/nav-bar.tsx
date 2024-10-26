@@ -1,4 +1,5 @@
-import { Link } from "next-view-transitions";
+import { Link as ViewLink } from "next-view-transitions";
+import Link from "next/link";
 import { Button } from "../ui/button";
 import logo from "@/public/logo.svg";
 import Image from "next/image";
@@ -8,7 +9,7 @@ export function NavBar() {
   return (
     <nav className="fixed flex flex-col max-w-full bg-none px-2 z-10 top-5 inset-x-0">
       <div className="flex flex-row items-center justify-between px-5">
-        <Link href="/">
+        <ViewLink href="/">
           <Image
             src={logo}
             alt="Logo"
@@ -16,7 +17,7 @@ export function NavBar() {
             height={24}
             className="invert dark:invert-0"
           />
-        </Link>
+        </ViewLink>
         <Button className="rounded-full px-4 py-6 bg-lime-500 text-primary-foreground hover:bg-lime-500 font-bold">
           <Link
             href="/api/auth/login"

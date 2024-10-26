@@ -1,9 +1,8 @@
 import "../globals.css";
 import { Providers } from "@/app/providers";
 import { Toaster } from "@/components/ui/sonner";
-import { Analytics } from "@vercel/analytics/react"
+import { Analytics } from "@vercel/analytics/react";
 import { Navbar } from "@/components/Navbar";
-
 
 export default function AppLayout({
   children,
@@ -12,14 +11,14 @@ export default function AppLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
+      <body className="">
         <Providers>
           <Navbar />
-          <main className="mx-auto max-w-screen-2xl">
-            {children}
-          </main>
+          <main className="mx-auto max-w-screen-2xl">{children}</main>
           <Toaster />
         </Providers>
         <Analytics />
+      </body>
     </html>
   );
 }

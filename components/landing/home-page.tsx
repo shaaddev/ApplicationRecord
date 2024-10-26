@@ -1,4 +1,4 @@
-import { Link } from "next-view-transitions";
+import Link from "next/link";
 import { MoveRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import SparklesText from "@/components/ui/sparkles-text";

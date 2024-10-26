@@ -3,13 +3,13 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "generate": "drizzle-kit generate",
-    "migrate": "npx tsx migrate.ts",
+    "db:push": "drizzle-kit generate",
+    "db:migrate": "npx tsx migrate.ts",
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "email-dev": "email dev"
+    "email:dev": "email dev"
   },
   "dependencies": {
     "@ai-sdk/amazon-bedrock": "^0.0.17",
