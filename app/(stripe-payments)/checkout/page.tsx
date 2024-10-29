@@ -1,36 +1,33 @@
 import type { Metadata } from "next";
 
 import Link from "next/link";
-import "@/styles.css"
+import "@/styles.css";
 import { CardStripe } from "@/components/Stripe/CardStripe";
 import { stripe_div } from "@/components/Stripe/CardStripe";
 
 const checkouts = [
   {
-    name: 'Donate with hosted Checkout',
-    href: '/donate-with-checkout',
-    svg: '/checkout-one-time-payments.svg',
+    name: "Donate with hosted Checkout",
+    href: "/donate-with-checkout",
+    svg: "/checkout-one-time-payments.svg",
   },
   {
-    name: 'Donate with Elements',
-    href: '/donate-with-elements',
-    svg: '/elements-card-payment.svg',
+    name: "Donate with Elements",
+    href: "/donate-with-elements",
+    svg: "/elements-card-payment.svg",
+  },
+];
 
-  }
-]
-
-export default function Page(): JSX.Element {
+export default function Page() {
   return (
     <div className={`${stripe_div}`}>
       <ul className="flex flex-wrap items-start pt-16">
         {checkouts.map((c, index) => (
           <li key={index} className="mx-2">
-            <Link
-              href={c.href}
-            >
+            <Link href={c.href}>
               <CardStripe>
-                  <h2 className="text-lg ">{c.name}</h2>
-                  <img src={c.svg} />
+                <h2 className="text-lg ">{c.name}</h2>
+                <img src={c.svg} />
               </CardStripe>
             </Link>
           </li>
