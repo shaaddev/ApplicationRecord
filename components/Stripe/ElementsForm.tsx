@@ -170,7 +170,7 @@ function CheckoutForm() {
   );
 }
 
-export default function ElementsForm(): JSX.Element {
+export default function ElementsForm() {
   return (
     <Elements
       stripe={getStripe()}
