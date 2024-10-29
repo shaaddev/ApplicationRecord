@@ -1,5 +1,5 @@
-import { Link } from "next-view-transitions";
 import ShineBorder from "@/components/ui/shine-border";
+import Link from "next/link";
 
 export function Donate() {
   return (
