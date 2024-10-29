@@ -23,8 +23,8 @@ export default function RootLayout({
     <ViewTransitions>
       <html lang="en" suppressHydrationWarning>
         <body className={`${inter.className} antialiased`}>
-          <div className="w-full lg:mx-auto flex flex-col justify-between min-h-screen py-12 sm:py-24 bg-background text-primary">
-            <Providers>
+          <div className="w-full lg:mx-auto flex flex-col justify-between py-12 sm:py-24 bg-background text-primary">
+            <Providers theme="dark">
               <main className="">
                 {children}
                 <Toaster position="bottom-right" />

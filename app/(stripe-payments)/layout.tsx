@@ -3,7 +3,7 @@ import { Providers } from "@/app/providers";
 import { Toaster } from "@/components/ui/sonner";
 import { Analytics } from "@vercel/analytics/react";
 
-export default function AppLayout({
+export default function DonateLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;

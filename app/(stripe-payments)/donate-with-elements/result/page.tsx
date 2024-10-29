@@ -1,15 +1,12 @@
 import type { Stripe } from "stripe";
-
-import PrintObject from "@/components/Stripe/PrintObject";
 import { stripe } from "@/lib/Stripe";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 
-export default async function ResultPage({
-  searchParams,
-}: {
-  searchParams: { payment_intent: string };
+export default async function ResultPage(props: {
+  searchParams: Promise<{ payment_intent: string }>;
 }) {
+  const searchParams = await props.searchParams;
   if (!searchParams.payment_intent)
     throw new Error("Please provide a valid payment_intent (`pi_...`)");
 
@@ -17,7 +14,7 @@ export default async function ResultPage({
     await stripe.paymentIntents.retrieve(searchParams.payment_intent);
 
   return (
-    <>
+    <div>
       <h2>Status: {paymentIntent.status}</h2>
       <h3>Thank you for your donation!</h3>
 
@@ -25,6 +22,6 @@ export default async function ResultPage({
       <Link href="/">
         <Button>Home</Button>
       </Link>
-    </>
+    </div>
   );
 }

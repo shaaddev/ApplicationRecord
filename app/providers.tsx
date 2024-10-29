@@ -2,9 +2,15 @@
 
 import { ThemeProvider } from "next-themes";
 
-export function Providers({ children }: { children: React.ReactNode }) {
+export function Providers({
+  children,
+  theme,
+}: {
+  children: React.ReactNode;
+  theme?: string;
+}) {
   return (
-    <ThemeProvider attribute="class" defaultTheme="dark">
+    <ThemeProvider attribute="class" defaultTheme="dark" forcedTheme={theme}>
       {children}
     </ThemeProvider>
   );
