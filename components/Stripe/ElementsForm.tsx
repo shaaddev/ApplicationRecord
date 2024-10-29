@@ -2,7 +2,12 @@
 
 import type { StripeError } from "@stripe/stripe-js";
 import * as React from "react";
-import { useStripe, useElements, PaymentElement, Elements } from "@stripe/react-stripe-js";
+import {
+  useStripe,
+  useElements,
+  PaymentElement,
+  Elements,
+} from "@stripe/react-stripe-js";
 
 import CustomDonationInput from "./CustomDonationInput";
 import StripeTestCards from "./StripeTestCards";
@@ -12,7 +17,7 @@ import * as config from "@/config";
 import getStripe from "@/lib/utils";
 import { createPaymentIntent } from "@/app/actions/stripe";
 
-function CheckoutForm(): JSX.Element {
+function CheckoutForm() {
   const [input, setInput] = React.useState<{
     customDonation: number;
     cardholderName: string;
@@ -84,7 +89,7 @@ function CheckoutForm(): JSX.Element {
 
       // Create a PaymentIntent with the specified amount.
       const { client_secret: clientSecret } = await createPaymentIntent(
-        new FormData(e.target as HTMLFormElement),
+        new FormData(e.target as HTMLFormElement)
       );
 
       // Use your card Element with other Stripe.js APIs
@@ -115,7 +120,10 @@ function CheckoutForm(): JSX.Element {
 
   return (
     <>
-      <form onSubmit={handleSubmit} className="max-w-lg w-full mx-auto p-6 rounded-md">
+      <form
+        onSubmit={handleSubmit}
+        className="max-w-lg w-full mx-auto p-6 rounded-md"
+      >
         <CustomDonationInput
           className="elements-style"
           name="customDonation"

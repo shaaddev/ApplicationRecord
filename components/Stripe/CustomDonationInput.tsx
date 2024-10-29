@@ -18,7 +18,7 @@ export default function CustomDonationInput({
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   value: number;
   className?: string;
-}): JSX.Element {
+}) {
   return (
     <div className="w-full max-w-md">
       <label className="block mb-2">
@@ -33,7 +33,7 @@ export default function CustomDonationInput({
         step={step}
         onChange={onChange}
         value={value}
-        className={`w-full `} 
+        className={`w-full `}
       />
     </div>
   );
