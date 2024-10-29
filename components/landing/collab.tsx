@@ -13,7 +13,7 @@ export function Collab() {
           Contribute to Landit and help build the future with us
         </h1>
       </div>
-      <Button className="rounded-full px-4 py-6 bg-lime-500 text-primary-foreground hover:bg-lime-700 hover:none font-bold">
+      <Button className="rounded-full px-4 py-6 bg-lime-500 text-primary-foreground hover:bg-lime-500 font-bold">
         <Link
           href="https://github.com/shaaddev/ApplicationRecord"
           className="flex flex-row items-center gap-2"
