@@ -22,10 +22,8 @@ export default async function ResultPage({
       <h3>Thank you for your donation!</h3>
 
       <p>You will receive a confirmation email soon!</p>
-      <Link href='/'>
-        <Button>
-          Home
-        </Button>
+      <Link href="/">
+        <Button>Home</Button>
       </Link>
     </>
   );
