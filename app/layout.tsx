@@ -21,7 +21,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={`${inter.className} antialiased`}>
-        <div className="w-full lg:mx-auto flex flex-col justify-between py-12 sm:py-24 bg-background text-primary">
+        <div className="w-full lg:max-w-screen-xl lg:mx-auto flex flex-col justify-between py-12 sm:py-24 bg-background text-primary">
           <Providers theme="dark">
             <main className="">
               {children}
