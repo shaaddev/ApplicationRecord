@@ -1,15 +1,9 @@
-import { type ClassValue, clsx } from "clsx"
-import { twMerge } from "tailwind-merge"
-import { Stripe, loadStripe } from '@stripe/stripe-js';
-
-/**
-* @param amount - The amount in the main currency unit (e.g., dollars).
-* @param currency - The currency code (e.g., 'usd').
-* @returns The amount formatted for Stripe (in the smallest currency unit).
-*/
+import { clsx, type ClassValue } from "clsx";
+import { twMerge } from "tailwind-merge";
+import { Stripe, loadStripe } from "@stripe/stripe-js";
 
 export function cn(...inputs: ClassValue[]) {
-  return twMerge(clsx(inputs))
+  return twMerge(clsx(inputs));
 }
 
 let stripePromise: Promise<Stripe | null>;
@@ -17,7 +11,7 @@ let stripePromise: Promise<Stripe | null>;
 export default function getStripe(): Promise<Stripe | null> {
   if (!stripePromise)
     stripePromise = loadStripe(
-      process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY as string,
+      process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY as string
     );
 
   return stripePromise;
@@ -28,9 +22,9 @@ export default function getStripe(): Promise<Stripe | null> {
 export async function fetchPostJSON(url: string, data: any) {
   try {
     const response = await fetch(url, {
-      method: 'POST',
+      method: "POST",
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
       },
       body: JSON.stringify(data),
     });
@@ -40,8 +34,8 @@ export async function fetchPostJSON(url: string, data: any) {
     }
 
     return await response.json();
-  } catch (error:any) {
-    console.error('Error fetching JSON:', error);
+  } catch (error: any) {
+    console.error("Error fetching JSON:", error);
     return { statusCode: 500, message: error.message };
   }
 }
@@ -50,7 +44,7 @@ export async function fetchPostJSON(url: string, data: any) {
 //  for the CustomDonationInput.tsx in CheckOutForm folder
 export function formatAmountForDisplay(
   amount: number,
-  currency: string,
+  currency: string
 ): string {
   let numberFormat = new Intl.NumberFormat(["en-US"], {
     style: "currency",
@@ -63,7 +57,7 @@ export function formatAmountForDisplay(
 //  for route.ts
 export function formatAmountForStripe(
   amount: number,
-  currency: string,
+  currency: string
 ): number {
   let numberFormat = new Intl.NumberFormat(["en-US"], {
     style: "currency",

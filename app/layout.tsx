@@ -2,9 +2,9 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import { Toaster } from "@/components/ui/sonner";
-import { Analytics } from "@vercel/analytics/react"
+import { Analytics } from "@vercel/analytics/react";
 import { GoogleAnalytics } from "@/components/google-analytics";
-
+import { Providers } from "./providers";
 
 const inter = Inter({ variable: "--font-inter", subsets: ["latin"] });
 
@@ -21,12 +21,16 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={inter.className}>
-          <main className="lg:mx-auto">
-            {children}
-          </main>
-          <Toaster />
+        <div className="w-full lg:mx-auto lg:max-w-screen-xl flex flex-col justify-between py-12 sm:py-24 bg-background text-primary">
+          <Providers theme="dark">
+            <main className="lg:mx-auto">
+              {children}
+              <Toaster position="bottom-right" />
+            </main>
+          </Providers>
           <Analytics />
           <GoogleAnalytics />
+        </div>
       </body>
     </html>
   );
