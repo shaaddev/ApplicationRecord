@@ -10,7 +10,7 @@ export function Providers({
   theme?: string;
 }) {
   return (
-    <ThemeProvider attribute="class" forcedTheme={theme} enableSystem>
+    <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
       {children}
     </ThemeProvider>
   );

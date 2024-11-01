@@ -10,13 +10,13 @@ export default function DonateLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <Providers>
+      <body>
         <main className="mx-auto max-w-screen-2xl">
           {children}
           <Toaster />
         </main>
-      </Providers>
-      <Analytics />
+        <Analytics />
+      </body>
     </html>
   );
 }
