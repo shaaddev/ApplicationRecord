@@ -1,10 +1,9 @@
-import { LoginLink } from "@kinde-oss/kinde-auth-nextjs/components";
+import { Landing } from "@/components/landing/landing";
 
-export default function LandingPage() {
+export default function Page() {
   return (
-    <iframe
-      src="/landing/index.html"
-      style={{ width: "100%", height: "100vh", border: "none" }}
-    ></iframe>
+    <div>
+      <Landing />
+    </div>
   );
 }
