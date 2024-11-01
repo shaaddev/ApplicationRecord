@@ -21,16 +21,14 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={inter.className}>
-        <div className="w-full lg:mx-auto lg:max-w-screen-xl flex flex-col justify-between py-12 sm:py-24 bg-background text-primary">
-          <Providers>
-            <main className="lg:mx-auto">
-              {children}
-              <Toaster position="bottom-right" />
-            </main>
-            <Analytics />
-            <GoogleAnalytics />
-          </Providers>
-        </div>
+        <Providers>
+          <main className="lg:mx-auto">
+            {children}
+            <Toaster position="bottom-right" />
+          </main>
+          <Analytics />
+          <GoogleAnalytics />
+        </Providers>
       </body>
     </html>
   );
