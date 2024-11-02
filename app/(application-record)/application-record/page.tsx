@@ -15,7 +15,6 @@ import { redirect } from "next/navigation";
 export default async function ApplicationRecord() {
   const { getUser, isAuthenticated } = getKindeServerSession();
   const user = await getUser();
-  const auth = await isAuthenticated();
 
   if (!(await isAuthenticated())) {
     redirect("/try-again");
