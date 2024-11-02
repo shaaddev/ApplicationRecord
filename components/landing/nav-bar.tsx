@@ -3,11 +3,12 @@ import { Button } from "../ui/button";
 import logo from "@/public/logo.svg";
 import Image from "next/image";
 import { MoveRight } from "lucide-react";
+import { Theme } from "../theme";
 
 export function NavBar() {
   return (
-    <nav className="fixed flex flex-col max-w-full bg-none px-2 z-10 top-5 inset-x-0">
-      <div className="flex flex-row items-center justify-between px-5">
+    <nav className="fixed flex flex-col max-w-full bg-background p-2 z-10 top-0 inset-x-0">
+      <div className="flex flex-row items-center justify-between px-5 z-10">
         <Link href="/">
           <Image
             src={logo}
@@ -17,6 +18,7 @@ export function NavBar() {
             className="invert dark:invert-0"
           />
         </Link>
+        <Theme className="text-black dark:text-slate-200" />
         <Button className="rounded-full px-4 py-6 bg-lime-500 text-primary-foreground hover:bg-lime-500 font-bold">
           <Link
             href="/api/auth/login"
