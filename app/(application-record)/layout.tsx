@@ -12,13 +12,11 @@ export default function AppLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body>
-        <Providers>
-          <Navbar />
-          <main className="mx-auto max-w-screen-2xl">
-            {children}
-            <Toaster />
-          </main>
-        </Providers>
+        <Navbar />
+        <main className="mx-auto max-w-screen-2xl">
+          {children}
+          <Toaster />
+        </main>
         <Analytics />
       </body>
     </html>
