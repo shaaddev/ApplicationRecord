@@ -3,7 +3,6 @@ import { TableCard } from "@/components/table-card";
 import { Button } from "@/components/ui/button";
 import { Pencil } from "@/lib/Logos";
 import { FormTrigger } from "@/components/Forms/form-trigger/create-form-trigger";
-import { redirect } from "next/navigation";
 import { applications } from "@/db/schema/applications";
 import { db } from "@/db";
 import { desc } from "drizzle-orm";
@@ -11,13 +10,15 @@ import { eq } from "drizzle-orm";
 import { ChatbotUI } from "@/components/ai-chatbot/chatbot";
 import { GridListToggle } from "@/components/Grid/grid-list-toggle";
 import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
+import { redirect } from "next/navigation";
 
 export default async function ApplicationRecord() {
-  const { getUser } = getKindeServerSession();
+  const { getUser, isAuthenticated } = getKindeServerSession();
   const user = await getUser();
+  const auth = await isAuthenticated();
 
-  if (!user) {
-    redirect("/api/auth/login");
+  if (!(await isAuthenticated())) {
+    redirect("/try-again");
   }
 
   const id = user?.id;
