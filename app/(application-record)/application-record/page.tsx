@@ -3,14 +3,11 @@ import { TableCard } from "@/components/table-card";
 import { Button } from "@/components/ui/button";
 import { Pencil } from "@/lib/Logos";
 import { FormTrigger } from "@/components/Forms/form-trigger/create-form-trigger";
-import { applications } from "@/db/schema/applications";
-import { db } from "@/db";
-import { desc } from "drizzle-orm";
-import { eq } from "drizzle-orm";
 import { ChatbotUI } from "@/components/ai-chatbot/chatbot";
 import { GridListToggle } from "@/components/Grid/grid-list-toggle";
 import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 import { redirect } from "next/navigation";
+import { getUserApplications } from "@/db/queries";
 
 export default async function ApplicationRecord() {
   const { getUser, isAuthenticated } = getKindeServerSession();
@@ -21,11 +18,7 @@ export default async function ApplicationRecord() {
   }
 
   const id = user?.id;
-  const apps = await db
-    .select()
-    .from(applications)
-    .where(eq(applications.user_id, id))
-    .orderBy(desc(applications.id));
+  const apps = await getUserApplications(id);
 
   return (
     <main className="flex flex-col items-center justify-between p-10 lg:p-16">
