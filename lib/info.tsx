@@ -44,6 +44,8 @@ export interface FeatureProps {
   icon: JSX.Element;
   title: string;
   desc: string;
+  image?: string;
+  features?: string[];
 }
 import { ArrowDownWideNarrow, RefreshCcw, Grid2X2 } from "lucide-react";
 
@@ -52,15 +54,30 @@ export const features: FeatureProps[] = [
     icon: <ArrowDownWideNarrow className="h-10 w-10 text-primary" />,
     title: "Smart Sorting & Filtering",
     desc: "Quickly find and organizes applications by role, company, status, or any other key details",
+    image: "/features/filter.jpeg",
+    features: ["Position", "Company", "Status", "Date Applied"],
   },
   {
     icon: <RefreshCcw className="h-10 w-10 text-primary" />,
     title: "One-Tap Status Updates",
     desc: "Seamlessly update your application progress with just a tap to keep your job search organized",
+    image: "/features/status.jpeg",
+    features: [
+      "Not Applied",
+      "Applied",
+      "Phone Screen",
+      "Offer",
+      "Hired",
+      "Rejected",
+      "Ghosted",
+      "Blacklist",
+    ],
   },
   {
     icon: <Grid2X2 className="h-10 w-10 text-primary" />,
     title: "Personalized Views & Modes",
     desc: "Switch between grid or list views, light or dark mode, to match your unique style",
+    image: "/features/list.jpeg",
+    features: ["Grid", "List", "Light Mode", "Dark Mode"],
   },
 ];

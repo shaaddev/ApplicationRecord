@@ -19,7 +19,7 @@ export function Donate() {
             color={["#A07CFE", "#FE8FB5", "#FFBE7B"]}
           >
             <h2 className="text-3xl font-bold">Donate Now</h2>
-            <p className="text-lg text-muted-foreground">
+            <p className="text-xs sm:text-lg text-muted-foreground">
               Click here to donate and support us through our journey
             </p>
           </ShineBorder>

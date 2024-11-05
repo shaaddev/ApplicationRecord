@@ -13,9 +13,9 @@ export function HomePage() {
           </h2>
           <SparklesText
             text="Take Control of Your Job Search with Landit"
-            className="text-7xl text-primary"
+            className="text-5xl sm:text-6xl lg:text-7xl text-primary"
           />
-          <p className="text-xl font-medium">
+          <p className="text-md sm:text-xl font-medium">
             Seamless, Secure, and Smart. Your All-in-One Job Application Tracker
           </p>
         </div>

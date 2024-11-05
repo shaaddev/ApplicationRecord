@@ -9,7 +9,7 @@ export function Collab() {
         <h2 className="text-lime-400 uppercase text-xl font-bold">
           Developers, Join us
         </h2>
-        <h1 className="text-6xl tracking-tight font-bold">
+        <h1 className="text-4xl sm:text-6xl tracking-tight font-bold">
           Contribute to Landit and help build the future with us
         </h1>
       </div>

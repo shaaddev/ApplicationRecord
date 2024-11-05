@@ -1,22 +1,29 @@
 import { features, FeatureProps } from "@/lib/info";
+import Image from "next/image";
 
 export function Features() {
   return (
     <section id="features">
-      <div className="relative flex flex-col items-center justify-center overflow-hidden rounded-lg text-center min-h-screen">
+      <div className="relative flex flex-col items-center justify-center overflow-hidden rounded-lg min-h-screen w-full my-48">
         <div className="flex min-h-0 flex-col gap-6 justify-center my-5">
-          <h2 className="text-2xl">Features</h2>
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-12">
-            {features.map((feature) => (
+          <h2 className="text-3xl uppercase font-bold text-center">Features</h2>
+          <div className="flex flex-col">
+            {features.map((feature: FeatureProps) => (
               <div
                 key={feature.title}
-                className="flex flex-col items-center text-center"
+                className="mx-auto w-full lg:w-3/4 flex flex-col xl:flex-row gap-12 bg-zinc-100 dark:bg-zinc-900 shadow-sm rounded-xl my-12"
               >
-                <div className="h-20 w-20 bg-lime-500 rounded-full flex justify-center items-center mb-6">
-                  {feature.icon}
+                <div className="flex flex-col justify-start p-16">
+                  <h2 className="text-4xl font-semibold ">{feature.title}</h2>
+                  <p className="mt-4 text-lg">{feature.desc}</p>
                 </div>
-                <h3 className="font-bold text-2xl">{feature.title}</h3>
-                <p>{feature.desc}</p>
+                <Image
+                  src={`${feature.image}`}
+                  width={1200}
+                  height={900}
+                  alt={feature.title}
+                  className="rounded-xl object-cover xl:w-1/2 border border-black/10 dark:border-none"
+                />
               </div>
             ))}
           </div>
