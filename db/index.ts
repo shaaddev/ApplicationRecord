@@ -1,12 +1,17 @@
-import { drizzle } from 'drizzle-orm/postgres-js';
-import postgres from 'postgres'
-import dotenv from 'dotenv'
+import { drizzle } from "drizzle-orm/postgres-js";
+import postgres from "postgres";
+import dotenv from "dotenv";
 
-dotenv.config({ path: '.env.local' });
+dotenv.config({ path: ".env.local" });
 
-if (!process.env.DATABASE_URL) {
-  throw new Error('DATABASE_URL is not set');
+const databaseUrl =
+  process.env.NODE_ENV === "production"
+    ? process.env.SUPABASE_DATABASE_URL
+    : process.env.LOCAL_DATABASE_URL;
+
+if (!databaseUrl) {
+  throw new Error("DATABASE_URL is not set");
 }
 
-export const client = postgres(process.env.DATABASE_URL);
+export const client = postgres(databaseUrl);
 export const db = drizzle(client);
