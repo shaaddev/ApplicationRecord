@@ -26,16 +26,23 @@ Thank you for considering contributing to our project! Your help is greatly appr
 ### Setting Up Your Local Environment
 
 1. **Copy the `.env.example` file to your .env.local**:
+
    ```bash
    cp .env.example .env.local
    ```
 
-2. **Obtain your DATABASE_URL, SUPABASE_URL, and SUPABASE_ANON_KEY from your respective accounts and insert them into the .env.local file.**:
+2. **Obtain your LOCAL_DATABASE_URL and insert them into the .env.local file.**:
 
    ```bash
-   DATABASE_URL=your_database_url_here
-   SUPABASE_URL=your_supabase_url_here
-   SUPABASE_ANON_KEY=your_supabase_anon_key_here
+   LOCAL_DATABASE_URL=your_database_url_here
+   ```
+
+   Note: _You must have PostgreSQL 14+ or later, and pgAdmin for this to work assuming you are familiar._
+
+   _If you would like to add your own migrations, feel free to use the command below_
+
+   ```bash
+   npm run db:migrate
    ```
 
 ### Running Tests Locally
@@ -43,7 +50,7 @@ Thank you for considering contributing to our project! Your help is greatly appr
 1. **Run tests to make sure your changes do not introduce new issues**:
 
    ```bash
-   npm test
+   npm run build
    ```
 
 ### Submitting Pull Requests
@@ -63,4 +70,4 @@ Thank you for considering contributing to our project! Your help is greatly appr
 
 ## Communication
 
-- For any inquiries not covered in the documentation, you can contact Rukaiah on [X](https://x.com/rukaiah_) or [LinkedIn](https://www.linkedin.com/in/rukaiah-edhah/). However, we kindly ask that you review the documentation thoroughly before reaching out 
+- For any inquiries not covered in the documentation, you can contact Rukaiah on [X](https://x.com/rukaiah_) or [LinkedIn](https://www.linkedin.com/in/rukaiah-edhah/). However, we kindly ask that you review the documentation thoroughly before reaching out
