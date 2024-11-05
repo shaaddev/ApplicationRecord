@@ -10,6 +10,7 @@ import { NavBar } from "@/components/landing/nav-bar";
 
 export function Landing() {
   const { theme } = useTheme();
+  const delay = 0.3;
 
   return (
     <div>
@@ -21,10 +22,10 @@ export function Landing() {
         refresh
       />
       <NavBar />
-      <HomePage />
-      <Features />
-      <Donate />
-      <Collab />
+      <HomePage delay={delay} />
+      <Features delay={delay} />
+      <Donate delay={delay} />
+      <Collab delay={delay} />
       <Footer />
     </div>
   );
