@@ -42,7 +42,7 @@ Thank you for considering contributing to our project! Your help is greatly appr
    _If you would like to add your own migrations, feel free to use the command below_
 
    ```bash
-   npm run db:migrate
+   pnpm run db:migrate
    ```
 
 ### Running Tests Locally
@@ -50,7 +50,7 @@ Thank you for considering contributing to our project! Your help is greatly appr
 1. **Run tests to make sure your changes do not introduce new issues**:
 
    ```bash
-   npm run build
+   pnpm run build
    ```
 
 ### Submitting Pull Requests
