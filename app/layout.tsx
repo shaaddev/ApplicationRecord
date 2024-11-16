@@ -5,6 +5,7 @@ import { Toaster } from "@/components/ui/sonner";
 import { Analytics } from "@vercel/analytics/react";
 import { GoogleAnalytics } from "@/components/google-analytics";
 import { Providers } from "./providers";
+import { ViewTransitions } from "next-view-transitions";
 
 const inter = Inter({ variable: "--font-inter", subsets: ["latin"] });
 
@@ -19,17 +20,19 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning>
-      <body className={inter.className}>
-        <Providers>
-          <main className="lg:mx-auto">
-            {children}
-            <Toaster position="bottom-right" />
-          </main>
-          <Analytics />
-          <GoogleAnalytics />
-        </Providers>
-      </body>
-    </html>
+    <ViewTransitions>
+      <html lang="en" suppressHydrationWarning>
+        <body className={inter.className}>
+          <Providers>
+            <main className="lg:mx-auto">
+              {children}
+              <Toaster position="bottom-right" />
+            </main>
+            <Analytics />
+            <GoogleAnalytics />
+          </Providers>
+        </body>
+      </html>
+    </ViewTransitions>
   );
 }

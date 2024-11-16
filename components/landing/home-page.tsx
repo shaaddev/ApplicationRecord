@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { Link as ViewLink } from "next-view-transitions";
 import { MoveRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import SparklesText from "@/components/ui/sparkles-text";
@@ -23,7 +24,7 @@ export function HomePage({ delay }: { delay?: number }) {
             </p>
           </div>
           <Button className="rounded-full px-4 py-6 bg-lime-500 text-primary-foreground hover:bg-lime-500 font-bold">
-            <Link
+            <ViewLink
               href="/application-record"
               className="flex flex-row items-center gap-2"
             >
@@ -31,7 +32,7 @@ export function HomePage({ delay }: { delay?: number }) {
               <div className="rounded-full bg-lime-600 p-2">
                 <MoveRight className="inline" />
               </div>
-            </Link>
+            </ViewLink>
           </Button>
         </div>
       </BlurFade>

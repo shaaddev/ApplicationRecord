@@ -4,12 +4,13 @@ import logo from "@/public/logo.svg";
 import Image from "next/image";
 import { MoveRight } from "lucide-react";
 import { Theme } from "../theme";
+import { Link as ViewLink } from "next-view-transitions";
 
 export function NavBar() {
   return (
     <nav className="fixed flex flex-col max-w-full bg-background p-2 z-10 top-0 inset-x-0">
       <div className="flex flex-row items-center justify-between px-5 z-10">
-        <Link href="/">
+        <ViewLink href="/">
           <Image
             src={logo}
             alt="Logo"
@@ -17,7 +18,7 @@ export function NavBar() {
             height={24}
             className="invert dark:invert-0"
           />
-        </Link>
+        </ViewLink>
         <Theme className="text-black dark:text-slate-200" />
         <Button className="rounded-full px-4 py-6 bg-lime-500 text-primary-foreground hover:bg-lime-500 font-bold">
           <Link

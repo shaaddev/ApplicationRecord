@@ -41,6 +41,7 @@
     "lucide-react": "^0.454.0",
     "next": "15.0.3",
     "next-themes": "^0.3.0",
+    "next-view-transitions": "^0.3.2",
     "postgres": "^3.4.4",
     "react": "19.0.0-rc-66855b96-20241106",
     "react-day-picker": "8.10.1",
