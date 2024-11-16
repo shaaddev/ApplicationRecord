@@ -18,7 +18,7 @@ export default function PaymentElementPage() {
         href="/"
         className={cn(
           buttonVariants({ variant: "outline" }),
-          "rounded-xl px-10 py-5 bg-lime-600 text-primary-foreground hover:bg-lime-600 font-bold"
+          "rounded-xl px-10 py-5 bg-lime-600 text-white hover:bg-lime-600 font-bold border-none"
         )}
       >
         Home
