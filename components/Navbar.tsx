@@ -15,11 +15,11 @@ export interface PathProps {
 }
 
 const paths: PathProps = {
-  "/api/auth/login": {
-    name: "Login",
-  },
   "/donate-with-elements": {
     name: "Donate",
+  },
+  "/api/auth/login": {
+    name: "Login",
   },
 };
 
@@ -42,12 +42,21 @@ export async function Navbar() {
                 .slice(1)
                 .map(([path, { name }]) => (
                   <li key={path}>
-                    <Link
-                      href={path}
-                      className="hover:text-slate-800 dark:hover:text-slate-800"
-                    >
-                      {name}
-                    </Link>
+                    {path === "/donate-with-elements" ? (
+                      <ViewLink
+                        href={path}
+                        className="hover:text-slate-800 dark:hover:text-slate-800"
+                      >
+                        {name}
+                      </ViewLink>
+                    ) : (
+                      <Link
+                        href={path}
+                        className="hover:text-slate-800 dark:hover:text-slate-800"
+                      >
+                        {name}
+                      </Link>
+                    )}
                   </li>
                 ))}
               <li>
@@ -58,12 +67,21 @@ export async function Navbar() {
             <>
               {Object.entries(paths).map(([path, { name }]) => (
                 <li key={path}>
-                  <Link
-                    href={path}
-                    className="hover:text-slate-800 dark:hover:text-slate-800"
-                  >
-                    {name}
-                  </Link>
+                  {path === "/donate-with-elements" ? (
+                    <ViewLink
+                      href={path}
+                      className="hover:text-slate-800 dark:hover:text-slate-800"
+                    >
+                      {name}
+                    </ViewLink>
+                  ) : (
+                    <Link
+                      href={path}
+                      className="hover:text-slate-800 dark:hover:text-slate-800"
+                    >
+                      {name}
+                    </Link>
+                  )}
                 </li>
               ))}
             </>
