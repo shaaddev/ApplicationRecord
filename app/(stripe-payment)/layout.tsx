@@ -7,9 +7,7 @@ export default function DonateLayout({
 }>) {
   return (
     <>
-      <main className="mx-auto max-w-screen-2xl bg-white text-black">
-        {children}
-      </main>
+      <main className="mx-auto bg-white text-black w-full">{children}</main>
     </>
   );
 }
