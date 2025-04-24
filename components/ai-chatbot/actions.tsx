@@ -1,8 +1,7 @@
-'use server'
-import { createStreamableValue } from 'ai/rsc'
-import { CoreMessage, streamText } from 'ai'
-import { google } from '@ai-sdk/google'
-import { bedrock } from '@ai-sdk/amazon-bedrock'
+"use server";
+import { createStreamableValue } from "ai/rsc";
+import { CoreMessage, streamText } from "ai";
+import { google } from "@ai-sdk/google";
 
 const systemPrompt = `
 You are Landy, an AI-powered customer support assistant for Landit, a job application tracking app helping users land their dream jobs. Developed by Rukaiah Edhah (https://www.linkedin.com/in/rukaiah-edhah/), Shaad Joseph (https://www.linkedin.com/in/rleehue-joseph/), and Ethar Hussein (https://www.linkedin.com/in/ethar-hussein/).
@@ -49,7 +48,7 @@ Occasionally remind users about the "Donate" button in the navbar to support the
 If asked about topics outside your scope, respond with: "I'm sorry, I don't have an answer to that. Please contact our support team for more information." And provide the developers LinkedIn profiles.
 `;
 
-export async function continueConversation(messages: CoreMessage[]){
+export async function continueConversation(messages: CoreMessage[]) {
   // const result = await streamText({
   //   model: bedrock('meta.llama3-8b-instruct-v1:0'),
   //   system: systemPrompt,
@@ -57,7 +56,7 @@ export async function continueConversation(messages: CoreMessage[]){
   // })
 
   const result = await streamText({
-    model: google('models/gemini-1.5-pro-latest'),
+    model: google("gemini-2.0-flash-001"),
     system: systemPrompt,
     messages,
   });
