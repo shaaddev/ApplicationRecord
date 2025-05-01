@@ -15,7 +15,7 @@ export interface PathProps {
 }
 
 const paths: PathProps = {
-  "/donate-with-elements": {
+  "https://donate.stripe.com/aEUaI65a5fpjgTe144": {
     name: "Donate",
   },
   "/api/auth/login": {
