@@ -17,7 +17,7 @@ export function Donate({ delay }: { delay?: number }) {
             </h1>
           </div>
           <div className="my-12 h-72">
-            <ViewLink href="/donate-with-elements">
+            <Link href="https://donate.stripe.com/aEUaI65a5fpjgTe144">
               <ShineBorder
                 className="flex flex-col items-center justify-center p-5 gap-12 whitespace-nowrap"
                 color={["#A07CFE", "#FE8FB5", "#FFBE7B"]}
@@ -27,7 +27,7 @@ export function Donate({ delay }: { delay?: number }) {
                   Click here to donate and support us through our journey
                 </p>
               </ShineBorder>
-            </ViewLink>
+            </Link>
           </div>
         </div>
       </BlurFade>
