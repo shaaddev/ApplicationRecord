@@ -24,9 +24,17 @@ const paths: PathProps = {
 };
 
 export async function Navbar() {
-  const { getUser } = getKindeServerSession();
+  const { getUser, isAuthenticated } = getKindeServerSession();
+  let user = null;
 
-  const user = await getUser();
+  try {
+    const authed = await isAuthenticated();
+    if (authed) {
+      user = await getUser();
+    }
+  } catch (error) {
+    console.error("Failed to resolve user session", error);
+  }
 
   return (
     <nav className="sticky flex flex-col max-w-full h-max z-10 top-0 inset-x-o px-10 py-5 m-2 rounded-2xl border-none bg-lime-600 text-slate-100  dark:bg-lime-500 backdrop-blur-xl  shadow-md ">

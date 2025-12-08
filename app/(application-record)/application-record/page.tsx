@@ -11,14 +11,15 @@ import { getUserApplications } from "@/db/queries";
 
 export default async function ApplicationRecord() {
   const { getUser, isAuthenticated } = getKindeServerSession();
-  const user = await getUser();
+  const authed = await isAuthenticated();
 
-  if (!(await isAuthenticated())) {
+  if (!authed) {
     redirect("/try-again");
   }
 
+  const user = await getUser();
   const id = user?.id;
-  const apps = await getUserApplications(id);
+  const apps = id ? await getUserApplications(id) : null;
 
   return (
     <main className="flex flex-col items-center justify-between p-10 lg:p-16">
