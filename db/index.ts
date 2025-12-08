@@ -6,7 +6,7 @@ dotenv.config({ path: ".env.local" });
 
 const databaseUrl =
   process.env.NODE_ENV === "production"
-    ? process.env.SUPABASE_DATABASE_URL
+    ? process.env.NEON_DB
     : process.env.LOCAL_DATABASE_URL;
 
 if (!databaseUrl) {
