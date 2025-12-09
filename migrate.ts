@@ -1,15 +1,27 @@
-import { migrate } from 'drizzle-orm/postgres-js/migrator'
-import dotenv from 'dotenv'
-import { client, db } from './db'
+import { config } from "dotenv";
+import { migrate } from "drizzle-orm/postgres-js/migrator";
+import { client, db } from "./db";
 
-dotenv.config({ path: '.env.local' });
+config({
+  path: ".env.local",
+});
 
 async function pushMigrations() {
-  await migrate(db, { 
-    migrationsFolder: './drizzle'
+  if (!process.env.NEON_DB) {
+    throw new Error("URL is not defined");
+  }
+
+  await migrate(db, {
+    migrationsFolder: "./drizzle",
   });
-  console.log('Migrations complete')
+
+  console.log("Migrations Complete");
   await client.end();
+  process.exit(0);
 }
 
-pushMigrations()
+pushMigrations().catch((err) => {
+  console.error("Migration failed");
+  console.error(err);
+  process.exit(1);
+});
