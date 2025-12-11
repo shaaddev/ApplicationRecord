@@ -9,9 +9,8 @@ import { eq } from "drizzle-orm";
 import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 
 export async function _Table({ data }: any) {
-  const { getUser, isAuthenticated } = getKindeServerSession();
-  const authed = await isAuthenticated().catch(() => false);
-  const user = authed ? await getUser() : null;
+  const { getUser } = getKindeServerSession();
+  const user = await getUser();
   const id = user?.id;
   let apps: any;
 

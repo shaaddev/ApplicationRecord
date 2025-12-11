@@ -4,15 +4,7 @@ import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 import { insertApplication, updateApplication } from "@/db/queries";
 
 export const createAction = async (formData: FormData) => {
-  const { getUser, isAuthenticated } = getKindeServerSession();
-  const authed = await isAuthenticated().catch(() => false);
-
-  if (!authed) {
-    return {
-      success: false,
-      message: "You must be signed in to add an application.",
-    };
-  }
+  const { getUser } = getKindeServerSession();
 
   const user = await getUser();
   const user_id = user?.id;

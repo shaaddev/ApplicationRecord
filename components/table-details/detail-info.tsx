@@ -11,9 +11,8 @@ import { Delete } from "../Grid/application-delete-btn";
 import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 
 export async function DetailInfo({ data }: { data: JobProps }) {
-  const { getUser, isAuthenticated } = getKindeServerSession();
-  const authed = await isAuthenticated().catch(() => false);
-  const user = authed ? await getUser() : null;
+  const { getUser } = getKindeServerSession();
+  const user = await getUser();
 
   return (
     <>
