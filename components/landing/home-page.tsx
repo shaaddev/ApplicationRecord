@@ -23,7 +23,8 @@ export function HomePage({ delay }: { delay?: number }) {
           </div>
           <Button
             variant="brand"
-            size="lg"
+            size="xl"
+            className="rounded-full font-semibold"
             render={<ViewLink href="/application-record" />}
             nativeButton={false}
           >

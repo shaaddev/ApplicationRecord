@@ -21,7 +21,12 @@ export function NavBar() {
       </ViewLink>
       <div className="flex items-center gap-1">
         <ThemeToggle />
-        <Button size="sm" render={<Link href="/login" />} nativeButton={false}>
+        <Button
+          size="lg"
+          className="rounded-full px-5 font-semibold"
+          render={<Link href="/login" />}
+          nativeButton={false}
+        >
           Log in
           <ArrowRightIcon data-icon="inline-end" />
         </Button>

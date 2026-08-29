@@ -16,8 +16,9 @@ export function Collab({ delay }: { delay?: number }) {
             </h1>
           </div>
           <Button
-            size="lg"
+            size="xl"
             variant="outline"
+            className="rounded-full font-semibold"
             render={
               <a
                 href="https://github.com/shaaddev/ApplicationRecord"
