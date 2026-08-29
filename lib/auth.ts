@@ -6,11 +6,6 @@ import { nextCookies } from "better-auth/next-js";
 import { emailOTP } from "better-auth/plugins/email-otp";
 import { email_otp_message } from "./resend";
 
-const base_url =
-  process.env.NODE_ENV === "production"
-    ? process.env.NEXT_PUBLIC_BASE_URL
-    : "http://localhost:3000";
-
 export const auth = betterAuth({
   database: drizzleAdapter(db, {
     provider: "pg",
@@ -27,8 +22,7 @@ export const auth = betterAuth({
     emailOTP({
       resendStrategy: "rotate",
       changeEmail: { enabled: true },
-      sendVerificationOTP: async ({ email, otp, type }) => {
-        // send email
+      sendVerificationOTP: async ({ email, otp }) => {
         await email_otp_message(email, otp);
       },
     }),

@@ -1,5 +1,5 @@
 import { db } from ".";
-import { eq, desc } from "drizzle-orm";
+import { eq, desc, and } from "drizzle-orm";
 import { applications } from "./schema";
 
 export async function getUserApplications(userId: string) {
@@ -48,6 +48,7 @@ export async function updateApplication({
   link,
   salary,
   id,
+  user_id,
 }: any) {
   const [updatedApplication] = await db
     .update(applications)
@@ -61,17 +62,34 @@ export async function updateApplication({
       salary: salary || null,
       updated_at: new Date(),
     })
-    .where(eq(applications.id, parseInt(id)))
+    .where(
+      and(eq(applications.id, parseInt(id)), eq(applications.user_id, user_id)),
+    )
     .returning();
 
   return updatedApplication;
 }
 
-export async function updateApplicationStatus(status: string, id: string) {
+export async function updateApplicationStatus(
+  status: string,
+  id: string,
+  userId: string,
+) {
   await db
     .update(applications)
     .set({
       status: status as string,
     })
-    .where(eq(applications.id, parseInt(id)));
+    .where(
+      and(eq(applications.id, parseInt(id)), eq(applications.user_id, userId)),
+    );
+}
+
+export async function deleteApplication(id: number, userId: string) {
+  const deleted = await db
+    .delete(applications)
+    .where(and(eq(applications.id, id), eq(applications.user_id, userId)))
+    .returning({ id: applications.id });
+
+  return deleted.length > 0;
 }

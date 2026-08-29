@@ -9,7 +9,7 @@ import {
   Section,
   Tailwind,
   Text,
-} from "react-email";
+} from "@react-email/components";
 import React from "react";
 
 interface OtpEmailProps {

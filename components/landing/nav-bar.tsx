@@ -22,7 +22,7 @@ export function NavBar() {
         <Theme className="text-black dark:text-slate-200" />
         <Button className="rounded-full px-4 py-6 bg-lime-500 text-primary-foreground hover:bg-lime-500 font-bold">
           <Link
-            href="/api/auth/login"
+            href="/sign-in"
             className="flex flex-row items-center gap-2"
           >
             Sign in

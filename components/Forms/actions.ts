@@ -1,13 +1,16 @@
 "use server";
 import { revalidatePath } from "next/cache";
-import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
+import { getUser } from "@/lib/session";
 import { insertApplication, updateApplication } from "@/db/queries";
 
 export const createAction = async (formData: FormData) => {
-  const { getUser } = getKindeServerSession();
-
   const user = await getUser();
-  const user_id = user?.id;
+  if (!user) {
+    return {
+      success: false,
+      error: "Sign in to add an application",
+    };
+  }
 
   const role = formData.get("role");
   const company_name = formData.get("company_name");
@@ -20,7 +23,7 @@ export const createAction = async (formData: FormData) => {
   if (!role || !company_name || !location || !status) {
     return {
       success: false,
-      message: "Missing required fields",
+      error: "Missing required fields",
     };
   }
 
@@ -33,7 +36,7 @@ export const createAction = async (formData: FormData) => {
       date_applied,
       link,
       salary,
-      user_id,
+      user_id: user.id,
     });
 
     revalidatePath("/");
@@ -42,14 +45,23 @@ export const createAction = async (formData: FormData) => {
       success: true,
     };
   } catch (error) {
+    console.error("Error creating application:", error);
     return {
       success: false,
-      error: console.log(error),
+      error: "Failed to add application",
     };
   }
 };
 
 export const editAction = async (formData: FormData, id: string) => {
+  const user = await getUser();
+  if (!user) {
+    return {
+      success: false,
+      error: "Sign in to edit an application",
+    };
+  }
+
   const role = formData.get("role") as string;
   const company_name = formData.get("company_name") as string;
   const location = formData.get("location") as string;
@@ -75,6 +87,7 @@ export const editAction = async (formData: FormData, id: string) => {
       link,
       salary,
       id,
+      user_id: user.id,
     });
 
     revalidatePath("/application-record");

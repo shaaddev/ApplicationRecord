@@ -2,6 +2,7 @@
 
 import React from "react";
 import { Resend } from "resend";
+import OtpEmail from "@/emails/otp-link";
 
 let resend: Resend | null = null;
 
