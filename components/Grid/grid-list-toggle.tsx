@@ -7,7 +7,6 @@ import { ApplicationListView } from "./application-list-view";
 import { JobProps } from "@/lib/info";
 import { FilterDropdown } from "./filter-dropdown";
 import { SortDropdown } from "./sort-dropdown";
-import { KindeUser } from "@kinde-oss/kinde-auth-nextjs/dist/types";
 
 const colors = {
   "Not Applied": "bg-red-500",

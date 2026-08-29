@@ -41,7 +41,7 @@ export const mock_data: JobProps[] = [
 ];
 
 export interface FeatureProps {
-  icon: JSX.Element;
+  icon: React.JSX.Element;
   title: string;
   desc: string;
   image?: string;

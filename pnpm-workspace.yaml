@@ -1,0 +1,9 @@
+allowBuilds:
+  '@clerk/shared': false
+  bufferutil: false
+  es5-ext: false
+  esbuild: false
+  utf-8-validate: false
+overrides:
+  '@types/react': 19.2.18
+  '@types/react-dom': 19.2.5

@@ -2,7 +2,6 @@
 
 import { Button } from '@/components/ui/button'
 import { useRouter } from 'next/navigation'
-import { revalidatePath } from 'next/cache';
 import { toast } from 'sonner';
 
 export function Delete({id, className}: {id: number, className?: string}){
