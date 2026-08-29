@@ -27,13 +27,13 @@ export default function OtpEmail({ email, pin, expiresInMinutes = 5 }: OtpEmailP
   return (
     <Html>
       <Head />
-      <Preview>{`Your Masira sign-in code${email ? ` for ${email}` : ""}`}</Preview>
+      <Preview>{`Your LandIt - Application Record sign-in code${email ? ` for ${email}` : ""}`}</Preview>
       <Tailwind>
         <Body className="bg-[#fafafa] py-10" style={{ fontFamily: fontStack }}>
           <Container className="mx-auto max-w-116.25 rounded-[10px] border border-[#e5e5e5] border-solid bg-white p-8">
             <Section>
               <Text className="m-0 text-center font-semibold text-[13px] text-[#0a0a0a] uppercase tracking-[0.22em]">
-                Masira
+                LandIt
               </Text>
             </Section>
 
@@ -58,7 +58,7 @@ export default function OtpEmail({ email, pin, expiresInMinutes = 5 }: OtpEmailP
             <Text className="m-0 text-center text-[12px] text-[#737373] leading-5">
               Never share this code. If you didn&apos;t request it, ignore this email.
             </Text>
-            <Text className="mt-3 mb-0 text-center text-[12px] text-[#a3a3a3]">© Masira</Text>
+            <Text className="mt-3 mb-0 text-center text-[12px] text-[#a3a3a3]">© LandIt</Text>
           </Container>
         </Body>
       </Tailwind>

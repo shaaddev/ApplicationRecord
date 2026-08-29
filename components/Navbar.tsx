@@ -20,8 +20,8 @@ const paths: PathProps = {
 };
 
 const signInPath: PathProps = {
-  "/sign-in": {
-    name: "Sign in",
+  "/login": {
+    name: "Log in",
   },
 };
 

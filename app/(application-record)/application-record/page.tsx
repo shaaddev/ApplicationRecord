@@ -12,7 +12,7 @@ export default async function ApplicationRecord() {
   const user = await getUser();
 
   if (!user) {
-    redirect("/try-again");
+    redirect("/login?next=/application-record");
   }
 
   const apps = await getUserApplications(user.id);

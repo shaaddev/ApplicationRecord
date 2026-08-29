@@ -20,9 +20,9 @@ function getResend(): Resend {
 export const email_otp_message = async (email: string, pin: string) => {
   try {
     await getResend().emails.send({
-      from: "Masira <system@shaaddev.com>",
+      from: "LandIt - Application Record <system@shaaddev.com>",
       to: [email],
-      subject: "Your Masira sign-in code",
+      subject: "Your LandIt - Application Record sign-in code",
       react: React.createElement(OtpEmail, {
         email: email as string,
         pin: pin as string,
