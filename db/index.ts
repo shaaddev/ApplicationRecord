@@ -4,7 +4,7 @@ import dotenv from "dotenv";
 
 dotenv.config({ path: ".env.local" });
 
-const databaseUrl =
+export const databaseUrl =
   process.env.NODE_ENV === "production"
     ? process.env.NEON_DB
     : process.env.LOCAL_DATABASE_URL;

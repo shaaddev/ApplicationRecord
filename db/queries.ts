@@ -1,6 +1,6 @@
 import { db } from ".";
 import { eq, desc } from "drizzle-orm";
-import { applications } from "./schema/applications";
+import { applications } from "./schema";
 
 export async function getUserApplications(userId: string) {
   const apps = await db

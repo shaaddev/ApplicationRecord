@@ -2,7 +2,7 @@ import { Table, TableBody } from "@/components/ui/table";
 import { TableList } from "./table-list";
 import { TableH } from "./table-head";
 import { mock_data } from "@/lib/info";
-import { applications } from "@/db/schema/applications";
+import { applications } from "@/db/schema";
 import { db } from "@/db";
 import { desc } from "drizzle-orm";
 import { eq } from "drizzle-orm";

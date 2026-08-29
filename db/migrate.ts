@@ -1,13 +1,13 @@
 import { config } from "dotenv";
 import { migrate } from "drizzle-orm/postgres-js/migrator";
-import { client, db } from ".";
+import { client, db, databaseUrl } from ".";
 
 config({
   path: ".env.local",
 });
 
 async function pushMigrations() {
-  if (!process.env.NEON_DB) {
+  if (!databaseUrl) {
     throw new Error("URL is not defined");
   }
 
