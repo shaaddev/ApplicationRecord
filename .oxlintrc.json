@@ -22,7 +22,8 @@
         "varsIgnorePattern": "^_",
         "caughtErrors": "none"
       }
-    ]
+    ],
+    "react/incompatible-library": "off"
   },
   "overrides": [
     {
@@ -31,7 +32,11 @@
         "no-unused-vars": "off",
         "jsx-a11y/heading-has-content": "off",
         "react/immutability": "off",
-        "react-hooks/exhaustive-deps": "off"
+        "react-hooks/exhaustive-deps": "off",
+        "jsx-a11y/prefer-tag-over-role": "off",
+        "jsx-a11y/label-has-associated-control": "off",
+        "jsx-a11y/click-events-have-key-events": "off",
+        "jsx-a11y/no-noninteractive-element-interactions": "off"
       }
     }
   ],

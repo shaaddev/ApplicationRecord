@@ -1,26 +1,22 @@
 import Link from "next/link";
-import { Button } from "../ui/button";
-import logo from "@/public/logo.svg";
 import Image from "next/image";
-import { MoveRight } from "lucide-react";
-import { Theme } from "../theme";
+import { ArrowRightIcon } from "@phosphor-icons/react/dist/ssr";
+import logo from "@/public/logo.svg";
+import { Button } from "@/components/ui/button";
+import { ThemeToggle } from "@/components/theme";
 import { Link as ViewLink } from "next-view-transitions";
 
 export function NavBar() {
   return (
-    <nav className="fixed flex flex-col max-w-full bg-background p-2 z-10 top-0 inset-x-0">
-      <div className="flex flex-row items-center justify-between px-5 z-10">
-        <ViewLink href="/">
-          <Image src={logo} alt="Logo" width={150} height={24} className="invert dark:invert-0" />
-        </ViewLink>
-        <Theme className="text-black dark:text-slate-200" />
-        <Button className="rounded-full px-4 py-6 bg-lime-500 text-primary-foreground hover:bg-lime-500 font-bold">
-          <Link href="/login" className="flex flex-row items-center gap-2">
-            Log in
-            <div className="rounded-full bg-lime-600 p-2">
-              <MoveRight className="inline" />
-            </div>
-          </Link>
+    <nav className="fixed inset-x-0 top-0 z-10 flex h-14 items-center justify-between bg-background/90 px-4 backdrop-blur-sm sm:px-6">
+      <ViewLink href="/" aria-label="Land It home" className="flex items-center">
+        <Image src={logo} alt="Land It" width={120} height={31} className="invert dark:invert-0" />
+      </ViewLink>
+      <div className="flex items-center gap-1">
+        <ThemeToggle />
+        <Button size="sm" render={<Link href="/login" />} nativeButton={false}>
+          Log in
+          <ArrowRightIcon data-icon="inline-end" />
         </Button>
       </div>
     </nav>

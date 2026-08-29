@@ -1,5 +1,5 @@
 import { Link as ViewLink } from "next-view-transitions";
-import { MoveRight } from "lucide-react";
+import { ArrowRightIcon } from "@phosphor-icons/react/dist/ssr";
 import { Button } from "@/components/ui/button";
 import SparklesText from "@/components/ui/sparkles-text";
 import BlurFade from "@/components/ui/blur-fade";
@@ -8,24 +8,22 @@ export function HomePage({ delay }: { delay?: number }) {
   return (
     <section id="home">
       <BlurFade delay={delay}>
-        <div className="min-h-96 relative flex flex-col items-center justify-center overflow-hidden rounded-lg text-center">
-          <div className="flex min-h-0 flex-col gap-6 justify-center my-5">
-            <h2 className="text-lime-400 uppercase text-xl font-bold">Organize your job hunt</h2>
+        <div className="relative flex min-h-96 flex-col items-center justify-center overflow-hidden rounded-lg text-center">
+          <div className="my-5 flex min-h-0 flex-col justify-center gap-6">
+            <h2 className="text-sm font-semibold tracking-[0.2em] text-brand-ink uppercase">
+              Organize your job hunt
+            </h2>
             <SparklesText
-              text="Take Control of Your Job Search with Landit"
-              className="text-5xl sm:text-6xl lg:text-7xl text-primary"
+              text="Take control of your job search with Land It"
+              className="text-5xl text-foreground sm:text-6xl lg:text-7xl"
             />
-            <p className="text-md sm:text-xl font-medium">
-              Seamless, Secure, and Smart. Your All-in-One Job Application Tracker
+            <p className="text-md font-medium text-muted-foreground sm:text-xl">
+              A calm, fast tracker for every application you send.
             </p>
           </div>
-          <Button className="rounded-full px-4 py-6 bg-lime-500 text-primary-foreground hover:bg-lime-500 font-bold">
-            <ViewLink href="/application-record" className="flex flex-row items-center gap-2">
-              Open App
-              <div className="rounded-full bg-lime-600 p-2">
-                <MoveRight className="inline" />
-              </div>
-            </ViewLink>
+          <Button size="lg" render={<ViewLink href="/application-record" />} nativeButton={false}>
+            Open app
+            <ArrowRightIcon data-icon="inline-end" />
           </Button>
         </div>
       </BlurFade>

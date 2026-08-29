@@ -1,5 +1,4 @@
 allowBuilds:
-  "@clerk/shared": false
   bufferutil: false
   es5-ext: false
   esbuild: false

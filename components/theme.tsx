@@ -1,11 +1,13 @@
 "use client";
+
 import { useSyncExternalStore } from "react";
 import { useTheme } from "next-themes";
-import { Sun, Moon } from "lucide-react";
+import { MoonIcon, SunIcon } from "@phosphor-icons/react";
+import { Button } from "@/components/ui/button";
 
 const subscribe = () => () => {};
 
-export function Theme({ className }: { className?: string }) {
+export function ThemeToggle({ className }: { className?: string }) {
   const mounted = useSyncExternalStore(
     subscribe,
     () => true,
@@ -13,25 +15,17 @@ export function Theme({ className }: { className?: string }) {
   );
   const { setTheme, resolvedTheme } = useTheme();
 
-  if (!mounted) return;
-
-  const toggleTheme = () => {
-    if (resolvedTheme === "dark") {
-      setTheme("light");
-    } else if (resolvedTheme === "light") {
-      setTheme("dark");
-    }
-  };
-  const btn_style = `inline align-middle p-2 lg:p-0 lg:border-none rounded-xl border ${className ? className : "text-slate-200"}`;
-  const btn_size = "w-5 h-5";
-
   return (
-    <button type="button" onClick={toggleTheme} className={btn_style}>
-      {resolvedTheme === "dark" ? (
-        <Sun className={btn_size} aria-label="the sun" />
-      ) : (
-        <Moon className={btn_size} aria-label="the moon" />
-      )}
-    </button>
+    <Button
+      type="button"
+      variant="ghost"
+      size="icon"
+      className={className}
+      aria-label="Toggle theme"
+      disabled={!mounted}
+      onClick={() => setTheme(resolvedTheme === "dark" ? "light" : "dark")}
+    >
+      {mounted && resolvedTheme === "dark" ? <SunIcon /> : <MoonIcon />}
+    </Button>
   );
 }

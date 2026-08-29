@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import { Toaster } from "@/components/ui/sonner";
 import { Analytics } from "@vercel/analytics/react";
 import { GoogleAnalytics } from "@/components/google-analytics";
 import { Providers } from "./providers";
@@ -10,8 +9,8 @@ import { ViewTransitions } from "next-view-transitions";
 const inter = Inter({ variable: "--font-inter", subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Application Record",
-  description: "SpreadSheet alternative for managing Job Applications",
+  title: "Land It",
+  description: "A calmer way to track job applications.",
 };
 
 export default function RootLayout({
@@ -22,12 +21,9 @@ export default function RootLayout({
   return (
     <ViewTransitions>
       <html lang="en" suppressHydrationWarning>
-        <body className={inter.className}>
+        <body className={`${inter.variable} font-sans`}>
           <Providers>
-            <main className="lg:mx-auto">
-              {children}
-              <Toaster position="bottom-right" />
-            </main>
+            {children}
             <Analytics />
             <GoogleAnalytics />
           </Providers>

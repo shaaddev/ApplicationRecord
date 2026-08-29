@@ -1,31 +1,35 @@
-import Link from "next/link";
+import { GithubLogoIcon } from "@phosphor-icons/react/dist/ssr";
 import { Button } from "@/components/ui/button";
-import { MoveRight } from "lucide-react";
 import BlurFade from "@/components/ui/blur-fade";
 
 export function Collab({ delay }: { delay?: number }) {
   return (
     <section id="collab">
       <BlurFade delay={delay! * 6}>
-        <div className="flex flex-col items-center justify-center overflow-hidden rounded-lg text-center max-w-6xl mx-auto min-h-screen">
-          <div className="flex min-h-0 flex-col gap-6 justify-center my-5">
-            <h2 className="text-lime-400 uppercase text-xl font-bold">Developers, Join us</h2>
-            <h1 className="text-4xl sm:text-6xl tracking-tight font-bold">
-              Contribute to Landit and help build the future with us
+        <div className="mx-auto flex min-h-screen max-w-6xl flex-col items-center justify-center overflow-hidden rounded-lg text-center">
+          <div className="my-5 flex min-h-0 flex-col justify-center gap-6">
+            <h2 className="text-sm font-semibold tracking-[0.2em] text-brand-ink uppercase">
+              Developers, join us
+            </h2>
+            <h1 className="text-4xl font-bold tracking-tight sm:text-6xl">
+              Contribute to Land It and help build the future with us
             </h1>
           </div>
-          <Button className="rounded-full px-4 py-6 bg-lime-500 text-primary-foreground hover:bg-lime-500 font-bold">
-            <Link
-              href="https://github.com/shaaddev/ApplicationRecord"
-              className="flex flex-row items-center gap-2"
-              target="_blank"
-              rel="noreferrer"
-            >
-              Contribute on Github
-              <div className="rounded-full bg-lime-600 p-2">
-                <MoveRight className="inline" />
-              </div>
-            </Link>
+          <Button
+            size="lg"
+            variant="outline"
+            render={
+              <a
+                href="https://github.com/shaaddev/ApplicationRecord"
+                target="_blank"
+                rel="noreferrer"
+                aria-label="Contribute on GitHub"
+              />
+            }
+            nativeButton={false}
+          >
+            <GithubLogoIcon data-icon="inline-start" weight="fill" />
+            Contribute on GitHub
           </Button>
         </div>
       </BlurFade>

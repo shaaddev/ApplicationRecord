@@ -3,12 +3,15 @@
 import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { toast } from "sonner";
+import { REGEXP_ONLY_DIGITS } from "input-otp";
 import { authClient } from "@/lib/auth-client";
 import { hasAccount } from "@/app/(auth)/actions";
+import { toast } from "@/components/ui/toast";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
+import { Spinner } from "@/components/ui/spinner";
+import { Field, FieldDescription, FieldGroup, FieldLabel } from "@/components/ui/field";
+import { InputOTP, InputOTPGroup, InputOTPSlot } from "@/components/ui/input-otp";
 import {
   Card,
   CardContent,
@@ -52,20 +55,17 @@ export function AuthForm({
 
   const sendCode = async () => {
     setPending(true);
-    const { error } = await authClient.emailOtp.sendVerificationOtp({
-      email,
-      type: "sign-in",
-    });
+    const { error } = await authClient.emailOtp.sendVerificationOtp({ email, type: "sign-in" });
     setPending(false);
 
     if (error) {
-      toast.error("Could not send code", { description: error.message });
+      toast.add({ type: "error", title: "Could not send code", description: error.message });
       return false;
     }
     return true;
   };
 
-  const otherPage = (page: "login" | "signup") => {
+  const otherPage = (page: Mode) => {
     const params = new URLSearchParams({ email });
     if (next !== "/application-record") params.set("next", next);
     return `/${page}?${params.toString()}`;
@@ -77,18 +77,26 @@ export function AuthForm({
     const check = await hasAccount(email);
     if (!check.ok) {
       setPending(false);
-      toast.error(check.error);
+      toast.add({ type: "error", title: check.error });
       return;
     }
     if (mode === "login" && !check.exists) {
       setPending(false);
-      toast.error("No account for this email", { description: "Create one to continue." });
+      toast.add({
+        type: "info",
+        title: "No account for this email",
+        description: "Create one to continue.",
+      });
       router.push(otherPage("signup"));
       return;
     }
     if (mode === "signup" && check.exists) {
       setPending(false);
-      toast.info("You already have an account", { description: "Log in with a code instead." });
+      toast.add({
+        type: "info",
+        title: "You already have an account",
+        description: "Log in with a code instead.",
+      });
       router.push(otherPage("login"));
       return;
     }
@@ -101,22 +109,24 @@ export function AuthForm({
   const onResend = async () => {
     if (await sendCode()) {
       setCode("");
-      toast.success("New code sent");
+      toast.add({ type: "success", title: "New code sent" });
     }
   };
 
-  const onSubmitCode = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+  const verify = async (otp: string) => {
     setPending(true);
     const { error } = await authClient.signIn.emailOtp({
       email,
-      otp: code,
+      otp,
       ...(mode === "signup" && name ? { name } : {}),
     });
     setPending(false);
 
     if (error) {
-      toast.error(mode === "signup" ? "Sign up failed" : "Log in failed", {
+      setCode("");
+      toast.add({
+        type: "error",
+        title: mode === "signup" ? "Sign up failed" : "Log in failed",
         description: error.message,
       });
       return;
@@ -126,93 +136,111 @@ export function AuthForm({
     router.refresh();
   };
 
+  const onSubmitCode = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (code.length === 6) await verify(code);
+  };
+
   return (
     <Card className="w-full max-w-md">
       <CardHeader>
-        <CardTitle className="text-2xl">
+        <CardTitle className="text-xl">
           {step === "details" ? copy[mode].title : "Check your email"}
         </CardTitle>
         <CardDescription>
-          {step === "details" ? copy[mode].description : `Enter the 6-digit code sent to ${email}.`}
+          {step === "details" ? copy[mode].description : `We sent a 6-digit code to ${email}.`}
         </CardDescription>
       </CardHeader>
       <CardContent>
         {step === "details" ? (
-          <form onSubmit={onSubmitDetails} className="flex flex-col gap-4">
-            {mode === "signup" && (
-              <div className="flex flex-col gap-2">
-                <Label htmlFor="name">Name</Label>
+          <form onSubmit={onSubmitDetails} className="flex flex-col gap-6">
+            <FieldGroup>
+              {mode === "signup" ? (
+                <Field>
+                  <FieldLabel htmlFor="name">Name</FieldLabel>
+                  <Input
+                    id="name"
+                    name="name"
+                    autoComplete="name"
+                    required
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                  />
+                </Field>
+              ) : null}
+              <Field>
+                <FieldLabel htmlFor="email">Email</FieldLabel>
                 <Input
-                  id="name"
-                  name="name"
-                  autoComplete="name"
+                  id="email"
+                  type="email"
+                  name="email"
+                  autoComplete="email"
                   required
-                  value={name}
-                  onChange={(e) => setName(e.target.value)}
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value.trim())}
                 />
-              </div>
-            )}
-            <div className="flex flex-col gap-2">
-              <Label htmlFor="email">Email</Label>
-              <Input
-                id="email"
-                type="email"
-                name="email"
-                autoComplete="email"
-                required
-                value={email}
-                onChange={(e) => setEmail(e.target.value.trim())}
-              />
-            </div>
+              </Field>
+            </FieldGroup>
             <Button
               type="submit"
-              className="bg-lime-500 text-black hover:bg-lime-400"
+              size="lg"
               disabled={pending || !email || (mode === "signup" && !name.trim())}
             >
-              {pending ? "Sending..." : copy[mode].submit}
+              {pending ? <Spinner data-icon="inline-start" /> : null}
+              {copy[mode].submit}
             </Button>
           </form>
         ) : (
-          <form onSubmit={onSubmitCode} className="flex flex-col gap-4">
-            <div className="flex flex-col gap-2">
-              <Label htmlFor="code">Code</Label>
-              <Input
+          <form onSubmit={onSubmitCode} className="flex flex-col gap-6">
+            <Field className="items-center text-center">
+              <FieldLabel htmlFor="code" className="justify-center">
+                Code
+              </FieldLabel>
+              <InputOTP
                 id="code"
-                name="code"
-                inputMode="numeric"
-                autoComplete="one-time-code"
-                pattern="[0-9]{6}"
+                containerClassName="justify-center"
                 maxLength={6}
-                required
-                className="text-center text-lg tracking-[0.4em]"
+                pattern={REGEXP_ONLY_DIGITS}
                 value={code}
-                onChange={(e) => setCode(e.target.value.replace(/\D/g, ""))}
-              />
-            </div>
-            <Button
-              type="submit"
-              className="bg-lime-500 text-black hover:bg-lime-400"
-              disabled={pending || code.length !== 6}
-            >
-              {pending ? "Verifying..." : "Verify"}
+                onChange={setCode}
+                onComplete={verify}
+                disabled={pending}
+              >
+                <InputOTPGroup>
+                  {[0, 1, 2, 3, 4, 5].map((i) => (
+                    <InputOTPSlot key={i} index={i} />
+                  ))}
+                </InputOTPGroup>
+              </InputOTP>
+              <FieldDescription className="text-center">
+                The code expires in 5 minutes.
+              </FieldDescription>
+            </Field>
+            <Button type="submit" size="lg" disabled={pending || code.length !== 6}>
+              {pending ? <Spinner data-icon="inline-start" /> : null}
+              Verify
             </Button>
-            <div className="flex items-center justify-between text-sm text-muted-foreground">
-              <button
+            <div className="flex items-center justify-between">
+              <Button
                 type="button"
-                className="underline underline-offset-4 hover:text-primary"
+                variant="link"
+                size="sm"
+                className="px-0 text-muted-foreground"
                 disabled={pending}
                 onClick={() => setStep("details")}
               >
                 Use a different email
-              </button>
-              <button
+              </Button>
+              <Button
                 type="button"
-                className="underline underline-offset-4 hover:text-primary"
+                variant="link"
+                size="sm"
+                className="px-0 text-muted-foreground"
                 disabled={pending}
                 onClick={onResend}
               >
                 Resend code
-              </button>
+              </Button>
             </div>
           </form>
         )}
@@ -221,14 +249,20 @@ export function AuthForm({
         {mode === "login" ? (
           <p>
             New to Land It?{" "}
-            <Link href={otherPage("signup")} className="text-primary underline underline-offset-4">
+            <Link
+              href={otherPage("signup")}
+              className="text-foreground underline underline-offset-4"
+            >
               Sign up
             </Link>
           </p>
         ) : (
           <p>
             Already have an account?{" "}
-            <Link href={otherPage("login")} className="text-primary underline underline-offset-4">
+            <Link
+              href={otherPage("login")}
+              className="text-foreground underline underline-offset-4"
+            >
               Log in
             </Link>
           </p>

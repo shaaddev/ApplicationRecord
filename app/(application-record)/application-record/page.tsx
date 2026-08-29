@@ -1,43 +1,39 @@
-import { TableCard } from "@/components/table-card";
-import { Button } from "@/components/ui/button";
-import { Pencil } from "@/lib/Logos";
-import { FormTrigger } from "@/components/Forms/form-trigger/create-form-trigger";
-import { ChatbotUI } from "@/components/ai-chatbot/chatbot";
-import { GridListToggle } from "@/components/Grid/grid-list-toggle";
+import type { Metadata } from "next";
 import { redirect } from "next/navigation";
 import { getUser } from "@/lib/session";
 import { getUserApplications } from "@/db/queries";
+import { computeStats } from "@/lib/applications";
+import { StatsRow } from "@/components/dashboard/stats-row";
+import { ApplicationsView } from "@/components/applications/applications-view";
+import { NewApplicationButton } from "@/components/applications/application-dialog";
+import { Chatbot } from "@/components/ai-chatbot/chatbot";
+
+export const metadata: Metadata = {
+  title: "Applications | Land It",
+};
 
 export default async function ApplicationRecord() {
   const user = await getUser();
-
   if (!user) {
     redirect("/login?next=/application-record");
   }
 
-  const apps = await getUserApplications(user.id);
+  const applications = await getUserApplications(user.id);
 
   return (
-    <main className="flex flex-col items-center justify-between p-10 lg:p-16">
-      <h1 className="text-2xl font-bold mb-6">Application Record</h1>
-      <TableCard>
-        <div className="flex mt-5 md:flex-row items-center gap-6 justify-between">
-          <GridListToggle data={apps}>
-            <FormTrigger>
-              <Button
-                type="button"
-                className="flex flex-row gap-2 dark:bg-slate-500 dark:text-black"
-              >
-                Add <span className="hidden md:flex">Application</span>{" "}
-                <Pencil className="w-4 h-4 inline " />
-              </Button>
-            </FormTrigger>
-          </GridListToggle>
+    <div className="flex flex-col gap-8">
+      <div className="flex flex-wrap items-end justify-between gap-4">
+        <div className="flex flex-col gap-1">
+          <h1 className="text-2xl font-semibold tracking-tight">Applications</h1>
+          <p className="text-sm text-muted-foreground">
+            Everything you have applied to, in one place.
+          </p>
         </div>
-      </TableCard>
-      <div className="fixed bottom-10 right-20">
-        <ChatbotUI />
+        <NewApplicationButton />
       </div>
-    </main>
+      <StatsRow stats={computeStats(applications)} />
+      <ApplicationsView applications={applications} />
+      <Chatbot />
+    </div>
   );
 }
