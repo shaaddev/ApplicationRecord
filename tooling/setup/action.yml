@@ -4,8 +4,14 @@ description: "setting up pnpm as runtime"
 runs:
   using: composite
   steps:
+    - uses: actions/checkout@v6
+
     - name: setup pnpm
-      uses: pnpm/action-setup@v4
+      uses: pnpm/setup@v1
+      with:
+        version: 11
+        runtime: node@24
+        cache: true
 
     - name: setup node
       uses: actions/setup-node@v6
