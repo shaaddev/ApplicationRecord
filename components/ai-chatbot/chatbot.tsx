@@ -83,7 +83,11 @@ export function Chatbot() {
     <Sheet>
       <SheetTrigger
         render={
-          <Button size="icon-lg" className="fixed right-5 bottom-5 z-30 rounded-full shadow-lg" />
+          <Button
+            variant="brand"
+            size="icon-lg"
+            className="fixed right-5 bottom-5 z-30 rounded-full shadow-lg"
+          />
         }
         aria-label="Chat with Landy"
       >

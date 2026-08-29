@@ -21,7 +21,12 @@ export function HomePage({ delay }: { delay?: number }) {
               A calm, fast tracker for every application you send.
             </p>
           </div>
-          <Button size="lg" render={<ViewLink href="/application-record" />} nativeButton={false}>
+          <Button
+            variant="brand"
+            size="lg"
+            render={<ViewLink href="/application-record" />}
+            nativeButton={false}
+          >
             Open app
             <ArrowRightIcon data-icon="inline-end" />
           </Button>

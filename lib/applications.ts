@@ -34,11 +34,11 @@ export const STATUS_TONE: Record<Status, Tone> = {
 };
 
 export const TONE_CLASS: Record<Tone, string> = {
-  neutral: "bg-status-neutral/12 text-status-neutral",
-  info: "bg-status-info/15 text-status-info",
-  progress: "bg-status-progress/12 text-status-progress",
-  success: "bg-status-success/12 text-status-success",
-  danger: "bg-status-danger/12 text-status-danger",
+  neutral: "bg-status-neutral/15 text-status-neutral",
+  info: "bg-status-info/20 text-status-info",
+  progress: "bg-status-progress/18 text-status-progress",
+  success: "bg-status-success/18 text-status-success",
+  danger: "bg-status-danger/15 text-status-danger",
   dark: "bg-status-dark/12 text-status-dark",
 };
 

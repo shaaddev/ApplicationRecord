@@ -58,14 +58,18 @@ export function UserMenu({
       >
         <Avatar className="size-7">
           {image ? <AvatarImage src={image} alt="" /> : null}
-          <AvatarFallback className="text-[11px]">{initials(name, email)}</AvatarFallback>
+          <AvatarFallback className="bg-brand text-[11px] font-medium text-brand-foreground">
+            {initials(name, email)}
+          </AvatarFallback>
         </Avatar>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="w-56">
-        <DropdownMenuLabel className="flex flex-col gap-0.5">
-          <span className="truncate font-medium text-foreground">{name || "Account"}</span>
-          <span className="truncate text-xs font-normal text-muted-foreground">{email}</span>
-        </DropdownMenuLabel>
+        <DropdownMenuGroup>
+          <DropdownMenuLabel className="flex flex-col gap-0.5">
+            <span className="truncate font-medium text-foreground">{name || "Account"}</span>
+            <span className="truncate text-xs font-normal text-muted-foreground">{email}</span>
+          </DropdownMenuLabel>
+        </DropdownMenuGroup>
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
           <DropdownMenuItem onClick={logout} disabled={pending}>

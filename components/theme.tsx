@@ -22,7 +22,6 @@ export function ThemeToggle({ className }: { className?: string }) {
       size="icon"
       className={className}
       aria-label="Toggle theme"
-      disabled={!mounted}
       onClick={() => setTheme(resolvedTheme === "dark" ? "light" : "dark")}
     >
       {mounted && resolvedTheme === "dark" ? <SunIcon /> : <MoonIcon />}

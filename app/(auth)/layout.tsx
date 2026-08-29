@@ -13,7 +13,7 @@ export default function AuthLayout({ children }: Readonly<{ children: React.Reac
             alt="Land It"
             width={104}
             height={27}
-            className="invert dark:invert-0"
+            className="h-auto invert dark:invert-0"
           />
         </Link>
         <ThemeToggle />

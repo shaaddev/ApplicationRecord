@@ -50,7 +50,7 @@ export function NewApplicationButton({ size = "default" }: { size?: "default" | 
 
   return (
     <>
-      <Button size={size} onClick={() => setOpen(true)}>
+      <Button size={size} variant="brand" onClick={() => setOpen(true)}>
         <PlusIcon data-icon="inline-start" weight="bold" />
         New application
       </Button>

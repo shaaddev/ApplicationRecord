@@ -183,6 +183,7 @@ export function AuthForm({
             </FieldGroup>
             <Button
               type="submit"
+              variant="brand"
               size="lg"
               disabled={pending || !email || (mode === "signup" && !name.trim())}
             >
@@ -216,7 +217,7 @@ export function AuthForm({
                 The code expires in 5 minutes.
               </FieldDescription>
             </Field>
-            <Button type="submit" size="lg" disabled={pending || code.length !== 6}>
+            <Button type="submit" variant="brand" size="lg" disabled={pending || code.length !== 6}>
               {pending ? <Spinner data-icon="inline-start" /> : null}
               Verify
             </Button>

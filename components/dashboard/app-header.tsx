@@ -19,7 +19,7 @@ export async function AppHeader() {
             width={104}
             height={27}
             priority
-            className="invert dark:invert-0"
+            className="h-auto invert dark:invert-0"
           />
         </Link>
         <div className="flex items-center gap-1">

@@ -36,7 +36,6 @@ import {
   DropdownMenuContent,
   DropdownMenuGroup,
   DropdownMenuLabel,
-  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { InputGroup, InputGroupAddon, InputGroupInput } from "@/components/ui/input-group";
@@ -231,9 +230,8 @@ export function ApplicationsView({ applications }: { applications: Application[]
             ) : null}
           </DropdownMenuTrigger>
           <DropdownMenuContent align="start" className="min-w-44">
-            <DropdownMenuLabel>Filter by status</DropdownMenuLabel>
-            <DropdownMenuSeparator />
             <DropdownMenuGroup>
+              <DropdownMenuLabel>Filter by status</DropdownMenuLabel>
               {STATUSES.map((s) => (
                 <DropdownMenuCheckboxItem
                   key={s}
@@ -314,7 +312,7 @@ export function ApplicationsView({ applications }: { applications: Application[]
                             <Button
                               variant="ghost"
                               size="xs"
-                              className="-ml-2 text-xs font-medium text-muted-foreground data-[sorted=true]:text-foreground"
+                              className="-ml-2 text-xs font-medium text-muted-foreground data-[sorted=true]:text-brand-ink"
                               data-sorted={sorted !== false}
                               onClick={header.column.getToggleSortingHandler()}
                             >
@@ -338,7 +336,7 @@ export function ApplicationsView({ applications }: { applications: Application[]
               </TableHeader>
               <TableBody>
                 {rows.map((row) => (
-                  <TableRow key={row.id}>
+                  <TableRow key={row.id} className="hover:bg-brand/8">
                     {row.getVisibleCells().map((cell) => (
                       <TableCell key={cell.id} className="py-2.5">
                         {flexRender(cell.column.columnDef.cell, cell.getContext())}
