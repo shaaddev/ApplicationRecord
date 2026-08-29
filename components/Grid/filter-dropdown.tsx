@@ -21,33 +21,15 @@ export function FilterDropdown({ onSort }: FilterDropdownProps) {
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
-        <DropdownMenuItem onClick={() => onSort('all')}>
-          All
-        </DropdownMenuItem>
-        <DropdownMenuItem onClick={() => onSort('Not Applied')}>
-          Not Applied
-        </DropdownMenuItem>
-        <DropdownMenuItem onClick={() => onSort('Applied')}>
-          Applied
-        </DropdownMenuItem>
-        <DropdownMenuItem onClick={() => onSort('Phone Screen')}>
-          Phone Screen
-        </DropdownMenuItem>
-        <DropdownMenuItem onClick={() => onSort('Offer')}>
-          Offer
-        </DropdownMenuItem>
-        <DropdownMenuItem onClick={() => onSort('Hired')}>
-          Hired
-        </DropdownMenuItem>
-        <DropdownMenuItem onClick={() => onSort('Rejected')}>
-          Rejected
-        </DropdownMenuItem>
-        <DropdownMenuItem onClick={() => onSort('Ghosted')}>
-          Ghosted
-        </DropdownMenuItem>
-        <DropdownMenuItem onClick={() => onSort('Blacklist')}>
-          Blacklist
-        </DropdownMenuItem>
+        <DropdownMenuItem onClick={() => onSort("all")}>All</DropdownMenuItem>
+        <DropdownMenuItem onClick={() => onSort("Not Applied")}>Not Applied</DropdownMenuItem>
+        <DropdownMenuItem onClick={() => onSort("Applied")}>Applied</DropdownMenuItem>
+        <DropdownMenuItem onClick={() => onSort("Phone Screen")}>Phone Screen</DropdownMenuItem>
+        <DropdownMenuItem onClick={() => onSort("Offer")}>Offer</DropdownMenuItem>
+        <DropdownMenuItem onClick={() => onSort("Hired")}>Hired</DropdownMenuItem>
+        <DropdownMenuItem onClick={() => onSort("Rejected")}>Rejected</DropdownMenuItem>
+        <DropdownMenuItem onClick={() => onSort("Ghosted")}>Ghosted</DropdownMenuItem>
+        <DropdownMenuItem onClick={() => onSort("Blacklist")}>Blacklist</DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
   );

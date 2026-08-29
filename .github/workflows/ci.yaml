@@ -13,11 +13,20 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
+      - name: checkout
+        uses: actions/checkout@v5
+
       - name: setup (pnpm + node + install)
         uses: ./tooling/setup
 
-      - name: Check App (format + lint + types)
-        run: pnpm run check
+      - name: Lint (oxlint)
+        run: pnpm lint -f github
+
+      - name: Format (oxfmt)
+        run: pnpm format:check
+
+      - name: Types (tsc)
+        run: pnpm typecheck
 
       - name: Install Vercel CLI
         run: pnpm i -g vercel@latest

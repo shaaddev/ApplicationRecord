@@ -1,7 +1,7 @@
 import { TableHead, TableRow, TableHeader } from "@/components/ui/table";
 
-export function TableH(){
-  return(
+export function TableH() {
+  return (
     <TableHeader>
       <TableRow>
         <TableHead>Role</TableHead>
@@ -13,5 +13,5 @@ export function TableH(){
         <TableHead>Salary</TableHead>
       </TableRow>
     </TableHeader>
-  )
+  );
 }

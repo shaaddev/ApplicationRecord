@@ -8,9 +8,7 @@ export function Features({ delay }: { delay?: number }) {
       <BlurFade delay={delay! * 3}>
         <div className="relative flex flex-col items-center justify-center overflow-hidden rounded-lg min-h-screen w-full my-48">
           <div className="flex min-h-0 flex-col gap-6 justify-center my-5">
-            <h2 className="text-3xl uppercase font-bold text-center">
-              Features
-            </h2>
+            <h2 className="text-3xl uppercase font-bold text-center">Features</h2>
             <div className="flex flex-col">
               {features.map((feature: FeatureProps) => (
                 <div

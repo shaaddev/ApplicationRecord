@@ -7,13 +7,7 @@ import { authClient } from "@/lib/auth-client";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 
 type Step = "email" | "code";
 
@@ -90,7 +84,6 @@ export function SignInForm() {
                 name="email"
                 autoComplete="email"
                 required
-                autoFocus
                 value={email}
                 onChange={(e) => setEmail(e.target.value.trim())}
               />
@@ -111,7 +104,6 @@ export function SignInForm() {
                 pattern="[0-9]{6}"
                 maxLength={6}
                 required
-                autoFocus
                 value={code}
                 onChange={(e) => setCode(e.target.value.replace(/\D/g, ""))}
               />

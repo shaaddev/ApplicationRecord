@@ -6,7 +6,6 @@ import { continueConversation } from "./actions";
 import { readStreamableValue } from "ai/rsc";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
-import { Input } from "@/components/ui/input";
 import ReactMarkdown from "react-markdown";
 import { ChevronsUpDownIcon, SendIcon } from "./icons";
 import { FaUser } from "react-icons/fa";
@@ -17,24 +16,18 @@ async function handleSendMessage(
   messages: CoreMessage[],
   setMessages: React.Dispatch<React.SetStateAction<CoreMessage[]>>,
   input: string,
-  setInput: React.Dispatch<React.SetStateAction<string>>
+  setInput: React.Dispatch<React.SetStateAction<string>>,
 ) {
   e.preventDefault();
 
-  const newMessages: CoreMessage[] = [
-    ...messages,
-    { role: "user", content: input },
-  ];
+  const newMessages: CoreMessage[] = [...messages, { role: "user", content: input }];
   setMessages(newMessages);
   setInput("");
 
   const result = await continueConversation(newMessages);
 
   for await (const content of readStreamableValue(result)) {
-    setMessages([
-      ...newMessages,
-      { role: "assistant", content: content as string },
-    ]);
+    setMessages([...newMessages, { role: "assistant", content: content as string }]);
   }
 }
 
@@ -64,13 +57,15 @@ export function ChatbotUI() {
         isExpanded ? "h-[600px]" : "h-[80px]"
       }`}
     >
-      <div
-        className={`flex items-center justify-between px-4 py-3 bg-lime-600 text-white rounded-t-lg cursor-pointer ${
+      <button
+        type="button"
+        className={`flex w-full items-center justify-between px-4 py-3 bg-lime-600 text-white rounded-t-lg cursor-pointer ${
           isExpanded ? "rounded-b-none" : ""
         }`}
+        aria-expanded={isExpanded}
         onClick={() => setIsExpanded(!isExpanded)}
       >
-        <div className="flex items-center gap-2">
+        <span className="flex items-center gap-2">
           <Image
             src="/landy.png"
             width={32}
@@ -80,11 +75,11 @@ export function ChatbotUI() {
             style={{ aspectRatio: "32/32", objectFit: "cover" }}
           />
           <h3 className="text-lg font-medium">Chat with Landy!</h3>
-        </div>
-        <Button variant="ghost" size="icon" className="rounded-full">
+        </span>
+        <span className="inline-flex h-9 w-9 items-center justify-center rounded-full">
           <ChevronsUpDownIcon className="w-4 h-4" />
-        </Button>
-      </div>
+        </span>
+      </button>
       {isExpanded && (
         <div className="flex flex-col h-[500px]">
           <div className="flex-1 overflow-y-auto p-4 space-y-4">
@@ -118,9 +113,7 @@ export function ChatbotUI() {
           </div>
           <div className="border-t px-6 pt-5">
             <form
-              onSubmit={(e) =>
-                handleSendMessage(e, messages, setMessages, input, setInput)
-              }
+              onSubmit={(e) => handleSendMessage(e, messages, setMessages, input, setInput)}
               className="flex items-center gap-2"
             >
               <div className="relative max-h-60 flex flex-row w-full grow justify-between overflow-hidden bg-zinc-100 dark:bg-slate-800 px-6 rounded-full border focus:outline-1">

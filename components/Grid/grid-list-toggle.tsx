@@ -4,7 +4,6 @@ import { LayoutGridIcon, ListIcon } from "lucide-react";
 import { useState, useMemo } from "react";
 import { ApplicationGridView } from "./application-grid-view";
 import { ApplicationListView } from "./application-list-view";
-import { JobProps } from "@/lib/info";
 import { FilterDropdown } from "./filter-dropdown";
 import { SortDropdown } from "./sort-dropdown";
 
@@ -21,15 +20,7 @@ const colors = {
 
 type SortableFields = "role" | "company_name" | "status" | "date_applied";
 
-export function GridListToggle({
-  data,
-  children,
-  user,
-}: {
-  data: any;
-  children?: React.ReactNode;
-  user?: any;
-}) {
+export function GridListToggle({ data, children }: { data: any; children?: React.ReactNode }) {
   const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
   const [sortField, setSortField] = useState<SortableFields>("date_applied");
   const [sortOrder, setSortOrder] = useState<"asc" | "desc">("desc");
@@ -72,7 +63,7 @@ export function GridListToggle({
       <div className="flex flex-row items-center justify-between gap-2">
         <div className="gap-2 flex">
           <Button
-            variant={viewMode === "grid" ? "default" : "outline-solid"}
+            variant={viewMode === "grid" ? "default" : "outline"}
             size="icon"
             onClick={() => setViewMode("grid")}
             aria-label="Grid view"
@@ -81,7 +72,7 @@ export function GridListToggle({
             <LayoutGridIcon className="h-4 w-4" />
           </Button>
           <Button
-            variant={viewMode === "list" ? "default" : "outline-solid"}
+            variant={viewMode === "list" ? "default" : "outline"}
             size="icon"
             onClick={() => setViewMode("list")}
             aria-label="List view"
@@ -91,21 +82,13 @@ export function GridListToggle({
           </Button>
         </div>
         <div className="flex items-center gap-2">
-          <SortDropdown
-            sortBy={sortField}
-            sortOrder={sortOrder}
-            onSortChange={handleSortChange}
-          />
+          <SortDropdown sortBy={sortField} sortOrder={sortOrder} onSortChange={handleSortChange} />
           <FilterDropdown onSort={handleFilter} />
           {children}
         </div>
       </div>
       {viewMode === "grid" ? (
-        <ApplicationGridView
-          data={sortedAndFilteredData}
-          statusColours={colors}
-          user={user}
-        />
+        <ApplicationGridView data={sortedAndFilteredData} statusColours={colors} />
       ) : (
         <ApplicationListView
           data={sortedAndFilteredData}

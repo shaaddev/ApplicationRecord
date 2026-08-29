@@ -1,17 +1,13 @@
-'use client'
-import { useState } from 'react'
-import { Button } from "@/components/ui/button"
-import { Pencil } from "lucide-react"
-import {
-  Dialog,
-  DialogContent,
-  DialogTrigger,
-} from "@/components/ui/dialog"
-import { EditForm } from '../Forms/edit-form'
-import { JobProps } from "@/lib/info"
+"use client";
+import { useState } from "react";
+import { Button } from "@/components/ui/button";
+import { Pencil } from "lucide-react";
+import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
+import { EditForm } from "../Forms/edit-form";
+import { JobProps } from "@/lib/info";
 
 export function EditButton({ job }: { job: JobProps }) {
-  const [open, setOpen] = useState(false)
+  const [open, setOpen] = useState(false);
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
@@ -24,5 +20,5 @@ export function EditButton({ job }: { job: JobProps }) {
         <EditForm {...job} onSuccess={() => setOpen(false)} />
       </DialogContent>
     </Dialog>
-  )
+  );
 }

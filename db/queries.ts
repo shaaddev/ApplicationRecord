@@ -62,27 +62,19 @@ export async function updateApplication({
       salary: salary || null,
       updated_at: new Date(),
     })
-    .where(
-      and(eq(applications.id, parseInt(id)), eq(applications.user_id, user_id)),
-    )
+    .where(and(eq(applications.id, parseInt(id)), eq(applications.user_id, user_id)))
     .returning();
 
   return updatedApplication;
 }
 
-export async function updateApplicationStatus(
-  status: string,
-  id: string,
-  userId: string,
-) {
+export async function updateApplicationStatus(status: string, id: string, userId: string) {
   await db
     .update(applications)
     .set({
       status: status as string,
     })
-    .where(
-      and(eq(applications.id, parseInt(id)), eq(applications.user_id, userId)),
-    );
+    .where(and(eq(applications.id, parseInt(id)), eq(applications.user_id, userId)));
 }
 
 export async function deleteApplication(id: number, userId: string) {

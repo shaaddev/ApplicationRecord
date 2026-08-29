@@ -4,11 +4,11 @@ import Script from "next/script";
 export function GoogleAnalytics() {
   return (
     <>
-      <Script 
+      <Script
         strategy="lazyOnload"
         src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GA_ID}`}
       />
-      <Script id='' strategy="lazyOnload">
+      <Script id="" strategy="lazyOnload">
         {`
           window.dataLayer = window.dataLayer || []; 
           function gtag(){dataLayer.push(arguments);}
@@ -19,5 +19,5 @@ export function GoogleAnalytics() {
         `}
       </Script>
     </>
-  )
+  );
 }

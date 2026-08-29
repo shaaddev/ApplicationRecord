@@ -1,17 +1,23 @@
 import { JobProps } from "@/lib/info";
-import { Card, CardContent } from "@/components/ui/card"
+import { Card, CardContent } from "@/components/ui/card";
 import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import { Badge } from "@/components/ui/badge"
+import { Badge } from "@/components/ui/badge";
 import Link from "next/link";
 import { UpdateStatusBtn } from "./application-update-btn";
 import { Delete } from "./application-delete-btn";
 import { EditButton } from "./edit-btn";
 
 export function ApplicationListView({
-  data, statusColours, className
-}: { data: JobProps[], statusColours: any, className?: string }) {
-  return(
+  data,
+  statusColours,
+  className,
+}: {
+  data: JobProps[];
+  statusColours: any;
+  className?: string;
+}) {
+  return (
     <div className="space-y-4">
       {data.map((m) => (
         <Card key={m.id} className="">
@@ -22,13 +28,17 @@ export function ApplicationListView({
               <p className="text-sm text-gray-500">{m.location}</p>
               <p className="text-sm text-gray-500">${m.salary}</p>
               {m.date_applied && (
-                <p className="text-sm text-gray-500">Applied: {m.date_applied.toLocaleDateString()}</p>
+                <p className="text-sm text-gray-500">
+                  Applied: {m.date_applied.toLocaleDateString()}
+                </p>
               )}
               {m.link && (
-                <Link href={`${m.link}`} target="_blank"
+                <Link
+                  href={`${m.link}`}
+                  target="_blank"
                   className={cn(
-                    buttonVariants({ variant: 'link', size: 'sm' }),
-                    'text-blue-500 hover:text-blue-700 underline size-8 ml-7',
+                    buttonVariants({ variant: "link", size: "sm" }),
+                    "text-blue-500 hover:text-blue-700 underline size-8 ml-7",
                   )}
                 >
                   Application Link
@@ -38,7 +48,12 @@ export function ApplicationListView({
             <div className="flex items-center justify-center space-x-4 flex-col sm:flex-row">
               <Badge className={`${statusColours[m.status]} `}>{m.status}</Badge>
               {/* add in the update status here */}
-              <UpdateStatusBtn id={m.id!} status={m.status} data={data} statusColours={statusColours} className={className}/>
+              <UpdateStatusBtn
+                id={m.id!}
+                status={m.status}
+                statusColours={statusColours}
+                className={className}
+              />
               <Delete id={Number(m.id!)} />
               <EditButton job={m} />
             </div>
@@ -46,5 +61,5 @@ export function ApplicationListView({
         </Card>
       ))}
     </div>
-  )
+  );
 }

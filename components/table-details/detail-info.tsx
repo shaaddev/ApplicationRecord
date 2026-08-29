@@ -31,10 +31,7 @@ export async function DetailInfo({ data }: { data: JobProps }) {
           {user ? (
             <div className="w-full pt-5 flex justify-between ">
               <Link href={`/edit/${data.id}`}>
-                <Button
-                  type="button"
-                  className="dark:bg-slate-500 dark:text-black"
-                >
+                <Button type="button" className="dark:bg-slate-500 dark:text-black">
                   Edit
                 </Button>
               </Link>

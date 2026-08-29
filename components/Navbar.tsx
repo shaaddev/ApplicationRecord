@@ -38,10 +38,7 @@ export async function Navbar() {
         <ul className="hidden lg:flex flex-row gap-6 justify-end">
           {Object.entries(links).map(([path, { name }]) => (
             <li key={path}>
-              <Link
-                href={path}
-                className="hover:text-slate-800 dark:hover:text-slate-800"
-              >
+              <Link href={path} className="hover:text-slate-800 dark:hover:text-slate-800">
                 {name}
               </Link>
             </li>

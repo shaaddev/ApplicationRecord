@@ -22,7 +22,7 @@ export default async function ApplicationRecord() {
       <h1 className="text-2xl font-bold mb-6">Application Record</h1>
       <TableCard>
         <div className="flex mt-5 md:flex-row items-center gap-6 justify-between">
-          <GridListToggle data={apps} user={user}>
+          <GridListToggle data={apps}>
             <FormTrigger>
               <Button
                 type="button"
