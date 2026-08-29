@@ -4,8 +4,8 @@
   "private": true,
   "scripts": {
     "db:generate": "drizzle-kit generate",
-    "db:migrate": "pnpm dlx tsx migrate.ts",
-    "db:migrate:prod": "NODE_ENV=production pnpm dlx tsx migrate.ts",
+    "db:migrate": "pnpm dlx tsx db/migrate.ts",
+    "db:migrate:prod": "NODE_ENV=production pnpm dlx tsx db/migrate.ts",
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
