@@ -15,7 +15,7 @@ export function Features({ delay }: { delay?: number }) {
               {features.map((feature: FeatureProps) => (
                 <div
                   key={feature.title}
-                  className="mx-auto w-full lg:w-3/4 flex flex-col xl:flex-row gap-12 bg-zinc-100 dark:bg-zinc-900 shadow-sm rounded-xl my-12"
+                  className="mx-auto w-full lg:w-3/4 flex flex-col xl:flex-row gap-12 bg-zinc-100 dark:bg-zinc-900 shadow-xs rounded-xl my-12"
                 >
                   <div className="flex flex-col justify-start p-16">
                     <h2 className="text-4xl font-semibold ">{feature.title}</h2>

@@ -9,7 +9,7 @@ export default function AppLayout({
   return (
     <>
       <Navbar />
-      <main className="mx-auto max-w-screen-2xl">{children}</main>
+      <main className="mx-auto max-w-(--breakpoint-2xl)">{children}</main>
     </>
   );
 }

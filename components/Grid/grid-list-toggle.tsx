@@ -72,7 +72,7 @@ export function GridListToggle({
       <div className="flex flex-row items-center justify-between gap-2">
         <div className="gap-2 flex">
           <Button
-            variant={viewMode === "grid" ? "default" : "outline"}
+            variant={viewMode === "grid" ? "default" : "outline-solid"}
             size="icon"
             onClick={() => setViewMode("grid")}
             aria-label="Grid view"
@@ -81,7 +81,7 @@ export function GridListToggle({
             <LayoutGridIcon className="h-4 w-4" />
           </Button>
           <Button
-            variant={viewMode === "list" ? "default" : "outline"}
+            variant={viewMode === "list" ? "default" : "outline-solid"}
             size="icon"
             onClick={() => setViewMode("list")}
             aria-label="List view"

@@ -127,7 +127,7 @@ export function ChatbotUI() {
                 <input
                   id="message"
                   placeholder="Type your message..."
-                  className="max-h-[60px] flex-1 border-none focus-within:outline-none bg-transparent"
+                  className="max-h-[60px] flex-1 border-none focus-within:outline-hidden bg-transparent"
                   autoComplete="off"
                   value={input}
                   onChange={(e) => setInput(e.target.value)}
