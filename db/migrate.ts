@@ -12,7 +12,7 @@ async function pushMigrations() {
   }
 
   await migrate(db, {
-    migrationsFolder: "./drizzle",
+    migrationsFolder: "./db/migrations",
   });
 
   console.log("Migrations Complete");
