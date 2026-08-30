@@ -6,6 +6,8 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import {
   type Application,
   type ApplicationInput,
+  PAY_UNITS,
+  PAY_UNIT_LABEL,
   STATUSES,
   applicationSchema,
   toFormValues,
@@ -35,6 +37,7 @@ import { statusClasses } from "./status-badge";
 import { cn } from "@/lib/utils";
 
 const statusItems = STATUSES.map((s) => ({ label: s, value: s }));
+const payUnitItems = PAY_UNITS.map((u) => ({ label: PAY_UNIT_LABEL[u], value: u }));
 
 export function ApplicationForm({
   application,
@@ -48,8 +51,9 @@ export function ApplicationForm({
     resolver: zodResolver(applicationSchema),
     defaultValues: toFormValues(application),
   });
-  const { register, control, handleSubmit, formState } = form;
+  const { register, control, handleSubmit, formState, watch } = form;
   const errors = formState.errors;
+  const payUnit = watch("pay_unit");
 
   const submit = handleSubmit((values) => {
     startTransition(async () => {
@@ -162,24 +166,52 @@ export function ApplicationForm({
             )}
           />
 
-          <Field data-invalid={errors.salary ? true : undefined}>
-            <FieldLabel htmlFor="salary">Salary</FieldLabel>
-            <InputGroup>
-              <InputGroupAddon>
-                <InputGroupText>$</InputGroupText>
-              </InputGroupAddon>
-              <InputGroupInput
-                id="salary"
-                type="number"
-                inputMode="numeric"
-                min={0}
-                step={1000}
-                placeholder="120000"
-                aria-invalid={errors.salary ? true : undefined}
-                {...register("salary")}
+          <Field data-invalid={errors.pay ? true : undefined}>
+            <FieldLabel htmlFor="pay">Pay</FieldLabel>
+            <div className="grid grid-cols-[1fr_auto] gap-2">
+              <InputGroup>
+                <InputGroupAddon>
+                  <InputGroupText>$</InputGroupText>
+                </InputGroupAddon>
+                <InputGroupInput
+                  id="pay"
+                  type="number"
+                  inputMode="decimal"
+                  min={0}
+                  step={payUnit === "hour" ? 1 : 1000}
+                  placeholder={payUnit === "hour" ? "45" : "120000"}
+                  aria-invalid={errors.pay ? true : undefined}
+                  {...register("pay")}
+                />
+              </InputGroup>
+              <Controller
+                control={control}
+                name="pay_unit"
+                render={({ field }) => (
+                  <Select
+                    items={payUnitItems}
+                    value={field.value}
+                    onValueChange={(value) => {
+                      if (value) field.onChange(value);
+                    }}
+                  >
+                    <SelectTrigger aria-label="Pay unit" className="w-28">
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectGroup>
+                        {payUnitItems.map((item) => (
+                          <SelectItem key={item.value} value={item.value}>
+                            {item.label}
+                          </SelectItem>
+                        ))}
+                      </SelectGroup>
+                    </SelectContent>
+                  </Select>
+                )}
               />
-            </InputGroup>
-            <FieldError>{errors.salary?.message}</FieldError>
+            </div>
+            <FieldError>{errors.pay?.message}</FieldError>
           </Field>
         </div>
 

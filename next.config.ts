@@ -8,6 +8,12 @@ const nextConfig = {
   //   ignoreDuringBuilds: true,
   // },
   reactStrictMode: true,
+  experimental: {
+    serverActions: {
+      // Spreadsheet imports post up to 500 parsed rows in one action call.
+      bodySizeLimit: "2mb",
+    },
+  },
   async headers() {
     return [
       {

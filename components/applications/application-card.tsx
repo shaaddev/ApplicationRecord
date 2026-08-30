@@ -1,5 +1,5 @@
 import { ArrowSquareOutIcon } from "@phosphor-icons/react";
-import { type Application, formatDate, formatSalary } from "@/lib/applications";
+import { type Application, formatDate, formatPay } from "@/lib/applications";
 import {
   Card,
   CardAction,
@@ -13,7 +13,7 @@ import { RowActions } from "./row-actions";
 
 export function ApplicationCard({ application }: { application: Application }) {
   const applied = formatDate(application.date_applied);
-  const salary = formatSalary(application.salary);
+  const pay = formatPay(application);
 
   return (
     <Card size="sm" className="gap-3">
@@ -39,10 +39,10 @@ export function ApplicationCard({ application }: { application: Application }) {
               <dd className="text-foreground tabular-nums">{applied}</dd>
             </div>
           ) : null}
-          {salary ? (
+          {pay ? (
             <div className="flex gap-1">
-              <dt className="sr-only">Salary</dt>
-              <dd className="text-foreground tabular-nums">{salary}</dd>
+              <dt className="sr-only">Pay</dt>
+              <dd className="text-foreground tabular-nums">{pay}</dd>
             </div>
           ) : null}
           {application.link ? (
