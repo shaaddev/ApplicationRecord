@@ -3,9 +3,11 @@ import { redirect } from "next/navigation";
 import { getUser } from "@/lib/session";
 import { getUserApplications } from "@/db/queries";
 import { computeStats } from "@/lib/applications";
+import { buildSuggestions } from "@/lib/suggestions";
 import { StatsRow } from "@/components/dashboard/stats-row";
 import { ApplicationsView } from "@/components/applications/applications-view";
 import { NewApplicationButton } from "@/components/applications/application-dialog";
+import { SuggestionsProvider } from "@/components/applications/suggestions-provider";
 import { Chatbot } from "@/components/ai-chatbot/chatbot";
 
 export const metadata: Metadata = {
@@ -21,19 +23,21 @@ export default async function ApplicationRecord() {
   const applications = await getUserApplications(user.id);
 
   return (
-    <div className="flex flex-col gap-8">
-      <div className="flex flex-wrap items-end justify-between gap-4">
-        <div className="flex flex-col gap-1">
-          <h1 className="text-2xl font-semibold tracking-tight">Applications</h1>
-          <p className="text-sm text-muted-foreground">
-            Everything you have applied to, in one place.
-          </p>
+    <SuggestionsProvider suggestions={buildSuggestions(applications)}>
+      <div className="flex flex-col gap-8">
+        <div className="flex flex-wrap items-end justify-between gap-4">
+          <div className="flex flex-col gap-1">
+            <h1 className="text-2xl font-semibold tracking-tight">Applications</h1>
+            <p className="text-sm text-muted-foreground">
+              Everything you have applied to, in one place.
+            </p>
+          </div>
+          <NewApplicationButton />
         </div>
-        <NewApplicationButton />
+        <StatsRow stats={computeStats(applications)} />
+        <ApplicationsView applications={applications} />
+        <Chatbot />
       </div>
-      <StatsRow stats={computeStats(applications)} />
-      <ApplicationsView applications={applications} />
-      <Chatbot />
-    </div>
+    </SuggestionsProvider>
   );
 }

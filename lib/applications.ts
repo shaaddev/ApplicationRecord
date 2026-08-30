@@ -51,6 +51,19 @@ export const TONE_DOT_CLASS: Record<Tone, string> = {
   dark: "bg-status-dark",
 };
 
+/** Yearly pay is stored in `salary`, hourly pay in `rate`. */
+export const PAY_UNITS = ["year", "hour"] as const;
+
+export type PayUnit = (typeof PAY_UNITS)[number];
+
+export const PAY_UNIT_LABEL: Record<PayUnit, string> = {
+  year: "per year",
+  hour: "per hour",
+};
+
+/** Working hours in a year, used to compare hourly pay against salaries. */
+export const HOURS_PER_YEAR = 2080;
+
 /** Shared by the form (client) and the server actions. */
 export const applicationSchema = z.object({
   role: z.string().trim().min(1, "Required").max(120, "Keep it under 120 characters"),
@@ -63,7 +76,8 @@ export const applicationSchema = z.object({
     .trim()
     .max(2048)
     .refine((v) => v === "" || /^https?:\/\//i.test(v), "Must start with http:// or https://"),
-  salary: z.string().trim().max(32),
+  pay: z.string().trim().max(32, "Keep it under 32 characters"),
+  pay_unit: z.enum(PAY_UNITS),
 });
 
 export type ApplicationInput = z.infer<typeof applicationSchema>;
@@ -76,7 +90,8 @@ export function toFormValues(app?: Application): ApplicationInput {
     status: isStatus(app?.status) ? app.status : "Applied",
     date_applied: app?.date_applied ?? null,
     link: app?.link ?? "",
-    salary: app?.salary ?? "",
+    pay: app?.rate ?? app?.salary ?? "",
+    pay_unit: app?.rate ? "hour" : "year",
   };
 }
 
@@ -107,10 +122,45 @@ const salaryFormatter = new Intl.NumberFormat("en-US", {
   maximumFractionDigits: 0,
 });
 
-export function formatSalary(salary: string | null) {
-  if (!salary) return null;
-  const n = Number(salary);
-  return Number.isFinite(n) && n > 0 ? salaryFormatter.format(n) : salary;
+const hourlyFormatter = new Intl.NumberFormat("en-US", {
+  style: "currency",
+  currency: "USD",
+  maximumFractionDigits: 2,
+});
+
+export type Pay = Pick<Application, "salary" | "rate">;
+
+function positiveNumber(value: string | null) {
+  if (!value) return null;
+  const n = Number(value);
+  return Number.isFinite(n) && n > 0 ? n : null;
+}
+
+/** Numeric pay with its unit. Hourly wins if both columns are filled. */
+export function payAmount(pay: Pay): { amount: number; unit: PayUnit } | null {
+  const hourly = positiveNumber(pay.rate);
+  if (hourly !== null) return { amount: hourly, unit: "hour" };
+  const yearly = positiveNumber(pay.salary);
+  if (yearly !== null) return { amount: yearly, unit: "year" };
+  return null;
+}
+
+/** Pay normalized to a yearly figure so hourly and salaried rows sort together. */
+export function annualPay(pay: Pay) {
+  const p = payAmount(pay);
+  if (!p) return undefined;
+  return p.unit === "hour" ? p.amount * HOURS_PER_YEAR : p.amount;
+}
+
+/** "$120,000/yr" or "$45/hr". Free text like "Negotiable" is shown as typed. */
+export function formatPay(pay: Pay) {
+  const p = payAmount(pay);
+  if (p) {
+    return p.unit === "hour"
+      ? `${hourlyFormatter.format(p.amount)}/hr`
+      : `${salaryFormatter.format(p.amount)}/yr`;
+  }
+  return pay.rate || pay.salary || null;
 }
 
 const dateFormatter = new Intl.DateTimeFormat("en-US", {

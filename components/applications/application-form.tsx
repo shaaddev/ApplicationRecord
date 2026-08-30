@@ -7,6 +7,8 @@ import { SparkleIcon } from "@phosphor-icons/react";
 import {
   type Application,
   type ApplicationInput,
+  PAY_UNITS,
+  PAY_UNIT_LABEL,
   STATUSES,
   applicationSchema,
   toFormValues,
@@ -18,7 +20,6 @@ import {
 } from "@/app/(application-record)/actions";
 import { toast } from "@/components/ui/toast";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { Spinner } from "@/components/ui/spinner";
 import { Field, FieldDescription, FieldError, FieldGroup, FieldLabel } from "@/components/ui/field";
 import {
@@ -37,10 +38,13 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { DateField } from "./date-field";
+import { SuggestInput } from "./suggest-input";
+import { useSuggestions } from "./suggestions-provider";
 import { statusClasses } from "./status-badge";
 import { cn } from "@/lib/utils";
 
 const statusItems = STATUSES.map((s) => ({ label: s, value: s }));
+const payUnitItems = PAY_UNITS.map((u) => ({ label: PAY_UNIT_LABEL[u], value: u }));
 
 const URL_RE = /^https?:\/\/\S+$/i;
 
@@ -48,7 +52,6 @@ const FILL_LABELS = {
   role: "role",
   company_name: "company",
   location: "location",
-  salary: "salary",
 } as const;
 
 function listify(items: string[]) {
@@ -65,14 +68,25 @@ export function ApplicationForm({
 }) {
   const [pending, startTransition] = useTransition();
   const [filling, setFilling] = useState(false);
+  const suggestions = useSuggestions();
   const form = useForm<ApplicationInput>({
     resolver: zodResolver(applicationSchema),
     defaultValues: toFormValues(application),
   });
-  const { register, control, handleSubmit, formState, getValues, setValue, setError, clearErrors } =
-    form;
+  const {
+    register,
+    control,
+    handleSubmit,
+    formState,
+    getValues,
+    setValue,
+    setError,
+    clearErrors,
+    watch,
+  } = form;
   const errors = formState.errors;
   const busy = pending || filling;
+  const payUnit = watch("pay_unit");
 
   const submit = handleSubmit((values) => {
     startTransition(async () => {
@@ -113,6 +127,12 @@ export function ApplicationForm({
         if (!value) continue;
         setValue(key, value, { shouldDirty: true, shouldValidate: true });
         filled.push(FILL_LABELS[key]);
+      }
+      // The extractor only reports yearly pay, so the unit is always "year".
+      if (result.data.salary) {
+        setValue("pay", result.data.salary, { shouldDirty: true, shouldValidate: true });
+        setValue("pay_unit", "year", { shouldDirty: true });
+        filled.push("salary");
       }
 
       if (filled.length === 0) {
@@ -179,41 +199,72 @@ export function ApplicationForm({
           )}
         </Field>
 
-        <Field data-invalid={errors.role ? true : undefined}>
-          <FieldLabel htmlFor="role">Role</FieldLabel>
-          <Input
-            id="role"
-            placeholder="Software Engineer"
-            aria-invalid={errors.role ? true : undefined}
-            autoComplete="off"
-            {...register("role")}
-          />
-          <FieldError>{errors.role?.message}</FieldError>
-        </Field>
+        <Controller
+          control={control}
+          name="role"
+          render={({ field, fieldState }) => (
+            <Field data-invalid={fieldState.invalid || undefined}>
+              <FieldLabel htmlFor="role">Role</FieldLabel>
+              <SuggestInput
+                id="role"
+                name={field.name}
+                ref={field.ref}
+                value={field.value}
+                onChange={field.onChange}
+                onBlur={field.onBlur}
+                items={suggestions.roles}
+                placeholder="Software Engineer"
+                invalid={fieldState.invalid}
+              />
+              <FieldError>{fieldState.error?.message}</FieldError>
+            </Field>
+          )}
+        />
 
-        <Field data-invalid={errors.company_name ? true : undefined}>
-          <FieldLabel htmlFor="company_name">Company</FieldLabel>
-          <Input
-            id="company_name"
-            placeholder="Acme"
-            aria-invalid={errors.company_name ? true : undefined}
-            autoComplete="organization"
-            {...register("company_name")}
-          />
-          <FieldError>{errors.company_name?.message}</FieldError>
-        </Field>
+        <Controller
+          control={control}
+          name="company_name"
+          render={({ field, fieldState }) => (
+            <Field data-invalid={fieldState.invalid || undefined}>
+              <FieldLabel htmlFor="company_name">Company</FieldLabel>
+              <SuggestInput
+                id="company_name"
+                name={field.name}
+                ref={field.ref}
+                value={field.value}
+                onChange={field.onChange}
+                onBlur={field.onBlur}
+                items={suggestions.companies}
+                placeholder="Acme"
+                invalid={fieldState.invalid}
+              />
+              <FieldError>{fieldState.error?.message}</FieldError>
+            </Field>
+          )}
+        />
 
         <div className="grid gap-6 sm:grid-cols-2">
-          <Field data-invalid={errors.location ? true : undefined}>
-            <FieldLabel htmlFor="location">Location</FieldLabel>
-            <Input
-              id="location"
-              placeholder="Remote, NYC"
-              aria-invalid={errors.location ? true : undefined}
-              {...register("location")}
-            />
-            <FieldError>{errors.location?.message}</FieldError>
-          </Field>
+          <Controller
+            control={control}
+            name="location"
+            render={({ field, fieldState }) => (
+              <Field data-invalid={fieldState.invalid || undefined}>
+                <FieldLabel htmlFor="location">Location</FieldLabel>
+                <SuggestInput
+                  id="location"
+                  name={field.name}
+                  ref={field.ref}
+                  value={field.value}
+                  onChange={field.onChange}
+                  onBlur={field.onBlur}
+                  items={suggestions.locations}
+                  placeholder="Remote, NYC"
+                  invalid={fieldState.invalid}
+                />
+                <FieldError>{fieldState.error?.message}</FieldError>
+              </Field>
+            )}
+          />
 
           <Controller
             control={control}
@@ -269,24 +320,52 @@ export function ApplicationForm({
             )}
           />
 
-          <Field data-invalid={errors.salary ? true : undefined}>
-            <FieldLabel htmlFor="salary">Salary</FieldLabel>
-            <InputGroup>
-              <InputGroupAddon>
-                <InputGroupText>$</InputGroupText>
-              </InputGroupAddon>
-              <InputGroupInput
-                id="salary"
-                type="number"
-                inputMode="numeric"
-                min={0}
-                step={1000}
-                placeholder="120000"
-                aria-invalid={errors.salary ? true : undefined}
-                {...register("salary")}
+          <Field data-invalid={errors.pay ? true : undefined}>
+            <FieldLabel htmlFor="pay">Pay</FieldLabel>
+            <div className="grid grid-cols-[1fr_auto] gap-2">
+              <InputGroup>
+                <InputGroupAddon>
+                  <InputGroupText>$</InputGroupText>
+                </InputGroupAddon>
+                <InputGroupInput
+                  id="pay"
+                  type="number"
+                  inputMode="decimal"
+                  min={0}
+                  step={payUnit === "hour" ? 1 : 1000}
+                  placeholder={payUnit === "hour" ? "45" : "120000"}
+                  aria-invalid={errors.pay ? true : undefined}
+                  {...register("pay")}
+                />
+              </InputGroup>
+              <Controller
+                control={control}
+                name="pay_unit"
+                render={({ field }) => (
+                  <Select
+                    items={payUnitItems}
+                    value={field.value}
+                    onValueChange={(value) => {
+                      if (value) field.onChange(value);
+                    }}
+                  >
+                    <SelectTrigger aria-label="Pay unit" className="w-28">
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectGroup>
+                        {payUnitItems.map((item) => (
+                          <SelectItem key={item.value} value={item.value}>
+                            {item.label}
+                          </SelectItem>
+                        ))}
+                      </SelectGroup>
+                    </SelectContent>
+                  </Select>
+                )}
               />
-            </InputGroup>
-            <FieldError>{errors.salary?.message}</FieldError>
+            </div>
+            <FieldError>{errors.pay?.message}</FieldError>
           </Field>
         </div>
       </FieldGroup>
