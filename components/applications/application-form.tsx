@@ -31,6 +31,8 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { DateField } from "./date-field";
+import { SuggestInput } from "./suggest-input";
+import { useSuggestions } from "./suggestions-provider";
 import { statusClasses } from "./status-badge";
 import { cn } from "@/lib/utils";
 
@@ -44,6 +46,7 @@ export function ApplicationForm({
   onDone: () => void;
 }) {
   const [pending, startTransition] = useTransition();
+  const suggestions = useSuggestions();
   const form = useForm<ApplicationInput>({
     resolver: zodResolver(applicationSchema),
     defaultValues: toFormValues(application),
@@ -72,41 +75,72 @@ export function ApplicationForm({
   return (
     <form onSubmit={submit} className="flex flex-col gap-6">
       <FieldGroup>
-        <Field data-invalid={errors.role ? true : undefined}>
-          <FieldLabel htmlFor="role">Role</FieldLabel>
-          <Input
-            id="role"
-            placeholder="Software Engineer"
-            aria-invalid={errors.role ? true : undefined}
-            autoComplete="off"
-            {...register("role")}
-          />
-          <FieldError>{errors.role?.message}</FieldError>
-        </Field>
+        <Controller
+          control={control}
+          name="role"
+          render={({ field, fieldState }) => (
+            <Field data-invalid={fieldState.invalid || undefined}>
+              <FieldLabel htmlFor="role">Role</FieldLabel>
+              <SuggestInput
+                id="role"
+                name={field.name}
+                ref={field.ref}
+                value={field.value}
+                onChange={field.onChange}
+                onBlur={field.onBlur}
+                items={suggestions.roles}
+                placeholder="Software Engineer"
+                invalid={fieldState.invalid}
+              />
+              <FieldError>{fieldState.error?.message}</FieldError>
+            </Field>
+          )}
+        />
 
-        <Field data-invalid={errors.company_name ? true : undefined}>
-          <FieldLabel htmlFor="company_name">Company</FieldLabel>
-          <Input
-            id="company_name"
-            placeholder="Acme"
-            aria-invalid={errors.company_name ? true : undefined}
-            autoComplete="organization"
-            {...register("company_name")}
-          />
-          <FieldError>{errors.company_name?.message}</FieldError>
-        </Field>
+        <Controller
+          control={control}
+          name="company_name"
+          render={({ field, fieldState }) => (
+            <Field data-invalid={fieldState.invalid || undefined}>
+              <FieldLabel htmlFor="company_name">Company</FieldLabel>
+              <SuggestInput
+                id="company_name"
+                name={field.name}
+                ref={field.ref}
+                value={field.value}
+                onChange={field.onChange}
+                onBlur={field.onBlur}
+                items={suggestions.companies}
+                placeholder="Acme"
+                invalid={fieldState.invalid}
+              />
+              <FieldError>{fieldState.error?.message}</FieldError>
+            </Field>
+          )}
+        />
 
         <div className="grid gap-6 sm:grid-cols-2">
-          <Field data-invalid={errors.location ? true : undefined}>
-            <FieldLabel htmlFor="location">Location</FieldLabel>
-            <Input
-              id="location"
-              placeholder="Remote, NYC"
-              aria-invalid={errors.location ? true : undefined}
-              {...register("location")}
-            />
-            <FieldError>{errors.location?.message}</FieldError>
-          </Field>
+          <Controller
+            control={control}
+            name="location"
+            render={({ field, fieldState }) => (
+              <Field data-invalid={fieldState.invalid || undefined}>
+                <FieldLabel htmlFor="location">Location</FieldLabel>
+                <SuggestInput
+                  id="location"
+                  name={field.name}
+                  ref={field.ref}
+                  value={field.value}
+                  onChange={field.onChange}
+                  onBlur={field.onBlur}
+                  items={suggestions.locations}
+                  placeholder="Remote, NYC"
+                  invalid={fieldState.invalid}
+                />
+                <FieldError>{fieldState.error?.message}</FieldError>
+              </Field>
+            )}
+          />
 
           <Controller
             control={control}
