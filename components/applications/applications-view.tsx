@@ -58,6 +58,7 @@ import {
 } from "@/components/ui/empty";
 import { NewApplicationButton } from "./application-dialog";
 import { ApplicationCard } from "./application-card";
+import { ResumeCell } from "./resume-control";
 import { StatusMenu } from "./status-menu";
 import { RowActions } from "./row-actions";
 import { statusClasses } from "./status-badge";
@@ -114,6 +115,12 @@ const columns: ColumnDef<Application>[] = [
         <span className="text-muted-foreground">—</span>
       );
     },
+  },
+  {
+    id: "resume",
+    accessorFn: (row) => (row.resume ? 1 : 0),
+    header: "Resume",
+    cell: ({ row }) => <ResumeCell application={row.original} />,
   },
   {
     id: "link",

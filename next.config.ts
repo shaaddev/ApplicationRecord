@@ -8,6 +8,13 @@ const nextConfig = {
   //   ignoreDuringBuilds: true,
   // },
   reactStrictMode: true,
+  experimental: {
+    serverActions: {
+      // Resume uploads go through a server action. Files are capped at 4MB in
+      // lib/resumes.ts; the extra room covers multipart overhead.
+      bodySizeLimit: "5mb",
+    },
+  },
   async headers() {
     return [
       {

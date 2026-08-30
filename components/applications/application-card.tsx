@@ -10,6 +10,7 @@ import {
 } from "@/components/ui/card";
 import { StatusMenu } from "./status-menu";
 import { RowActions } from "./row-actions";
+import { ResumeChip } from "./resume-control";
 
 export function ApplicationCard({ application }: { application: Application }) {
   const applied = formatDate(application.date_applied);
@@ -57,6 +58,9 @@ export function ApplicationCard({ application }: { application: Application }) {
             </a>
           ) : null}
         </dl>
+        <div className="flex min-w-0 items-center">
+          <ResumeChip application={application} />
+        </div>
       </CardContent>
     </Card>
   );
