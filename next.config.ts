@@ -10,8 +10,10 @@ const nextConfig = {
   reactStrictMode: true,
   experimental: {
     serverActions: {
-      // Spreadsheet imports post up to 500 parsed rows in one action call.
-      bodySizeLimit: "2mb",
+      // Resume uploads go through a server action. Files are capped at 4MB in
+      // lib/resumes.ts; the extra room covers multipart overhead. Spreadsheet
+      // imports (up to 500 parsed rows per call) fit well within this.
+      bodySizeLimit: "5mb",
     },
   },
   async headers() {
