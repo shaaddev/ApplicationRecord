@@ -32,7 +32,7 @@ export function ApplicationDialog({
           <DialogDescription>
             {editing
               ? "Update the details for this application."
-              : "Add a role you applied to, or one you plan to."}
+              : "Paste the posting link to fill in the details, or type them in."}
           </DialogDescription>
         </DialogHeader>
         <ApplicationForm

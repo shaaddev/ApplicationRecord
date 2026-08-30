@@ -4,6 +4,7 @@ import { revalidatePath } from "next/cache";
 import { z } from "zod";
 import { getUser } from "@/lib/session";
 import { applicationSchema, isStatus, type ApplicationInput } from "@/lib/applications";
+import { extractJobDetails, type ExtractResult } from "@/lib/job-posting";
 import { checkResumeFile, cleanFileName, hasPdfHeader } from "@/lib/resumes";
 import { IMPORT_ROW_LIMIT, type ImportRowInput } from "@/lib/import/shared";
 import {
@@ -101,6 +102,19 @@ export async function deleteApplication(id: number): Promise<Result> {
   } catch (error) {
     console.error("deleteApplication", error);
     return fail("Could not delete the application.");
+  }
+}
+
+export async function autofillFromLink(url: string): Promise<ExtractResult> {
+  const user = await getUser();
+  if (!user) return { ok: false, error: "Sign in to use autofill." };
+  if (typeof url !== "string" || url.length > 2048) return { ok: false, error: "Check the link." };
+
+  try {
+    return await extractJobDetails(url);
+  } catch (error) {
+    console.error("autofillFromLink", error);
+    return { ok: false, error: "Could not read that page." };
   }
 }
 
