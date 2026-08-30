@@ -8,9 +8,12 @@ export const CSV_HEADERS = [
   "Location",
   "Status",
   "Date applied",
+  "Planned date",
+  "Follow-up date",
   "Pay",
   "Pay unit",
   "Link",
+  "Notes",
 ] as const;
 
 function escapeCell(value: string) {
@@ -29,9 +32,12 @@ function applicationRow(app: Application): string[] {
     app.location,
     app.status,
     app.date_applied ? isoDate(app.date_applied) : "",
+    app.planned_date ? isoDate(app.planned_date) : "",
+    app.follow_up_date ? isoDate(app.follow_up_date) : "",
     app.rate ?? app.salary ?? "",
     app.rate ? "hour" : app.salary ? "year" : "",
     app.link ?? "",
+    app.notes ?? "",
   ];
 }
 
@@ -48,18 +54,24 @@ export function templateCsv() {
       "Remote",
       "Applied",
       "2026-08-01",
+      "",
+      "2026-08-15",
       "120000",
       "year",
       "https://example.com/jobs/123",
+      "Referred by Sam",
     ],
     [
       "Globex",
       "Frontend Developer",
       "New York, NY",
-      "Phone Screen",
+      "Not Applied",
+      "",
       "2026-08-12",
+      "",
       "65",
       "hour",
+      "",
       "",
     ],
   ]);

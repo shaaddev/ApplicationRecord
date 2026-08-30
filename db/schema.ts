@@ -25,6 +25,11 @@ export const applications = pgTable("applications", {
   location: text("location").notNull(),
   status: text("status").notNull(),
   date_applied: timestamp("date_applied", { mode: "date" }),
+  /** When the user plans to apply. Mostly useful while the status is "Not Applied". */
+  planned_date: timestamp("planned_date", { mode: "date" }),
+  /** When to check back in on the application. */
+  follow_up_date: timestamp("follow_up_date", { mode: "date" }),
+  notes: text("notes"),
   link: text("link"),
   salary: text("salary"),
   rate: text("rate"),

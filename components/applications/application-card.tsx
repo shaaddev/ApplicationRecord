@@ -14,6 +14,8 @@ import { ResumeChip } from "./resume-control";
 
 export function ApplicationCard({ application }: { application: Application }) {
   const applied = formatDate(application.date_applied);
+  const planned = applied ? null : formatDate(application.planned_date);
+  const followUp = formatDate(application.follow_up_date);
   const pay = formatPay(application);
 
   return (
@@ -39,6 +41,17 @@ export function ApplicationCard({ application }: { application: Application }) {
               <dt>Applied</dt>
               <dd className="text-foreground tabular-nums">{applied}</dd>
             </div>
+          ) : planned ? (
+            <div className="flex gap-1">
+              <dt>Planned</dt>
+              <dd className="text-foreground tabular-nums">{planned}</dd>
+            </div>
+          ) : null}
+          {followUp ? (
+            <div className="flex gap-1">
+              <dt>Follow up</dt>
+              <dd className="text-foreground tabular-nums">{followUp}</dd>
+            </div>
           ) : null}
           {pay ? (
             <div className="flex gap-1">
@@ -58,6 +71,11 @@ export function ApplicationCard({ application }: { application: Application }) {
             </a>
           ) : null}
         </dl>
+        {application.notes ? (
+          <p className="line-clamp-3 text-xs whitespace-pre-line text-muted-foreground">
+            {application.notes}
+          </p>
+        ) : null}
         <div className="flex min-w-0 items-center">
           <ResumeChip application={application} />
         </div>

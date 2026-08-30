@@ -68,6 +68,8 @@ export const PAY_UNIT_LABEL: Record<PayUnit, string> = {
 /** Working hours in a year, used to compare hourly pay against salaries. */
 export const HOURS_PER_YEAR = 2080;
 
+export const NOTES_LIMIT = 2000;
+
 /** Shared by the form (client) and the server actions. */
 export const applicationSchema = z.object({
   role: z.string().trim().min(1, "Required").max(120, "Keep it under 120 characters"),
@@ -75,6 +77,9 @@ export const applicationSchema = z.object({
   location: z.string().trim().min(1, "Required").max(120, "Keep it under 120 characters"),
   status: z.enum(STATUSES),
   date_applied: z.date().nullable(),
+  planned_date: z.date().nullable(),
+  follow_up_date: z.date().nullable(),
+  notes: z.string().trim().max(NOTES_LIMIT, `Keep it under ${NOTES_LIMIT} characters`),
   link: z
     .string()
     .trim()
@@ -93,6 +98,9 @@ export function toFormValues(app?: Application): ApplicationInput {
     location: app?.location ?? "",
     status: isStatus(app?.status) ? app.status : "Applied",
     date_applied: app?.date_applied ?? null,
+    planned_date: app?.planned_date ?? null,
+    follow_up_date: app?.follow_up_date ?? null,
+    notes: app?.notes ?? "",
     link: app?.link ?? "",
     pay: app?.rate ?? app?.salary ?? "",
     pay_unit: app?.rate ? "hour" : "year",

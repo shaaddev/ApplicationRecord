@@ -4,6 +4,7 @@ import {
   type ApplicationInput,
   type PayUnit,
   type Status,
+  NOTES_LIMIT,
   STATUSES,
   applicationSchema,
 } from "@/lib/applications";
@@ -19,9 +20,12 @@ export const IMPORT_FIELDS = [
   "location",
   "status",
   "date_applied",
+  "planned_date",
+  "follow_up_date",
   "pay",
   "pay_unit",
   "link",
+  "notes",
 ] as const;
 
 export type ImportField = (typeof IMPORT_FIELDS)[number];
@@ -32,9 +36,12 @@ export const FIELD_LABEL: Record<ImportField, string> = {
   location: "Location",
   status: "Status",
   date_applied: "Date applied",
+  planned_date: "Planned date",
+  follow_up_date: "Follow-up date",
   pay: "Pay",
   pay_unit: "Pay unit",
   link: "Link",
+  notes: "Notes",
 };
 
 export const REQUIRED_FIELDS: readonly ImportField[] = ["company_name", "role", "location"];
@@ -55,9 +62,33 @@ const ALIASES: Record<ImportField, string[]> = {
     "application date",
     "date",
   ],
+  planned_date: [
+    "planned date",
+    "planned",
+    "plan to apply",
+    "planned application date",
+    "apply by",
+    "apply on",
+    "target date",
+    "deadline",
+    "due",
+    "due date",
+  ],
+  follow_up_date: [
+    "follow up date",
+    "follow up",
+    "followup",
+    "followup date",
+    "follow up on",
+    "next step",
+    "next step date",
+    "check in",
+    "reminder",
+  ],
   pay: ["pay", "salary", "compensation", "comp", "rate", "hourly rate", "wage", "pay rate"],
   pay_unit: ["pay unit", "unit", "per", "pay period", "pay type", "salary type"],
   link: ["link", "url", "posting", "job link", "job url", "listing", "job posting", "website"],
+  notes: ["notes", "note", "comments", "comment", "remarks", "details", "description"],
 };
 
 function normalizeHeader(header: string) {
@@ -338,6 +369,10 @@ export function buildRows(sheet: Sheet, mapping: Mapping, existing: Application[
 
     const date = parseDate(cell("date_applied"));
     if (date.error) errors.push(date.error);
+    const planned = parseDate(cell("planned_date"));
+    if (planned.error) errors.push(`Planned date: ${planned.error}`);
+    const followUp = parseDate(cell("follow_up_date"));
+    if (followUp.error) errors.push(`Follow-up date: ${followUp.error}`);
     const status = parseStatus(cell("status"));
     if (status.error) errors.push(status.error);
     const pay = parsePay(cell("pay"));
@@ -350,6 +385,9 @@ export function buildRows(sheet: Sheet, mapping: Mapping, existing: Application[
       location: cellText(cell("location")),
       status: status.value,
       date_applied: date.value,
+      planned_date: planned.value,
+      follow_up_date: followUp.value,
+      notes: cellText(cell("notes")).slice(0, NOTES_LIMIT),
       link: parseLink(cell("link")),
       pay: pay.value.pay,
       pay_unit: unit.value ?? pay.value.unit ?? "year",

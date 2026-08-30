@@ -17,6 +17,7 @@ import {
   CaretUpIcon,
   FunnelIcon,
   MagnifyingGlassIcon,
+  NoteIcon,
   SquaresFourIcon,
   TableIcon,
 } from "@phosphor-icons/react";
@@ -41,6 +42,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { InputGroup, InputGroupAddon, InputGroupInput } from "@/components/ui/input-group";
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import {
   Table,
   TableBody,
@@ -109,8 +111,26 @@ const columns: ColumnDef<Application>[] = [
     header: "Applied",
     cell: ({ row }) => {
       const applied = formatDate(row.original.date_applied);
-      return applied ? (
-        <span className="tabular-nums">{applied}</span>
+      if (applied) return <span className="tabular-nums">{applied}</span>;
+      const planned = formatDate(row.original.planned_date);
+      return planned ? (
+        <span className="text-muted-foreground tabular-nums" title="Planned application date">
+          Planned {planned}
+        </span>
+      ) : (
+        <span className="text-muted-foreground">—</span>
+      );
+    },
+  },
+  {
+    id: "follow_up_date",
+    accessorFn: (row) => row.follow_up_date?.getTime(),
+    sortUndefined: "last",
+    header: "Follow-up",
+    cell: ({ row }) => {
+      const followUp = formatDate(row.original.follow_up_date);
+      return followUp ? (
+        <span className="tabular-nums">{followUp}</span>
       ) : (
         <span className="text-muted-foreground">—</span>
       );
@@ -121,6 +141,25 @@ const columns: ColumnDef<Application>[] = [
     accessorFn: (row) => (row.resume ? 1 : 0),
     header: "Resume",
     cell: ({ row }) => <ResumeCell application={row.original} />,
+  },
+  {
+    id: "notes",
+    header: () => <span className="sr-only">Notes</span>,
+    enableSorting: false,
+    cell: ({ row }) =>
+      row.original.notes ? (
+        <Tooltip>
+          <TooltipTrigger
+            render={<Button variant="ghost" size="icon-sm" />}
+            aria-label={`Notes for ${row.original.company_name}`}
+          >
+            <NoteIcon />
+          </TooltipTrigger>
+          <TooltipContent className="max-w-sm">
+            <span className="line-clamp-6 whitespace-pre-line">{row.original.notes}</span>
+          </TooltipContent>
+        </Tooltip>
+      ) : null,
   },
   {
     id: "link",
@@ -157,7 +196,9 @@ const columns: ColumnDef<Application>[] = [
 function matches(app: Application, query: string) {
   if (!query) return true;
   const q = query.toLowerCase();
-  return [app.company_name, app.role, app.location].some((v) => v.toLowerCase().includes(q));
+  return [app.company_name, app.role, app.location, app.notes ?? ""].some((v) =>
+    v.toLowerCase().includes(q),
+  );
 }
 
 export function ApplicationsView({ applications }: { applications: Application[] }) {
@@ -222,7 +263,7 @@ export function ApplicationsView({ applications }: { applications: Application[]
             <MagnifyingGlassIcon />
           </InputGroupAddon>
           <InputGroupInput
-            placeholder="Search company, role, location"
+            placeholder="Search company, role, location, notes"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             aria-label="Search applications"

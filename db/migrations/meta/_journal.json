@@ -15,6 +15,13 @@
       "when": 1788056625947,
       "tag": "0001_broad_squadron_sinister",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1788101844292,
+      "tag": "0002_dazzling_groot",
+      "breakpoints": true
     }
   ]
 }

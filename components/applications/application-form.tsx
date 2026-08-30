@@ -1,12 +1,13 @@
 "use client";
 
 import { useState, useTransition } from "react";
-import { Controller, useForm } from "react-hook-form";
+import { type Control, Controller, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { SparkleIcon } from "@phosphor-icons/react";
 import {
   type Application,
   type ApplicationInput,
+  NOTES_LIMIT,
   PAY_UNITS,
   PAY_UNIT_LABEL,
   STATUSES,
@@ -21,6 +22,7 @@ import {
 import { toast } from "@/components/ui/toast";
 import { Button } from "@/components/ui/button";
 import { Spinner } from "@/components/ui/spinner";
+import { Textarea } from "@/components/ui/textarea";
 import { Field, FieldDescription, FieldError, FieldGroup, FieldLabel } from "@/components/ui/field";
 import {
   InputGroup,
@@ -59,6 +61,37 @@ function listify(items: string[]) {
   return `${items.slice(0, -1).join(", ")} and ${items[items.length - 1]}`;
 }
 
+type DateName = "date_applied" | "planned_date" | "follow_up_date";
+
+function DateInput({
+  control,
+  name,
+  label,
+}: {
+  control: Control<ApplicationInput>;
+  name: DateName;
+  label: string;
+}) {
+  return (
+    <Controller
+      control={control}
+      name={name}
+      render={({ field, fieldState }) => (
+        <Field data-invalid={fieldState.invalid || undefined}>
+          <FieldLabel htmlFor={name}>{label}</FieldLabel>
+          <DateField
+            id={name}
+            value={field.value}
+            onChange={field.onChange}
+            invalid={fieldState.invalid}
+          />
+          <FieldError>{fieldState.error?.message}</FieldError>
+        </Field>
+      )}
+    />
+  );
+}
+
 export function ApplicationForm({
   application,
   onDone,
@@ -86,7 +119,17 @@ export function ApplicationForm({
   } = form;
   const errors = formState.errors;
   const busy = pending || filling;
-  const payUnit = watch("pay_unit");
+  const [status, payUnit, plannedDate, dateApplied] = watch([
+    "status",
+    "pay_unit",
+    "planned_date",
+    "date_applied",
+  ]);
+  // Show the date that fits the status. A date that already has a value stays
+  // visible either way, so switching status never hides what the user entered.
+  const notApplied = status === "Not Applied";
+  const showPlanned = notApplied || plannedDate !== null;
+  const showApplied = !notApplied || dateApplied !== null;
 
   const submit = handleSubmit((values) => {
     startTransition(async () => {
@@ -303,22 +346,13 @@ export function ApplicationForm({
         </div>
 
         <div className="grid gap-6 sm:grid-cols-2">
-          <Controller
-            control={control}
-            name="date_applied"
-            render={({ field, fieldState }) => (
-              <Field data-invalid={fieldState.invalid || undefined}>
-                <FieldLabel htmlFor="date_applied">Date applied</FieldLabel>
-                <DateField
-                  id="date_applied"
-                  value={field.value}
-                  onChange={field.onChange}
-                  invalid={fieldState.invalid}
-                />
-                <FieldError>{fieldState.error?.message}</FieldError>
-              </Field>
-            )}
-          />
+          {showPlanned ? (
+            <DateInput control={control} name="planned_date" label="Planned application date" />
+          ) : null}
+          {showApplied ? (
+            <DateInput control={control} name="date_applied" label="Date applied" />
+          ) : null}
+          <DateInput control={control} name="follow_up_date" label="Follow-up date" />
 
           <Field data-invalid={errors.pay ? true : undefined}>
             <FieldLabel htmlFor="pay">Pay</FieldLabel>
@@ -368,6 +402,19 @@ export function ApplicationForm({
             <FieldError>{errors.pay?.message}</FieldError>
           </Field>
         </div>
+
+        <Field data-invalid={errors.notes ? true : undefined}>
+          <FieldLabel htmlFor="notes">Notes</FieldLabel>
+          <Textarea
+            id="notes"
+            placeholder="Recruiter name, referral, interview prep, anything worth remembering"
+            maxLength={NOTES_LIMIT}
+            aria-invalid={errors.notes ? true : undefined}
+            className="max-h-48 overflow-y-auto"
+            {...register("notes")}
+          />
+          <FieldError>{errors.notes?.message}</FieldError>
+        </Field>
       </FieldGroup>
 
       <div className="flex justify-end gap-2">
