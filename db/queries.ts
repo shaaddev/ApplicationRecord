@@ -2,6 +2,7 @@ import { db } from ".";
 import { eq, desc, and } from "drizzle-orm";
 import { applications, resumes } from "./schema";
 import type { Application, ApplicationInput, Status } from "@/lib/applications";
+import type { ImportRowInput } from "@/lib/import/shared";
 
 const resumeMeta = {
   file_name: resumes.file_name,
@@ -27,8 +28,38 @@ function toRow(input: ApplicationInput) {
     status: input.status,
     date_applied: input.date_applied,
     link: input.link || null,
-    salary: input.salary || null,
+    salary: input.pay_unit === "year" ? input.pay || null : null,
+    rate: input.pay_unit === "hour" ? input.pay || null : null,
   };
+}
+
+/**
+ * Inserts new rows and overwrites the ones flagged with `replaceId`, all in one
+ * transaction. Replacements are scoped to the user, so a foreign id is a no-op.
+ */
+export async function importApplications(userId: string, rows: ImportRowInput[]) {
+  return db.transaction(async (tx) => {
+    const inserts = rows
+      .filter((r) => r.replaceId === undefined)
+      .map((r) => ({ ...toRow(r.input), user_id: userId }));
+    const inserted =
+      inserts.length > 0
+        ? (await tx.insert(applications).values(inserts).returning({ id: applications.id })).length
+        : 0;
+
+    let replaced = 0;
+    for (const r of rows) {
+      if (r.replaceId === undefined) continue;
+      const updated = await tx
+        .update(applications)
+        .set({ ...toRow(r.input), updated_at: new Date() })
+        .where(and(eq(applications.id, r.replaceId), eq(applications.user_id, userId)))
+        .returning({ id: applications.id });
+      replaced += updated.length;
+    }
+
+    return { inserted, replaced };
+  });
 }
 
 export async function insertApplication(userId: string, input: ApplicationInput) {

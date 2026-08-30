@@ -25,8 +25,9 @@ import {
   type Application,
   type Status,
   STATUSES,
+  annualPay,
   formatDate,
-  formatSalary,
+  formatPay,
 } from "@/lib/applications";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -57,6 +58,8 @@ import {
   EmptyTitle,
 } from "@/components/ui/empty";
 import { NewApplicationButton } from "./application-dialog";
+import { ImportButton } from "./import-dialog";
+import { ExportButton } from "./export-button";
 import { ApplicationCard } from "./application-card";
 import { ResumeCell } from "./resume-control";
 import { StatusMenu } from "./status-menu";
@@ -86,17 +89,14 @@ const columns: ColumnDef<Application>[] = [
     cell: ({ row }) => <StatusMenu id={row.original.id} status={row.original.status} />,
   },
   {
-    id: "salary",
-    accessorFn: (row) => {
-      const n = Number(row.salary);
-      return Number.isFinite(n) && n > 0 ? n : undefined;
-    },
+    id: "pay",
+    accessorFn: (row) => annualPay(row),
     sortUndefined: "last",
-    header: "Salary",
+    header: "Pay",
     cell: ({ row }) => {
-      const salary = formatSalary(row.original.salary);
-      return salary ? (
-        <span className="tabular-nums">{salary}</span>
+      const pay = formatPay(row.original);
+      return pay ? (
+        <span className="tabular-nums">{pay}</span>
       ) : (
         <span className="text-muted-foreground">—</span>
       );
@@ -198,7 +198,10 @@ export function ApplicationsView({ applications }: { applications: Application[]
           </EmptyDescription>
         </EmptyHeader>
         <EmptyContent>
-          <NewApplicationButton size="sm" />
+          <div className="flex flex-wrap justify-center gap-2">
+            <NewApplicationButton size="sm" />
+            <ImportButton applications={applications} />
+          </div>
         </EmptyContent>
       </Empty>
     );
@@ -272,6 +275,9 @@ export function ApplicationsView({ applications }: { applications: Application[]
         <span className="ml-auto text-xs text-muted-foreground tabular-nums">
           {filtered.length} of {applications.length}
         </span>
+
+        <ImportButton applications={applications} />
+        <ExportButton applications={sortedApps} />
 
         <ToggleGroup
           variant="outline"

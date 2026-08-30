@@ -1,12 +1,15 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
+import { z } from "zod";
 import { getUser } from "@/lib/session";
 import { applicationSchema, isStatus, type ApplicationInput } from "@/lib/applications";
 import { checkResumeFile, cleanFileName, hasPdfHeader } from "@/lib/resumes";
+import { IMPORT_ROW_LIMIT, type ImportRowInput } from "@/lib/import/shared";
 import {
   deleteApplication as deleteRow,
   deleteResume as deleteResumeRow,
+  importApplications as importRows,
   insertApplication,
   updateApplication as updateRow,
   updateApplicationStatus as updateStatusRow,
@@ -14,6 +17,20 @@ import {
 } from "@/db/queries";
 
 type Result = { ok: true } | { ok: false; error: string };
+
+export type ImportResult =
+  | { ok: true; inserted: number; replaced: number }
+  | { ok: false; error: string };
+
+const importSchema = z
+  .array(
+    z.object({
+      input: applicationSchema,
+      replaceId: z.number().int().positive().optional(),
+    }),
+  )
+  .min(1, "Nothing to import.")
+  .max(IMPORT_ROW_LIMIT, `Import up to ${IMPORT_ROW_LIMIT} rows at a time.`);
 
 const PATH = "/application-record";
 
@@ -130,5 +147,27 @@ export async function removeResume(id: number): Promise<Result> {
   } catch (error) {
     console.error("removeResume", error);
     return fail("Could not remove the resume.");
+  }
+}
+
+export async function importApplications(rows: ImportRowInput[]): Promise<ImportResult> {
+  const user = await getUser();
+  if (!user) return { ok: false, error: "Sign in to import applications." };
+
+  const parsed = importSchema.safeParse(rows);
+  if (!parsed.success) {
+    const issue = parsed.error.issues[0];
+    const row = typeof issue?.path[0] === "number" ? issue.path[0] + 1 : null;
+    const message = issue?.message ?? "Check the file.";
+    return { ok: false, error: row ? `Row ${row}: ${message}` : message };
+  }
+
+  try {
+    const result = await importRows(user.id, parsed.data);
+    revalidatePath(PATH);
+    return { ok: true, ...result };
+  } catch (error) {
+    console.error("importApplications", error);
+    return { ok: false, error: "Could not import the applications." };
   }
 }

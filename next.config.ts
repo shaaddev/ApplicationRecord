@@ -11,7 +11,8 @@ const nextConfig = {
   experimental: {
     serverActions: {
       // Resume uploads go through a server action. Files are capped at 4MB in
-      // lib/resumes.ts; the extra room covers multipart overhead.
+      // lib/resumes.ts; the extra room covers multipart overhead. Spreadsheet
+      // imports (up to 500 parsed rows per call) fit well within this.
       bodySizeLimit: "5mb",
     },
   },
