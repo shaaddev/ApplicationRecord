@@ -1,0 +1,79 @@
+name: "PR checks"
+
+on:
+  pull_request:
+    branches:
+      - main
+    types: [opened, synchronize, reopened, edited, ready_for_review]
+
+permissions:
+  contents: read
+  pull-requests: read
+
+concurrency:
+  group: pr-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+jobs:
+  guidelines:
+    name: Guidelines
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout (full history for diff)
+        uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+
+      - name: PR title follows commit conventions
+        env:
+          TITLE: ${{ github.event.pull_request.title }}
+        run: |
+          pattern='^(feat|fix|refactor|perf|chore|docs|style|test|build|ci|revert|bump)(\([a-z0-9._/-]+\))?!?: [^ ](.*[^. ])?$'
+          if [[ "$TITLE" =~ $pattern ]]; then
+            echo "ok: $TITLE"
+          else
+            echo "::error title=PR title::\"$TITLE\" must look like \"type: summary\" or \"type(scope): summary\" (types: feat, fix, refactor, perf, chore, docs, style, test, build, ci, revert, bump), with no trailing period."
+            exit 1
+          fi
+
+      - name: No em dashes added (AGENTS.md writing style)
+        run: tooling/check-em-dashes.sh "${{ github.event.pull_request.base.sha }}" HEAD
+
+  lint:
+    name: Lint (oxlint)
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout
+        uses: actions/checkout@v5
+
+      - name: setup (pnpm + node + install)
+        uses: ./tooling/setup
+
+      - name: oxlint
+        run: pnpm lint -f github
+
+  format:
+    name: Format (oxfmt)
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout
+        uses: actions/checkout@v5
+
+      - name: setup (pnpm + node + install)
+        uses: ./tooling/setup
+
+      - name: oxfmt --check
+        run: pnpm format:check
+
+  typecheck:
+    name: Types (tsc)
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout
+        uses: actions/checkout@v5
+
+      - name: setup (pnpm + node + install)
+        uses: ./tooling/setup
+
+      - name: next typegen + tsc
+        run: pnpm typecheck
