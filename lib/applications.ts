@@ -1,7 +1,11 @@
 import { z } from "zod";
 import type { applications } from "@/db/schema";
+import type { ResumeMeta } from "./resumes";
 
-export type Application = typeof applications.$inferSelect;
+export type ApplicationRow = typeof applications.$inferSelect;
+
+/** A row plus the metadata of its attached resume, if any. Bytes are never sent to the client. */
+export type Application = ApplicationRow & { resume: ResumeMeta | null };
 
 export const STATUSES = [
   "Not Applied",

@@ -9,7 +9,14 @@ import {
   index,
   uniqueIndex,
   serial,
+  customType,
 } from "drizzle-orm/pg-core";
+
+const bytea = customType<{ data: Buffer; driverData: Buffer }>({
+  dataType() {
+    return "bytea";
+  },
+});
 
 export const applications = pgTable("applications", {
   id: serial("id").primaryKey().notNull(),
@@ -22,6 +29,22 @@ export const applications = pgTable("applications", {
   salary: text("salary"),
   rate: text("rate"),
   user_id: text("user_id").notNull(),
+  created_at: timestamp("created_at", { withTimezone: true }).defaultNow().notNull(),
+  updated_at: timestamp("updated_at", { withTimezone: true }).defaultNow().notNull(),
+});
+
+/** One PDF per application. Bytes live in Postgres; deleting the application drops the file. */
+export const resumes = pgTable("resumes", {
+  id: serial("id").primaryKey().notNull(),
+  application_id: integer("application_id")
+    .notNull()
+    .unique()
+    .references(() => applications.id, { onDelete: "cascade" }),
+  user_id: text("user_id").notNull(),
+  file_name: text("file_name").notNull(),
+  content_type: text("content_type").notNull(),
+  size: integer("size").notNull(),
+  data: bytea("data").notNull(),
   created_at: timestamp("created_at", { withTimezone: true }).defaultNow().notNull(),
   updated_at: timestamp("updated_at", { withTimezone: true }).defaultNow().notNull(),
 });
